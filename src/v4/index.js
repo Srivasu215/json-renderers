@@ -1,3 +1,5 @@
+import registerGlobal from "./registerGlobal.js";
+
 // import renderTable from "./table/index.js";
 // import renderNavTabs from "./navTabs/index.js";
 // import renderForm from "./form/index.js";
@@ -138,5 +140,7 @@ const render = ({
         inShowLog: localShowLog
     });
 };
+
+registerGlobal(render);
 
 export default render;
