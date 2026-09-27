@@ -1,0 +1,20 @@
+{
+    "default": {
+        "tagName": "select",
+        "attributes": {
+            "id": "LedgerName"
+        },
+        "jsonToSpec": {
+            "operation": "loopArray",
+            "source": "LedgerName",
+            "template": {
+                "tagName": "option",
+                "attributes": {
+                    "value": "${}"
+                },
+                "textContent": "${}"
+            }
+        },
+        "children": []
+    }
+}
