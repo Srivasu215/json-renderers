@@ -1,6 +1,6 @@
 {
   "name": "json-renderers",
-  "version": "1.4.2",
+  "version": "1.5.2",
   "description": "Standalone, config-driven Table renderer built on top of json-to-dom",
   "type": "module",
   "main": "src/index.js",
@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@keshavsoft/json-to-tag": "^1.4.2",
-    "json-to-spec": "^25.1.1"
+    "json-to-spec": "^25.1.1",
+    "json-traversal": "^1.5.2"
   }
 }
