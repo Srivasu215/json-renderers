@@ -1,5 +1,5 @@
 import jsonToSpec from "../../../node_modules/json-to-spec/index.js";
-import jsonToTag from "../../../node_modules/@keshavsoft/json-to-tag/index.js";
+import jsonToTag from "@keshavsoft/json-to-tag";
 
 // Story 3: Generate table DOM element from structure specification and data
 const startFunc = ({
