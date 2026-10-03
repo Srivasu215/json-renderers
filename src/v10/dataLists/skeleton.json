@@ -1,0 +1,38 @@
+{
+    "old": {
+        "tagName": "datalist",
+        "attributes": {
+            "id": "LedgerName"
+        },
+        "jsonToSpec": {
+            "operation": "loopArray",
+            "source": "LedgerName",
+            "template": {
+                "tagName": "option",
+                "attributes": {
+                    "value": "${}"
+                },
+                "textContent": "${}"
+            }
+        },
+        "children": []
+    },
+    "default": {
+        "mapping": {
+            "tagName": "$datalist",
+            "attributes": {
+                "id": "$LedgerName"
+            },
+            "children": {
+                "list": "LedgerName",
+                "item": {
+                    "tagName": "$option",
+                    "attributes": {
+                        "value": ""
+                    },
+                    "textContent": ""
+                }
+            }
+        }
+    }
+}

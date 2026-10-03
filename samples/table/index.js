@@ -1,7 +1,7 @@
 // import render from "../../src/index.js";
-import render from "../../docs/dist/v9/min.js";
+import render from "../../docs/dist/v10/min.js";
 
-import "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v8/min.js";
+// import "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v10/min.js";
 
 import data from "./batches.json" with { type: "json" };
 
