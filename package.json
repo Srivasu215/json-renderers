@@ -1,6 +1,6 @@
 {
   "name": "json-renderers",
-  "version": "1.9.1",
+  "version": "1.10.1",
   "description": "Standalone, config-driven Table renderer built on top of json-to-dom",
   "type": "module",
   "main": "src/index.js",
