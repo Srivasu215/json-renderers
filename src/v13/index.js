@@ -7,17 +7,14 @@ const render = ({
     targetHtmlId,
     data,
     classToApply,
-    inTargetHtmlId,
-    inData,
     columns,
-    inColumns,
     appendPosition
 } = {}) => {
     const rawType = type;
 
-    const localTargetHtmlId = inTargetHtmlId ?? targetHtmlId;
-    const localData = inData ?? data;
-    const localColumns = inColumns ?? columns;
+    const localTargetHtmlId = targetHtmlId;
+    const localData = data;
+    const localColumns = columns;
 
     // Default to table renderer
     const content = buildSpec({

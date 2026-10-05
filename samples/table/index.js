@@ -16,7 +16,8 @@ const start = () => {
     render({
       type: "table",
       data, appendPosition: "prepend1",
-      targetHtmlId: "main"
+      targetHtmlId: "main",
+      columns: ["Name"]
     });
 
   } catch (err) {
