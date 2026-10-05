@@ -9,17 +9,19 @@ const startFunc = ({
     inColumns,
     inData, inAppendPosition
 } = {}) => {
+    debugger
     const localTargetHtmlId = inTargetHtmlId;
     const localData = inData ?? [];
     const localColumns = inColumns;
 
     let specAsJsonToDom = jsonRenderBuild({
-        type = "table",
-        targetHtmlId: inTargetHtmlId,
+        type: "table",
+        targetHtmlId: localTargetHtmlId,
         data: localData,
         columns: localColumns,
         appendPosition: inAppendPosition
     });
+    console.log("specAsJsonToDom : ", specAsJsonToDom);
 
     const container = document.getElementById(localTargetHtmlId);
 

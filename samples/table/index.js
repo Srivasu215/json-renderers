@@ -1,5 +1,5 @@
 // import render from "../../src/index.js";
-import render from "../../docs/dist/v12/min.js";
+import render from "../../docs/dist/v13/min.js";
 
 // import "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v12/min.js";
 

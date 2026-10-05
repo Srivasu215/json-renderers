@@ -11,7 +11,10 @@ const render = ({
     targetHtmlId,
     data,
     classToApply,
+    inTargetHtmlId,
+    inData,
     columns,
+    inColumns,
     appendPosition
 } = {}) => {
     const rawType = type;
@@ -28,16 +31,12 @@ const render = ({
     const localTargetHtmlId = inTargetHtmlId ?? targetHtmlId;
     const localData = inData ?? data;
     const localColumns = inColumns ?? columns;
-    const localSkeletonType = inSkeletonType ?? skeletonType ?? variant ?? "default";
-    const localShowLog = inShowLog ?? showLog ?? false;
 
     // Default to table renderer
     return renderer({
-        targetHtmlId: localTargetHtmlId,
+        inTargetHtmlId: localTargetHtmlId,
         inColumns: localColumns,
         inData: localData,
-        inSkeletonType: localSkeletonType,
-        inShowLog: localShowLog,
         inAppendPosition: appendPosition
     });
 };
