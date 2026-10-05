@@ -659,11 +659,9 @@ const Vt = ({
     data: l ?? [],
     columns: e
   });
-  console.log("specAsJsonToDom : ", s);
-  const u = document.getElementById(n);
-  u && (u.innerHTML = "");
-  const c = k(s);
-  u.append(c);
+  console.log("specAsJsonToDom : ", o, s);
+  const u = document.getElementById(n), c = k(s);
+  o === "prepend" ? u.prepend(c) : (u && (u.innerHTML = ""), u.append(c));
 }, T = {
   table: Vt
 }, qt = ({

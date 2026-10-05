@@ -15,8 +15,8 @@ const start = () => {
 
     render({
       type: "table",
-      data,
-      targetHtmlId: "dom-render-container"
+      data, appendPosition: "prepend1",
+      targetHtmlId: "main"
     });
 
   } catch (err) {

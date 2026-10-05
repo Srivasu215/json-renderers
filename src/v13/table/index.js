@@ -18,18 +18,22 @@ const startFunc = ({
         type: "table",
         targetHtmlId: localTargetHtmlId,
         data: localData,
-        columns: localColumns,
-        appendPosition: inAppendPosition
+        columns: localColumns
     });
-    console.log("specAsJsonToDom : ", specAsJsonToDom);
+    console.log("specAsJsonToDom : ", inAppendPosition, specAsJsonToDom);
 
     const container = document.getElementById(localTargetHtmlId);
 
-    if (container) container.innerHTML = "";
-
     const content = jsonToTag(specAsJsonToDom);
 
-    container.append(content);
+    if (inAppendPosition === "prepend") {
+        container.prepend(content);
+    } else {
+
+        if (container) container.innerHTML = "";
+
+        container.append(content);
+    };
 };
 
 export default startFunc;
