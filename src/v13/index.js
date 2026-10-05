@@ -11,21 +11,8 @@ const render = ({
     targetHtmlId,
     data,
     classToApply,
-    inTargetHtmlId,
-    inData,
     columns,
-    inColumns,
-    colGroup,
-    inColGroup,
-    footerData,
-    inFooterData,
-    config,
-    inConfig,
-    variant,
-    skeletonType,
-    inSkeletonType,
-    showLog = false,
-    inShowLog
+    appendPosition
 } = {}) => {
     const rawType = type;
     const resolvedType = typeof rawType === "string" ? rawType.toLowerCase() : "table";
@@ -49,11 +36,9 @@ const render = ({
         targetHtmlId: localTargetHtmlId,
         inColumns: localColumns,
         inData: localData,
-        inColGroup: inColGroup ?? colGroup,
-        inFooterData: inFooterData ?? footerData ?? [],
-        inConfig: inConfig ?? config ?? {},
         inSkeletonType: localSkeletonType,
-        inShowLog: localShowLog
+        inShowLog: localShowLog,
+        inAppendPosition: appendPosition
     });
 };
 
