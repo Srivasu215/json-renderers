@@ -1,10 +1,6 @@
 import registerGlobal from "./registerGlobal.js";
 
-import renderTable from "./table/index.js";
-
-const RENDERER_MAP = {
-    table: renderTable
-};
+import buildSpec from "./buildSpec/index.js";
 
 const render = ({
     type = "table",
@@ -18,27 +14,29 @@ const render = ({
     appendPosition
 } = {}) => {
     const rawType = type;
-    const resolvedType = typeof rawType === "string" ? rawType.toLowerCase() : "table";
-    const renderer = RENDERER_MAP[resolvedType];
-
-    if (!renderer) {
-        console.error(
-            `[Renderer] Unknown renderer type "${rawType}". Available types: ${Object.keys(RENDERER_MAP).join(", ")}`
-        );
-        return null;
-    }
 
     const localTargetHtmlId = inTargetHtmlId ?? targetHtmlId;
     const localData = inData ?? data;
     const localColumns = inColumns ?? columns;
 
     // Default to table renderer
-    return renderer({
+    const content = buildSpec({
         inTargetHtmlId: localTargetHtmlId,
         inColumns: localColumns,
-        inData: localData,
-        inAppendPosition: appendPosition
+        inData: localData, type: rawType
     });
+
+    const container = document.getElementById(localTargetHtmlId);
+
+    if (appendPosition === "prepend") {
+        container.prepend(content);
+    } else {
+        if (container) container.innerHTML = "";
+
+        container.append(content);
+    };
+
+    return container;
 };
 
 registerGlobal(render);

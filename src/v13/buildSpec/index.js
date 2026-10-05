@@ -1,13 +1,11 @@
 import jsonRenderBuild from "json-renderers-build";
 import jsonToTag from "@keshavsoft/json-to-tag";
 
-import skeletonJson from './skeleton.json' with { type: 'json' };
-
 // --- Story of Table Render ---
 const startFunc = ({
     inTargetHtmlId,
-    inColumns,
-    inData, inAppendPosition
+    inColumns, type,
+    inData
 } = {}) => {
     debugger
     const localTargetHtmlId = inTargetHtmlId;
@@ -20,20 +18,11 @@ const startFunc = ({
         data: localData,
         columns: localColumns
     });
-    console.log("specAsJsonToDom : ", inAppendPosition, specAsJsonToDom);
-
-    const container = document.getElementById(localTargetHtmlId);
 
     const content = jsonToTag(specAsJsonToDom);
 
-    if (inAppendPosition === "prepend") {
-        container.prepend(content);
-    } else {
+    return content;
 
-        if (container) container.innerHTML = "";
-
-        container.append(content);
-    };
 };
 
 export default startFunc;

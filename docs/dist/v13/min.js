@@ -1,10 +1,10 @@
-const R = {
+const I = {
   version: "v12.0.0",
   description: "build table from store data and render to DOM uses json-to-spec, json-to-dom under the hood"
 }, F = (t) => {
   var e;
   typeof globalThis > "u" || !t || (globalThis.ks ?? (globalThis.ks = {}), (e = globalThis.ks).jsonRenderers ?? (e.jsonRenderers = {
-    meta: R,
+    meta: I,
     renderToDom: t
   }));
 }, G = {
@@ -19,7 +19,7 @@ const R = {
 }, S = {
   version: "v32",
   description: "JSON-to-DOM engine with centralized traversal and responsibility-focused construction"
-}, L = ({ inFuncDefinition: t } = {}) => {
+}, R = ({ inFuncDefinition: t } = {}) => {
   if (typeof globalThis > "u" || !t) return;
   globalThis.ks ?? (globalThis.ks = {});
   const e = {
@@ -27,22 +27,22 @@ const R = {
     buildSpecElement: t
   };
   globalThis.ks.jsonToSpec = e;
-}, M = (t, e) => d(t, e), C = (t, e) => Array.isArray(t) ? t.map((l) => M(l, e)).flat(1 / 0).filter(Boolean) : [], z = (t, e) => {
+}, z = (t, e) => f(t, e), T = (t, e) => Array.isArray(t) ? t.map((l) => z(l, e)).flat(1 / 0).filter(Boolean) : [], L = (t, e) => {
   if ("source" in t && (t == null ? void 0 : t.source) in e) {
     const l = e[t == null ? void 0 : t.source];
     if (Array.isArray(l))
       return l.map((n) => {
         const r = t == null ? void 0 : t.template;
         if (r)
-          return d(r, n);
+          return f(r, n);
       });
   }
-}, P = (t, e) => {
+}, M = (t, e) => {
   let l = [];
   for (const [o, n] of Object.entries(e)) {
     const r = t == null ? void 0 : t.template;
     if (r) {
-      const a = d(r, {
+      const a = f(r, {
         key: o,
         value: n
       });
@@ -57,19 +57,19 @@ const R = {
       return l.map((n) => {
         const r = t == null ? void 0 : t.template;
         if (r)
-          return d(r, n);
+          return f(r, n);
       });
   }
 }, q = (t, e) => {
   if ("operation" in t) {
     if (t.operation === "loopArray")
-      return z(t, e);
+      return L(t, e);
     if (t.operation === "loopObject")
-      return P(t, e);
+      return M(t, e);
     if (t.operation === "loopCollection")
       return V(t, e);
   }
-}, A = (t, e) => {
+}, C = (t, e) => {
   if (typeof e == "string") return e;
   if (typeof t != "string") return t;
   if (t === "${value}")
@@ -80,46 +80,46 @@ const R = {
     return (e == null ? void 0 : e[o]) ?? "";
   }
   return t;
-}, B = (t, e) => {
+}, P = (t, e) => {
   let l = {};
   for (const [o, n] of Object.entries(t)) {
-    const r = A(n, e);
+    const r = C(n, e);
     l[o] = r;
   }
   return l;
-}, _ = (t, e) => {
+}, B = (t, e) => {
   if ("tagName" in t) {
     if ("textContent" in t) {
-      const l = A(t.textContent, e);
+      const l = C(t.textContent, e);
       t.textContent = l;
     }
     if ("attributes" in t) {
-      const l = B(t.attributes, e);
+      const l = P(t.attributes, e);
       t.attributes = l;
     }
   }
-}, U = (t, e) => {
+}, _ = (t, e) => {
   if (!t || typeof t != "object" || Array.isArray(t)) return null;
   const l = structuredClone(t);
   if (!l) return null;
-  if ("tagName" in l && _(l, e), "jsonToSpec" in l) {
+  if ("tagName" in l && B(l, e), "jsonToSpec" in l) {
     const o = l == null ? void 0 : l.jsonToSpec, n = q(o, e);
     Array.isArray(n) ? l.children = n : l.children = [n], delete l.jsonToSpec;
   }
   if (Array.isArray(l == null ? void 0 : l.children)) {
-    const o = C(l == null ? void 0 : l.children, e);
+    const o = T(l == null ? void 0 : l.children, e);
     l.children = o;
   }
   return l;
-}, d = (t, e) => {
+}, f = (t, e) => {
   if (t == null) return null;
   debugger;
-  return typeof Node < "u" && t instanceof Node ? t : Array.isArray(t) ? C(t, e) : typeof t == "object" ? U(t, e) : typeof t == "string" || typeof t == "number" ? document.createTextNode(String(t)) : t;
-}, x = (t, e) => d(t, e);
-L({
-  inFuncDefinition: x
+  return typeof Node < "u" && t instanceof Node ? t : Array.isArray(t) ? T(t, e) : typeof t == "object" ? _(t, e) : typeof t == "string" || typeof t == "number" ? document.createTextNode(String(t)) : t;
+}, A = (t, e) => f(t, e);
+R({
+  inFuncDefinition: A
 });
-const K = {
+const U = {
   default: {
     tagName: "table",
     attributes: {
@@ -165,20 +165,20 @@ const K = {
       }
     ]
   }
-}, X = ({
+}, K = ({
   targetHtmlId: t,
   inTargetHtmlId: e,
   inColumns: l,
   inData: o
 } = {}) => {
   const n = o ?? [], r = l;
-  return x(K.default, {
+  return A(U.default, {
     columns: r,
     data: n
   });
 }, y = {
-  table: X
-}, v = ({
+  table: K
+}, x = ({
   type: t = "table",
   targetHtmlId: e,
   data: l,
@@ -186,47 +186,47 @@ const K = {
   inTargetHtmlId: n,
   inData: r,
   columns: a,
-  inColumns: s,
+  inColumns: i,
   colGroup: u,
-  inColGroup: c,
-  footerData: i,
-  inFooterData: f,
-  config: b,
-  inConfig: w,
-  variant: m,
-  skeletonType: $,
-  inSkeletonType: E,
-  showLog: D = !1,
-  inShowLog: O
+  inColGroup: d,
+  footerData: s,
+  inFooterData: w,
+  config: m,
+  inConfig: g,
+  variant: c,
+  skeletonType: k,
+  inSkeletonType: $,
+  showLog: E = !1,
+  inShowLog: D
 } = {}) => {
-  const g = t, I = typeof g == "string" ? g.toLowerCase() : "table", p = y[I];
+  const h = t, O = typeof h == "string" ? h.toLowerCase() : "table", p = y[O];
   return p ? p({
     targetHtmlId: n ?? e,
-    inColumns: s ?? a,
+    inColumns: i ?? a,
     inData: r ?? l,
-    inColGroup: c ?? u,
-    inFooterData: f ?? i ?? [],
-    inConfig: w ?? b ?? {},
-    inSkeletonType: E ?? $ ?? m ?? "default",
-    inShowLog: O ?? D ?? !1
+    inColGroup: d ?? u,
+    inFooterData: w ?? s ?? [],
+    inConfig: g ?? m ?? {},
+    inSkeletonType: $ ?? k ?? c ?? "default",
+    inShowLog: D ?? E ?? !1
   }) : (console.error(
-    `[Renderer] Unknown renderer type "${g}". Available types: ${Object.keys(y).join(", ")}`
+    `[Renderer] Unknown renderer type "${h}". Available types: ${Object.keys(y).join(", ")}`
   ), null);
 };
-H(v);
-const Q = {
+H(x);
+const X = {
   version: "v9",
   description: "JSON-to-DOM engine with SVG namespace support, mixed text content, and centralized traversal"
-}, W = ({ inFuncDefinition: t, inReviewSpec: e } = {}) => {
+}, Q = ({ inFuncDefinition: t, inReviewSpec: e } = {}) => {
   if (typeof globalThis > "u" || !t) return;
   globalThis.ks ?? (globalThis.ks = {});
   const l = {
-    meta: Q,
+    meta: X,
     buildSpecElement: t,
     reviewSpec: e
   };
   globalThis.ks["json-to-tag"] = l, globalThis.ks.jsonToTag = l;
-}, Y = (t) => t == null ? null : typeof Node < "u" && t instanceof Node ? t : typeof t == "string" || typeof t == "number" ? document.createTextNode(String(t)) : typeof t == "object" && (t.nodeType === 3 || t.tagName === "#text" || !t.tagName && (t.textContent !== void 0 || t.text !== void 0)) ? document.createTextNode(t.textContent ?? t.text ?? "") : N(t), j = (t) => Array.isArray(t) ? t.map(Y).flat(1 / 0).filter(Boolean) : [], Z = (t) => (t == null, t), J = "http://www.w3.org/2000/svg", tt = /* @__PURE__ */ new Set([
+}, W = (t) => t == null ? null : typeof Node < "u" && t instanceof Node ? t : typeof t == "string" || typeof t == "number" ? document.createTextNode(String(t)) : typeof t == "object" && (t.nodeType === 3 || t.tagName === "#text" || !t.tagName && (t.textContent !== void 0 || t.text !== void 0)) ? document.createTextNode(t.textContent ?? t.text ?? "") : j(t), v = (t) => Array.isArray(t) ? t.map(W).flat(1 / 0).filter(Boolean) : [], Y = (t) => (t == null, t), Z = "http://www.w3.org/2000/svg", J = /* @__PURE__ */ new Set([
   "svg",
   "path",
   "symbol",
@@ -253,15 +253,15 @@ const Q = {
   "fegaussianblur",
   "femerge",
   "femergenode"
-]), et = ({ inTagName: t }) => {
+]), tt = ({ inTagName: t }) => {
   const e = t == null ? void 0 : t.toLowerCase();
   if (!e) return null;
   if (e === "checkbox") {
     const l = document.createElement("input");
     return l.type = "checkbox", l;
   }
-  return tt.has(e) ? document.createElementNS(J, e) : document.createElement(e);
-}, lt = ({ inElement: t, inTextContent: e }) => (!t || e === void 0 || e === null || (t.textContent = e), t), rt = ({ inElement: t, inProperties: e }) => (t && e && typeof e == "object" && Object.assign(t, e), t), ot = "http://www.w3.org/1999/xlink", nt = ({ inElement: t, inAttributes: e }) => {
+  return J.has(e) ? document.createElementNS(Z, e) : document.createElement(e);
+}, et = ({ inElement: t, inTextContent: e }) => (!t || e === void 0 || e === null || (t.textContent = e), t), lt = ({ inElement: t, inProperties: e }) => (t && e && typeof e == "object" && Object.assign(t, e), t), rt = "http://www.w3.org/1999/xlink", ot = ({ inElement: t, inAttributes: e }) => {
   const l = t, o = e;
   if (!l || !o || typeof o != "object")
     return l;
@@ -273,13 +273,13 @@ const Q = {
     }
     if (r === "xlink:href" || r === "href") {
       if (a != null) {
-        const s = String(a);
+        const i = String(a);
         if (n)
           try {
-            l.setAttributeNS(ot, "href", s);
+            l.setAttributeNS(rt, "href", i);
           } catch {
           }
-        l.setAttribute("href", s), l.setAttribute("xlink:href", s);
+        l.setAttribute("href", i), l.setAttribute("xlink:href", i);
       }
       return;
     }
@@ -289,33 +289,33 @@ const Q = {
     }
     a != null && l.setAttribute(r, String(a));
   }), l;
-}, at = ({ inElement: t, inClassList: e }) => {
+}, nt = ({ inElement: t, inClassList: e }) => {
   if (!t || !e) return t;
   const l = typeof e == "string" ? e.split(/\s+/).filter(Boolean) : Array.isArray(e) ? e.filter((o) => typeof o == "string" && o.trim()) : [];
   return l.length && t.classList.add(...l), t;
-}, st = (t) => {
+}, at = (t) => {
   if (!t || typeof t != "object" || Array.isArray(t) || !t.tagName) return null;
-  const e = et({ inTagName: t.tagName });
+  const e = tt({ inTagName: t.tagName });
   if (!e) return null;
-  if (lt({
+  if (et({
     inElement: e,
-    inTextContent: Z(t.textContent),
+    inTextContent: Y(t.textContent),
     inTagName: t.tagName
-  }), rt({
+  }), lt({
     inElement: e,
     inProperties: t.properties
-  }), nt({
+  }), ot({
     inElement: e,
     inAttributes: t.attributes
-  }), at({
+  }), nt({
     inElement: e,
     inClassList: t.classList
   }), Array.isArray(t.children)) {
-    const l = j(t.children);
+    const l = v(t.children);
     l.length && e.append(...l);
   }
   return e;
-}, N = (t) => t == null ? null : typeof Node < "u" && t instanceof Node ? t : Array.isArray(t) ? j(t) : typeof t == "object" ? st(t) : typeof t == "string" || typeof t == "number" ? document.createTextNode(String(t)) : null, it = "./tags.schema.json", ut = {
+}, j = (t) => t == null ? null : typeof Node < "u" && t instanceof Node ? t : Array.isArray(t) ? v(t) : typeof t == "object" ? at(t) : typeof t == "string" || typeof t == "number" ? document.createTextNode(String(t)) : null, st = "./tags.schema.json", it = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
@@ -323,7 +323,7 @@ const Q = {
     "role"
   ],
   childTags: []
-}, ct = {
+}, ut = {
   allowsTextContent: !1,
   allowsChildren: !1,
   allowedAttributes: [
@@ -336,7 +336,7 @@ const Q = {
     "required",
     "list"
   ]
-}, dt = {
+}, ct = {
   allowsTextContent: !1,
   allowsChildren: !1,
   allowedAttributes: [
@@ -347,7 +347,7 @@ const Q = {
     "disabled",
     "required"
   ]
-}, ft = {
+}, dt = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
@@ -356,7 +356,7 @@ const Q = {
   childTags: [
     "col"
   ]
-}, gt = {
+}, ft = {
   allowsTextContent: !1,
   allowsChildren: !1,
   allowedAttributes: [
@@ -364,14 +364,14 @@ const Q = {
     "style",
     "width"
   ]
-}, ht = {
+}, gt = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
     "for"
   ],
   childTags: []
-}, bt = {
+}, ht = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
@@ -384,7 +384,7 @@ const Q = {
     "target"
   ],
   childTags: []
-}, wt = {
+}, bt = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
@@ -397,6 +397,11 @@ const Q = {
   childTags: [
     "option"
   ]
+}, wt = {
+  allowsTextContent: !0,
+  allowsChildren: !0,
+  allowedAttributes: [],
+  childTags: []
 }, mt = {
   allowsTextContent: !0,
   allowsChildren: !0,
@@ -413,11 +418,6 @@ const Q = {
   allowedAttributes: [],
   childTags: []
 }, Tt = {
-  allowsTextContent: !0,
-  allowsChildren: !0,
-  allowedAttributes: [],
-  childTags: []
-}, Ct = {
   allowsTextContent: !1,
   allowsChildren: !1,
   allowedAttributes: [
@@ -427,7 +427,7 @@ const Q = {
     "height",
     "loading"
   ]
-}, At = {
+}, Ct = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
@@ -437,7 +437,7 @@ const Q = {
     "value"
   ],
   childTags: []
-}, xt = {
+}, At = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
@@ -451,6 +451,13 @@ const Q = {
     "thead",
     "tbody",
     "tfoot",
+    "tr"
+  ]
+}, xt = {
+  allowsTextContent: !1,
+  allowsChildren: !0,
+  allowedAttributes: [],
+  childTags: [
     "tr"
   ]
 }, vt = {
@@ -472,17 +479,10 @@ const Q = {
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: [
-    "tr"
-  ]
-}, kt = {
-  allowsTextContent: !1,
-  allowsChildren: !0,
-  allowedAttributes: [],
-  childTags: [
     "td",
     "th"
   ]
-}, $t = {
+}, kt = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
@@ -491,7 +491,7 @@ const Q = {
     "rowspan"
   ],
   childTags: []
-}, Et = {
+}, $t = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
@@ -499,14 +499,14 @@ const Q = {
     "rowspan"
   ],
   childTags: []
-}, Dt = {
+}, Et = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: [
     "option"
   ]
-}, Ot = {
+}, Dt = {
   allowsTextContent: !0,
   allowsChildren: !1,
   allowedAttributes: [
@@ -515,14 +515,14 @@ const Q = {
     "selected",
     "disabled"
   ]
-}, It = {
+}, Ot = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
     "role"
   ],
   childTags: []
-}, Rt = {
+}, It = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
@@ -561,71 +561,71 @@ const Q = {
     "value"
   ],
   childTags: []
-}, Lt = {
+}, Rt = {
   allowsTextContent: !1,
   allowsChildren: !1,
   allowedAttributes: []
-}, Mt = {
-  $schema: it,
-  div: ut,
-  input: ct,
-  checkbox: dt,
-  colgroup: ft,
-  col: gt,
-  label: ht,
-  form: bt,
-  select: wt,
-  p: mt,
-  h1: pt,
-  h2: yt,
-  span: Tt,
-  img: Ct,
-  button: At,
-  table: xt,
-  thead: vt,
-  tbody: jt,
-  tfoot: Nt,
-  tr: kt,
-  th: $t,
-  td: Et,
-  datalist: Dt,
-  option: Ot,
-  header: It,
-  a: Rt,
+}, zt = {
+  $schema: st,
+  div: it,
+  input: ut,
+  checkbox: ct,
+  colgroup: dt,
+  col: ft,
+  label: gt,
+  form: ht,
+  select: bt,
+  p: wt,
+  h1: mt,
+  h2: pt,
+  span: yt,
+  img: Tt,
+  button: Ct,
+  table: At,
+  thead: xt,
+  tbody: vt,
+  tfoot: jt,
+  tr: Nt,
+  th: kt,
+  td: $t,
+  datalist: Et,
+  option: Dt,
+  header: Ot,
+  a: It,
   i: Ft,
   small: Gt,
   ul: Ht,
   li: St,
-  hr: Lt
-}, h = ({ inSpec: t }) => {
+  hr: Rt
+}, b = ({ inSpec: t }) => {
   const e = t;
   if (!e) return [];
   if (Array.isArray(e))
-    return e.flatMap((o) => h({ inSpec: o }));
+    return e.flatMap((o) => b({ inSpec: o }));
   if (typeof e != "object") return [];
   const l = [];
   return typeof e.tagName == "string" && e.tagName.trim().length > 0 && l.push(e.tagName.toLowerCase()), Array.isArray(e.children) && e.children.length > 0 && e.children.forEach((o) => {
-    const n = h({ inSpec: o });
+    const n = b({ inSpec: o });
     l.push(...n);
   }), l;
-}, zt = ({ inTagsFound: t, inAllowedTags: e }) => {
+}, Lt = ({ inTagsFound: t, inAllowedTags: e }) => {
   const l = t ?? [], o = e ?? {}, n = new Set(
-    Object.keys(o).filter((i) => i !== "$schema").map((i) => i.toLowerCase())
-  ), r = {}, a = [], s = [];
-  l.forEach((i) => {
-    r[i] = (r[i] || 0) + 1, n.has(i) ? a.includes(i) || a.push(i) : s.includes(i) || s.push(i);
+    Object.keys(o).filter((s) => s !== "$schema").map((s) => s.toLowerCase())
+  ), r = {}, a = [], i = [];
+  l.forEach((s) => {
+    r[s] = (r[s] || 0) + 1, n.has(s) ? a.includes(s) || a.push(s) : i.includes(s) || i.push(s);
   });
-  const u = l.length, c = s.length === 0;
+  const u = l.length, d = i.length === 0;
   return {
     totalTags: u,
     tagCounts: r,
     uniqueTags: Object.keys(r),
     recognizedTags: a,
-    unrecognizedTags: s,
-    areAllTagsPresent: c
+    unrecognizedTags: i,
+    areAllTagsPresent: d
   };
-}, Pt = ({ inSpec: t, inTags: e = Mt } = {}) => {
-  const l = t, o = e, n = h({ inSpec: l }), r = zt({
+}, Mt = ({ inSpec: t, inTags: e = zt } = {}) => {
+  const l = t, o = e, n = b({ inSpec: l }), r = Lt({
     inTagsFound: n,
     inAllowedTags: o
   });
@@ -637,33 +637,28 @@ const Q = {
     recognizedTags: r.recognizedTags,
     unrecognizedTags: r.unrecognizedTags
   };
-}, k = (t = {}) => {
+}, N = (t = {}) => {
   const e = (t == null ? void 0 : t.spec) ?? (t == null ? void 0 : t.inSpec) ?? t;
-  return N(e);
+  return j(e);
 };
-W({
-  inFuncDefinition: k,
-  inReviewSpec: Pt
+Q({
+  inFuncDefinition: N,
+  inReviewSpec: Mt
 });
 const Vt = ({
   inTargetHtmlId: t,
   inColumns: e,
-  inData: l,
-  inAppendPosition: o
+  type: l,
+  inData: o
 } = {}) => {
   debugger;
-  const n = t;
-  let s = v({
+  let i = x({
     type: "table",
-    targetHtmlId: n,
-    data: l ?? [],
+    targetHtmlId: t,
+    data: o ?? [],
     columns: e
   });
-  console.log("specAsJsonToDom : ", o, s);
-  const u = document.getElementById(n), c = k(s);
-  o === "prepend" ? u.prepend(c) : (u && (u.innerHTML = ""), u.append(c));
-}, T = {
-  table: Vt
+  return N(i);
 }, qt = ({
   type: t = "table",
   targetHtmlId: e,
@@ -672,18 +667,16 @@ const Vt = ({
   inTargetHtmlId: n,
   inData: r,
   columns: a,
-  inColumns: s,
+  inColumns: i,
   appendPosition: u
 } = {}) => {
-  const c = t, i = typeof c == "string" ? c.toLowerCase() : "table", f = T[i];
-  return f ? f({
-    inTargetHtmlId: n ?? e,
-    inColumns: s ?? a,
+  const d = t, s = n ?? e, g = Vt({
+    inTargetHtmlId: s,
+    inColumns: i ?? a,
     inData: r ?? l,
-    inAppendPosition: u
-  }) : (console.error(
-    `[Renderer] Unknown renderer type "${c}". Available types: ${Object.keys(T).join(", ")}`
-  ), null);
+    type: d
+  }), c = document.getElementById(s);
+  return u === "prepend" ? c.prepend(g) : (c && (c.innerHTML = ""), c.append(g)), c;
 };
 F(qt);
 export {
