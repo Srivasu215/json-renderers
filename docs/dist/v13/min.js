@@ -649,9 +649,8 @@ const St = ({
   type: l,
   inData: r
 } = {}) => {
-  debugger;
   let a = p({
-    type: "table",
+    type: l,
     data: r ?? [],
     columns: e
   });

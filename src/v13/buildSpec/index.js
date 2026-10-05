@@ -7,13 +7,13 @@ const startFunc = ({
     inColumns, type,
     inData
 } = {}) => {
-    debugger
+    // debugger
     const localTargetHtmlId = inTargetHtmlId;
     const localData = inData ?? [];
     const localColumns = inColumns;
 
     let specAsJsonToDom = jsonRenderBuild({
-        type: "table",
+        type,
         targetHtmlId: localTargetHtmlId,
         data: localData,
         columns: localColumns
@@ -22,7 +22,6 @@ const startFunc = ({
     const content = jsonToTag(specAsJsonToDom);
 
     return content;
-
 };
 
 export default startFunc;
