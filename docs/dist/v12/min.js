@@ -1,23 +1,23 @@
 const F = {
   version: "v12.0.0",
   description: "build table from store data and render to DOM uses json-to-spec, json-to-dom under the hood"
-}, D = (t) => {
+}, S = (t) => {
   var e;
   typeof globalThis > "u" || !t || (globalThis.ks ?? (globalThis.ks = {}), (e = globalThis.ks).jsonRenderers ?? (e.jsonRenderers = {
     meta: F,
     renderToDom: t
   }));
-}, G = {
+}, D = {
   version: "v32",
   description: "JSON-to-DOM engine with centralized traversal and responsibility-focused construction"
-}, S = ({ inFuncDefinition: t } = {}) => {
+}, G = ({ inFuncDefinition: t } = {}) => {
   if (typeof globalThis > "u" || !t) return;
   globalThis.ks ?? (globalThis.ks = {});
   const e = {
-    meta: G,
+    meta: D,
     buildSpecElement: t
   };
-  globalThis.ks["json-to-tag"] = e, globalThis.ks.jsonToTag = e;
+  globalThis.ks.jsonToSpec = e;
 }, z = (t, e) => d(t, e), b = (t, e) => Array.isArray(t) ? t.map((l) => z(l, e)).flat(1 / 0).filter(Boolean) : [], I = (t, e) => {
   if ("source" in t && (t == null ? void 0 : t.source) in e) {
     const l = e[t == null ? void 0 : t.source];
@@ -107,7 +107,7 @@ const F = {
   debugger;
   return typeof Node < "u" && t instanceof Node ? t : Array.isArray(t) ? b(t, e) : typeof t == "object" ? P(t, e) : typeof t == "string" || typeof t == "number" ? document.createTextNode(String(t)) : t;
 }, y = (t, e) => d(t, e);
-S({
+G({
   inFuncDefinition: y
 });
 const H = {
@@ -303,12 +303,12 @@ const H = {
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: []
-}, gt = {
+}, ht = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: []
-}, ht = {
+}, gt = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [],
@@ -457,11 +457,11 @@ const H = {
     "value"
   ],
   childTags: []
-}, Dt = {
+}, St = {
   allowsTextContent: !1,
   allowsChildren: !1,
   allowedAttributes: []
-}, Gt = {
+}, Dt = {
   $schema: lt,
   div: rt,
   input: ot,
@@ -473,8 +473,8 @@ const H = {
   select: ct,
   p: dt,
   h1: ft,
-  h2: gt,
-  span: ht,
+  h2: ht,
+  span: gt,
   img: wt,
   button: bt,
   table: mt,
@@ -492,19 +492,19 @@ const H = {
   small: Et,
   ul: Ot,
   li: Ft,
-  hr: Dt
-}, g = ({ inSpec: t }) => {
+  hr: St
+}, h = ({ inSpec: t }) => {
   const e = t;
   if (!e) return [];
   if (Array.isArray(e))
-    return e.flatMap((o) => g({ inSpec: o }));
+    return e.flatMap((o) => h({ inSpec: o }));
   if (typeof e != "object") return [];
   const l = [];
   return typeof e.tagName == "string" && e.tagName.trim().length > 0 && l.push(e.tagName.toLowerCase()), Array.isArray(e.children) && e.children.length > 0 && e.children.forEach((o) => {
-    const n = g({ inSpec: o });
+    const n = h({ inSpec: o });
     l.push(...n);
   }), l;
-}, St = ({ inTagsFound: t, inAllowedTags: e }) => {
+}, Gt = ({ inTagsFound: t, inAllowedTags: e }) => {
   const l = t ?? [], o = e ?? {}, n = new Set(
     Object.keys(o).filter((i) => i !== "$schema").map((i) => i.toLowerCase())
   ), r = {}, a = [], s = [];
@@ -520,8 +520,8 @@ const H = {
     unrecognizedTags: s,
     areAllTagsPresent: c
   };
-}, zt = ({ inSpec: t, inTags: e = Gt } = {}) => {
-  const l = t, o = e, n = g({ inSpec: l }), r = St({
+}, zt = ({ inSpec: t, inTags: e = Dt } = {}) => {
+  const l = t, o = e, n = h({ inSpec: l }), r = Gt({
     inTagsFound: n,
     inAllowedTags: o
   });
@@ -626,8 +626,8 @@ const It = {
   showLog: $ = !1,
   inShowLog: E
 } = {}) => {
-  const f = t, O = typeof f == "string" ? f.toLowerCase() : "table", h = w[O];
-  return h ? h({
+  const f = t, O = typeof f == "string" ? f.toLowerCase() : "table", g = w[O];
+  return g ? g({
     targetHtmlId: n ?? e,
     inColumns: s ?? a,
     inData: r ?? l,
@@ -640,7 +640,7 @@ const It = {
     `[Renderer] Unknown renderer type "${f}". Available types: ${Object.keys(w).join(", ")}`
   ), null);
 };
-D(Rt);
+S(Rt);
 export {
   Rt as default
 };
