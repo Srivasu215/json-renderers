@@ -1,7 +1,7 @@
 // import render from "../../src/index.js";
-import render from "../../docs/dist/v10/min.js";
+import render from "../../docs/dist/v12/min.js";
 
-// import "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v10/min.js";
+// import "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v12/min.js";
 
 import data from "./batches.json" with { type: "json" };
 
@@ -18,7 +18,6 @@ const start = () => {
       data,
       targetHtmlId: "dom-render-container"
     });
-
 
   } catch (err) {
     console.log("error : ", err);
