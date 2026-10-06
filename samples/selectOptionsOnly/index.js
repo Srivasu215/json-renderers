@@ -1,13 +1,13 @@
 
 import render from "../../docs/dist/v13/min.js";
 
-import data from "./data.json" with {type: "json"};
+import data from "./data.json" with { type: "json" };
 
 const start = () => {
   try {
     render({
-      type: "select", data: data.LedgerName,
-      targetHtmlId: "dom-render-container", showLog: true
+      type: "selectOptionsOnly", data: data.LedgerName,
+      targetHtmlId: "selectId"
     });
   } catch (err) {
     console.log("error : ", err);

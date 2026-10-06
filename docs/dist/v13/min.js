@@ -1,125 +1,121 @@
-const A = {
-  version: "v13.0.0",
+const x = {
+  version: "v13.1.0",
   description: "build table from store data and render to DOM uses json-to-spec, json-to-dom under the hood"
-}, x = (t) => {
+}, j = (t) => {
   var e;
   typeof globalThis > "u" || !t || (globalThis.ks ?? (globalThis.ks = {}), (e = globalThis.ks).jsonRenderers ?? (e.jsonRenderers = {
-    meta: A,
+    meta: x,
     renderToDom: t
   }));
 }, v = {
   version: "v3.0.0",
   description: "build table from store data and render to DOM uses json-to-spec, json-to-dom under the hood"
-}, j = (t) => {
+}, N = (t) => {
   var e;
   typeof globalThis > "u" || !t || (globalThis.ks ?? (globalThis.ks = {}), (e = globalThis.ks).jsonRenderersBuild ?? (e.jsonRenderersBuild = {
     meta: v,
     renderToDom: t
   }));
-}, N = {
+}, $ = {
   version: "v32",
   description: "JSON-to-DOM engine with centralized traversal and responsibility-focused construction"
-}, $ = ({ inFuncDefinition: t } = {}) => {
+}, k = ({ inFuncDefinition: t } = {}) => {
   if (typeof globalThis > "u" || !t) return;
   globalThis.ks ?? (globalThis.ks = {});
   const e = {
-    meta: N,
+    meta: $,
     buildSpecElement: t
   };
   globalThis.ks.jsonToSpec = e;
-}, k = (t, e) => c(t, e), w = (t, e) => Array.isArray(t) ? t.map((l) => k(l, e)).flat(1 / 0).filter(Boolean) : [], D = (t, e) => {
+}, D = (t, e) => g(t, e), m = (t, e) => Array.isArray(t) ? t.map((l) => D(l, e)).flat(1 / 0).filter(Boolean) : [], O = (t, e) => {
   if ("source" in t && (t == null ? void 0 : t.source) in e) {
     const l = e[t == null ? void 0 : t.source];
     if (Array.isArray(l))
       return l.map((n) => {
-        const o = t == null ? void 0 : t.template;
-        if (o)
-          return c(o, n);
+        const r = t == null ? void 0 : t.template;
+        if (r)
+          return g(r, n);
       });
   }
 }, E = (t, e) => {
   let l = [];
-  for (const [r, n] of Object.entries(e)) {
-    const o = t == null ? void 0 : t.template;
-    if (o) {
-      const a = c(o, {
-        key: r,
+  for (const [o, n] of Object.entries(e)) {
+    const r = t == null ? void 0 : t.template;
+    if (r) {
+      const a = g(r, {
+        key: o,
         value: n
       });
       l.push(a);
     }
   }
   return l;
-}, O = (t, e) => {
+}, S = (t, e) => {
   if ("source" in t && (t == null ? void 0 : t.source) in e) {
     const l = e[t == null ? void 0 : t.source];
     if (Array.isArray(l))
       return l.map((n) => {
-        const o = t == null ? void 0 : t.template;
-        if (o)
-          return c(o, n);
+        const r = t == null ? void 0 : t.template;
+        if (r)
+          return g(r, n);
       });
   }
-}, F = (t, e) => {
+}, L = (t, e) => {
   if ("operation" in t) {
     if (t.operation === "loopArray")
-      return D(t, e);
+      return O(t, e);
     if (t.operation === "loopObject")
       return E(t, e);
     if (t.operation === "loopCollection")
-      return O(t, e);
+      return S(t, e);
   }
-}, m = (t, e) => {
+}, p = (t, e) => {
   if (typeof e == "string") return e;
   if (typeof t != "string") return t;
   if (t === "${value}")
     return e.value;
   const l = t.match(/^\$\{(.+?)\}$/);
   if (l) {
-    const r = l[1];
-    return (e == null ? void 0 : e[r]) ?? "";
+    const o = l[1];
+    return (e == null ? void 0 : e[o]) ?? "";
   }
   return t;
-}, G = (t, e) => {
+}, F = (t, e) => {
   let l = {};
-  for (const [r, n] of Object.entries(t)) {
-    const o = m(n, e);
-    l[r] = o;
+  for (const [o, n] of Object.entries(t)) {
+    const r = p(n, e);
+    l[o] = r;
   }
   return l;
-}, R = (t, e) => {
+}, G = (t, e) => {
   if ("tagName" in t) {
     if ("textContent" in t) {
-      const l = m(t.textContent, e);
+      const l = p(t.textContent, e);
       t.textContent = l;
     }
     if ("attributes" in t) {
-      const l = G(t.attributes, e);
+      const l = F(t.attributes, e);
       t.attributes = l;
     }
   }
-}, z = (t, e) => {
+}, M = (t, e) => {
   if (!t || typeof t != "object" || Array.isArray(t)) return null;
   const l = structuredClone(t);
   if (!l) return null;
-  if ("tagName" in l && R(l, e), "jsonToSpec" in l) {
-    const r = l == null ? void 0 : l.jsonToSpec, n = F(r, e);
+  if ("tagName" in l && G(l, e), "jsonToSpec" in l) {
+    const o = l == null ? void 0 : l.jsonToSpec, n = L(o, e);
     Array.isArray(n) ? l.children = n : l.children = [n], delete l.jsonToSpec;
   }
   if (Array.isArray(l == null ? void 0 : l.children)) {
-    const r = w(l == null ? void 0 : l.children, e);
-    l.children = r;
+    const o = m(l == null ? void 0 : l.children, e);
+    l.children = o;
   }
   return l;
-}, c = (t, e) => {
-  if (t == null) return null;
-  debugger;
-  return typeof Node < "u" && t instanceof Node ? t : Array.isArray(t) ? w(t, e) : typeof t == "object" ? z(t, e) : typeof t == "string" || typeof t == "number" ? document.createTextNode(String(t)) : t;
-}, g = (t, e) => c(t, e);
-$({
-  inFuncDefinition: g
+}, g = (t, e) => t == null ? null : typeof Node < "u" && t instanceof Node ? t : Array.isArray(t) ? m(t, e) : typeof t == "object" ? M(t, e) : typeof t == "string" || typeof t == "number" ? document.createTextNode(String(t)) : t, h = (t, e) => g(t, e);
+k({
+  inFuncDefinition: h
 });
-const M = {
+const R = {
   default: {
     tagName: "table",
     attributes: {
@@ -165,18 +161,18 @@ const M = {
       }
     ]
   }
-}, S = ({
+}, z = ({
   inColumns: t,
   inData: e
 } = {}) => {
-  const l = e ?? [], r = t;
-  return g(M.default, {
-    columns: r,
+  const l = e ?? [], o = t;
+  return h(R.default, {
+    columns: o,
     data: l
   });
-}, I = "select", L = {
+}, I = "select", V = {
   id: "LedgerName"
-}, V = {
+}, q = {
   operation: "loopArray",
   source: "arrayOfStrings",
   template: {
@@ -186,45 +182,63 @@ const M = {
     },
     textContent: "${}"
   }
-}, q = [], P = {
+}, B = [], P = {
   tagName: I,
-  attributes: L,
-  jsonToSpec: V,
-  children: q
-}, B = ({
+  attributes: V,
+  jsonToSpec: q,
+  children: B
+}, H = ({
   inData: t
-} = {}) => g(P, {
+} = {}) => h(P, {
   arrayOfStrings: t ?? []
-}), b = {
-  table: S,
-  select: B
-}, p = ({
+}), _ = {
+  operation: "loopArray",
+  source: "arrayOfStrings",
+  template: {
+    tagName: "option",
+    attributes: {
+      value: "${}"
+    },
+    textContent: "${}"
+  }
+}, U = [], K = {
+  jsonToSpec: _,
+  children: U
+}, X = ({
+  inData: t
+} = {}) => h(K, {
+  arrayOfStrings: t ?? []
+}), w = {
+  table: z,
+  select: H,
+  selectOptionsOnly: X
+}, y = ({
   type: t = "table",
   data: e,
   columns: l
 } = {}) => {
-  const r = t, n = typeof r == "string" ? r.toLowerCase() : "table", o = b[n];
-  return o ? o({
+  const o = t, n = w[o];
+  return n ? n({
     inColumns: l,
     inData: e
   }) : (console.error(
-    `[Renderer] Unknown renderer type "${r}". Available types: ${Object.keys(b).join(", ")}`
+    `[Renderer] Unknown renderer type "${o}". Available types: ${Object.keys(w).join(", ")}`
   ), null);
 };
-j(p);
-const H = {
+N(y);
+const Q = {
   version: "v9",
   description: "JSON-to-DOM engine with SVG namespace support, mixed text content, and centralized traversal"
-}, _ = ({ inFuncDefinition: t, inReviewSpec: e } = {}) => {
+}, W = ({ inFuncDefinition: t, inReviewSpec: e } = {}) => {
   if (typeof globalThis > "u" || !t) return;
   globalThis.ks ?? (globalThis.ks = {});
   const l = {
-    meta: H,
+    meta: Q,
     buildSpecElement: t,
     reviewSpec: e
   };
   globalThis.ks["json-to-tag"] = l, globalThis.ks.jsonToTag = l;
-}, U = (t) => t == null ? null : typeof Node < "u" && t instanceof Node ? t : typeof t == "string" || typeof t == "number" ? document.createTextNode(String(t)) : typeof t == "object" && (t.nodeType === 3 || t.tagName === "#text" || !t.tagName && (t.textContent !== void 0 || t.text !== void 0)) ? document.createTextNode(t.textContent ?? t.text ?? "") : T(t), y = (t) => Array.isArray(t) ? t.map(U).flat(1 / 0).filter(Boolean) : [], K = (t) => (t == null, t), X = "http://www.w3.org/2000/svg", Q = /* @__PURE__ */ new Set([
+}, Y = (t) => t == null ? null : typeof Node < "u" && t instanceof Node ? t : typeof t == "string" || typeof t == "number" ? document.createTextNode(String(t)) : typeof t == "object" && (t.nodeType === 3 || t.tagName === "#text" || !t.tagName && (t.textContent !== void 0 || t.text !== void 0)) ? document.createTextNode(t.textContent ?? t.text ?? "") : C(t), T = (t) => Array.isArray(t) ? t.map(Y).flat(1 / 0).filter(Boolean) : [], Z = (t) => (t == null, t), J = "http://www.w3.org/2000/svg", tt = /* @__PURE__ */ new Set([
   "svg",
   "path",
   "symbol",
@@ -251,30 +265,30 @@ const H = {
   "fegaussianblur",
   "femerge",
   "femergenode"
-]), W = ({ inTagName: t }) => {
+]), et = ({ inTagName: t }) => {
   const e = t == null ? void 0 : t.toLowerCase();
   if (!e) return null;
   if (e === "checkbox") {
     const l = document.createElement("input");
     return l.type = "checkbox", l;
   }
-  return Q.has(e) ? document.createElementNS(X, e) : document.createElement(e);
-}, Y = ({ inElement: t, inTextContent: e }) => (!t || e === void 0 || e === null || (t.textContent = e), t), Z = ({ inElement: t, inProperties: e }) => (t && e && typeof e == "object" && Object.assign(t, e), t), J = "http://www.w3.org/1999/xlink", tt = ({ inElement: t, inAttributes: e }) => {
-  const l = t, r = e;
-  if (!l || !r || typeof r != "object")
+  return tt.has(e) ? document.createElementNS(J, e) : document.createElement(e);
+}, lt = ({ inElement: t, inTextContent: e }) => (!t || e === void 0 || e === null || (t.textContent = e), t), ot = ({ inElement: t, inProperties: e }) => (t && e && typeof e == "object" && Object.assign(t, e), t), rt = "http://www.w3.org/1999/xlink", nt = ({ inElement: t, inAttributes: e }) => {
+  const l = t, o = e;
+  if (!l || !o || typeof o != "object")
     return l;
   const n = typeof SVGElement < "u" ? l instanceof SVGElement : l.namespaceURI === "http://www.w3.org/2000/svg";
-  return Object.entries(r).forEach(([o, a]) => {
-    if (o === "class") {
+  return Object.entries(o).forEach(([r, a]) => {
+    if (r === "class") {
       n ? l.setAttribute("class", String(a)) : l.className = a;
       return;
     }
-    if (o === "xlink:href" || o === "href") {
+    if (r === "xlink:href" || r === "href") {
       if (a != null) {
         const i = String(a);
         if (n)
           try {
-            l.setAttributeNS(J, "href", i);
+            l.setAttributeNS(rt, "href", i);
           } catch {
           }
         l.setAttribute("href", i), l.setAttribute("xlink:href", i);
@@ -282,38 +296,38 @@ const H = {
       return;
     }
     if (typeof a == "boolean") {
-      a ? l.setAttribute(o, "") : l.removeAttribute(o);
+      a ? l.setAttribute(r, "") : l.removeAttribute(r);
       return;
     }
-    a != null && l.setAttribute(o, String(a));
+    a != null && l.setAttribute(r, String(a));
   }), l;
-}, et = ({ inElement: t, inClassList: e }) => {
+}, at = ({ inElement: t, inClassList: e }) => {
   if (!t || !e) return t;
-  const l = typeof e == "string" ? e.split(/\s+/).filter(Boolean) : Array.isArray(e) ? e.filter((r) => typeof r == "string" && r.trim()) : [];
+  const l = typeof e == "string" ? e.split(/\s+/).filter(Boolean) : Array.isArray(e) ? e.filter((o) => typeof o == "string" && o.trim()) : [];
   return l.length && t.classList.add(...l), t;
-}, lt = (t) => {
+}, st = (t) => {
   if (!t || typeof t != "object" || Array.isArray(t) || !t.tagName) return null;
-  const e = W({ inTagName: t.tagName });
+  const e = et({ inTagName: t.tagName });
   if (!e) return null;
-  if (Y({
+  if (lt({
     inElement: e,
-    inTextContent: K(t.textContent),
+    inTextContent: Z(t.textContent),
     inTagName: t.tagName
-  }), Z({
+  }), ot({
     inElement: e,
     inProperties: t.properties
-  }), tt({
+  }), nt({
     inElement: e,
     inAttributes: t.attributes
-  }), et({
+  }), at({
     inElement: e,
     inClassList: t.classList
   }), Array.isArray(t.children)) {
-    const l = y(t.children);
+    const l = T(t.children);
     l.length && e.append(...l);
   }
   return e;
-}, T = (t) => t == null ? null : typeof Node < "u" && t instanceof Node ? t : Array.isArray(t) ? y(t) : typeof t == "object" ? lt(t) : typeof t == "string" || typeof t == "number" ? document.createTextNode(String(t)) : null, rt = "./tags.schema.json", ot = {
+}, C = (t) => t == null ? null : typeof Node < "u" && t instanceof Node ? t : Array.isArray(t) ? T(t) : typeof t == "object" ? st(t) : typeof t == "string" || typeof t == "number" ? document.createTextNode(String(t)) : null, it = "./tags.schema.json", ct = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
@@ -321,7 +335,7 @@ const H = {
     "role"
   ],
   childTags: []
-}, nt = {
+}, ut = {
   allowsTextContent: !1,
   allowsChildren: !1,
   allowedAttributes: [
@@ -334,7 +348,7 @@ const H = {
     "required",
     "list"
   ]
-}, at = {
+}, dt = {
   allowsTextContent: !1,
   allowsChildren: !1,
   allowedAttributes: [
@@ -345,7 +359,7 @@ const H = {
     "disabled",
     "required"
   ]
-}, st = {
+}, ft = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
@@ -354,7 +368,7 @@ const H = {
   childTags: [
     "col"
   ]
-}, it = {
+}, gt = {
   allowsTextContent: !1,
   allowsChildren: !1,
   allowedAttributes: [
@@ -362,14 +376,14 @@ const H = {
     "style",
     "width"
   ]
-}, ut = {
+}, ht = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
     "for"
   ],
   childTags: []
-}, ct = {
+}, bt = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
@@ -382,7 +396,7 @@ const H = {
     "target"
   ],
   childTags: []
-}, dt = {
+}, wt = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
@@ -395,27 +409,27 @@ const H = {
   childTags: [
     "option"
   ]
-}, ft = {
+}, mt = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: []
-}, gt = {
+}, pt = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: []
-}, ht = {
+}, yt = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: []
-}, bt = {
+}, Tt = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: []
-}, wt = {
+}, Ct = {
   allowsTextContent: !1,
   allowsChildren: !1,
   allowedAttributes: [
@@ -425,7 +439,7 @@ const H = {
     "height",
     "loading"
   ]
-}, mt = {
+}, At = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
@@ -435,7 +449,7 @@ const H = {
     "value"
   ],
   childTags: []
-}, pt = {
+}, xt = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
@@ -451,28 +465,28 @@ const H = {
     "tfoot",
     "tr"
   ]
-}, yt = {
+}, jt = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: [
     "tr"
   ]
-}, Tt = {
+}, vt = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: [
     "tr"
   ]
-}, Ct = {
+}, Nt = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: [
     "tr"
   ]
-}, At = {
+}, $t = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [],
@@ -480,7 +494,7 @@ const H = {
     "td",
     "th"
   ]
-}, xt = {
+}, kt = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
@@ -489,7 +503,7 @@ const H = {
     "rowspan"
   ],
   childTags: []
-}, vt = {
+}, Dt = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
@@ -497,14 +511,14 @@ const H = {
     "rowspan"
   ],
   childTags: []
-}, jt = {
+}, Ot = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: [
     "option"
   ]
-}, Nt = {
+}, Et = {
   allowsTextContent: !0,
   allowsChildren: !1,
   allowedAttributes: [
@@ -513,14 +527,14 @@ const H = {
     "selected",
     "disabled"
   ]
-}, $t = {
+}, St = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
     "role"
   ],
   childTags: []
-}, kt = {
+}, Lt = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
@@ -531,19 +545,19 @@ const H = {
     "download"
   ],
   childTags: []
-}, Dt = {
+}, Ft = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
     "aria-hidden"
   ],
   childTags: []
-}, Et = {
+}, Gt = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: []
-}, Ot = {
+}, Mt = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
@@ -552,126 +566,137 @@ const H = {
   childTags: [
     "li"
   ]
-}, Ft = {
+}, Rt = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
     "value"
   ],
   childTags: []
-}, Gt = {
+}, zt = {
   allowsTextContent: !1,
   allowsChildren: !1,
   allowedAttributes: []
-}, Rt = {
-  $schema: rt,
-  div: ot,
-  input: nt,
-  checkbox: at,
-  colgroup: st,
-  col: it,
-  label: ut,
-  form: ct,
-  select: dt,
-  p: ft,
-  h1: gt,
-  h2: ht,
-  span: bt,
-  img: wt,
-  button: mt,
-  table: pt,
-  thead: yt,
-  tbody: Tt,
-  tfoot: Ct,
-  tr: At,
-  th: xt,
-  td: vt,
-  datalist: jt,
-  option: Nt,
-  header: $t,
-  a: kt,
-  i: Dt,
-  small: Et,
-  ul: Ot,
-  li: Ft,
-  hr: Gt
-}, f = ({ inSpec: t }) => {
+}, It = {
+  $schema: it,
+  div: ct,
+  input: ut,
+  checkbox: dt,
+  colgroup: ft,
+  col: gt,
+  label: ht,
+  form: bt,
+  select: wt,
+  p: mt,
+  h1: pt,
+  h2: yt,
+  span: Tt,
+  img: Ct,
+  button: At,
+  table: xt,
+  thead: jt,
+  tbody: vt,
+  tfoot: Nt,
+  tr: $t,
+  th: kt,
+  td: Dt,
+  datalist: Ot,
+  option: Et,
+  header: St,
+  a: Lt,
+  i: Ft,
+  small: Gt,
+  ul: Mt,
+  li: Rt,
+  hr: zt
+}, b = ({ inSpec: t }) => {
   const e = t;
   if (!e) return [];
   if (Array.isArray(e))
-    return e.flatMap((r) => f({ inSpec: r }));
+    return e.flatMap((o) => b({ inSpec: o }));
   if (typeof e != "object") return [];
   const l = [];
-  return typeof e.tagName == "string" && e.tagName.trim().length > 0 && l.push(e.tagName.toLowerCase()), Array.isArray(e.children) && e.children.length > 0 && e.children.forEach((r) => {
-    const n = f({ inSpec: r });
+  return typeof e.tagName == "string" && e.tagName.trim().length > 0 && l.push(e.tagName.toLowerCase()), Array.isArray(e.children) && e.children.length > 0 && e.children.forEach((o) => {
+    const n = b({ inSpec: o });
     l.push(...n);
   }), l;
-}, zt = ({ inTagsFound: t, inAllowedTags: e }) => {
-  const l = t ?? [], r = e ?? {}, n = new Set(
-    Object.keys(r).filter((s) => s !== "$schema").map((s) => s.toLowerCase())
-  ), o = {}, a = [], i = [];
+}, Vt = ({ inTagsFound: t, inAllowedTags: e }) => {
+  const l = t ?? [], o = e ?? {}, n = new Set(
+    Object.keys(o).filter((s) => s !== "$schema").map((s) => s.toLowerCase())
+  ), r = {}, a = [], i = [];
   l.forEach((s) => {
-    o[s] = (o[s] || 0) + 1, n.has(s) ? a.includes(s) || a.push(s) : i.includes(s) || i.push(s);
+    r[s] = (r[s] || 0) + 1, n.has(s) ? a.includes(s) || a.push(s) : i.includes(s) || i.push(s);
   });
-  const d = l.length, h = i.length === 0;
+  const c = l.length, f = i.length === 0;
   return {
-    totalTags: d,
-    tagCounts: o,
-    uniqueTags: Object.keys(o),
+    totalTags: c,
+    tagCounts: r,
+    uniqueTags: Object.keys(r),
     recognizedTags: a,
     unrecognizedTags: i,
-    areAllTagsPresent: h
+    areAllTagsPresent: f
   };
-}, Mt = ({ inSpec: t, inTags: e = Rt } = {}) => {
-  const l = t, r = e, n = f({ inSpec: l }), o = zt({
+}, qt = ({ inSpec: t, inTags: e = It } = {}) => {
+  const l = t, o = e, n = b({ inSpec: l }), r = Vt({
     inTagsFound: n,
-    inAllowedTags: r
+    inAllowedTags: o
   });
   return {
-    areAllTagsPresent: o.areAllTagsPresent,
-    totalTags: o.totalTags,
-    tagCounts: o.tagCounts,
-    uniqueTags: o.uniqueTags,
-    recognizedTags: o.recognizedTags,
-    unrecognizedTags: o.unrecognizedTags
+    areAllTagsPresent: r.areAllTagsPresent,
+    totalTags: r.totalTags,
+    tagCounts: r.tagCounts,
+    uniqueTags: r.uniqueTags,
+    recognizedTags: r.recognizedTags,
+    unrecognizedTags: r.unrecognizedTags
   };
-}, C = (t = {}) => {
+}, A = (t = {}) => {
   const e = (t == null ? void 0 : t.spec) ?? (t == null ? void 0 : t.inSpec) ?? t;
-  return T(e);
+  return C(e);
 };
-_({
-  inFuncDefinition: C,
-  inReviewSpec: Mt
+W({
+  inFuncDefinition: A,
+  inReviewSpec: qt
 });
-const St = ({
+const Bt = ({
   inTargetHtmlId: t,
   inColumns: e,
   type: l,
-  inData: r
+  inData: o,
+  showLog: n
 } = {}) => {
-  let a = p({
+  const r = t, a = o ?? [], i = e;
+  console.log("buildSpec 1 :", r, a.localColumns);
+  let c = y({
     type: l,
-    data: r ?? [],
-    columns: e
-  });
-  return C(a);
-}, It = ({
+    data: a,
+    columns: i
+  }), f = c;
+  !("tagName" in c) && "children" in c && (f = c.children);
+  const s = A(f);
+  return console.log("buildSpec 3 :", s), s;
+}, Pt = ({
   type: t = "table",
   targetHtmlId: e,
   data: l,
-  classToApply: r,
+  classToApply: o,
   columns: n,
-  appendPosition: o
+  appendPosition: r,
+  showLog: a = !1
 } = {}) => {
-  const a = t, i = e, s = St({
-    inTargetHtmlId: i,
-    inColumns: n,
-    inData: l,
-    type: a
-  }), u = document.getElementById(i);
-  return o === "prepend" ? u.prepend(s) : (u && (u.innerHTML = ""), u.append(s)), u;
+  const i = t, c = e, f = l, s = n;
+  console.log("showLog 1 :", i, e, l, o, n, r);
+  const u = Bt({
+    inTargetHtmlId: c,
+    inColumns: s,
+    showLog: a,
+    inData: f,
+    type: i
+  });
+  console.log("showLog 2 :", u);
+  const d = document.getElementById(c);
+  return console.log("showLog 3 :", d), r === "prepend" ? d.prepend(u) : (d && (d.innerHTML = ""), console.log("showLog 4:1 :", u instanceof Node), console.log("showLog 4:2 :", u instanceof NodeList), console.log("showLog 4:3 :", u instanceof HTMLCollection), u != null && typeof u[Symbol.iterator] == "function" ? d.append(...u) : d.append(u)), console.log("showLog 5 :", d), d;
 };
-x(It);
+j(Pt);
 export {
-  It as default
+  Pt as default
 };

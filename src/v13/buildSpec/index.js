@@ -5,12 +5,14 @@ import jsonToTag from "@keshavsoft/json-to-tag";
 const startFunc = ({
     inTargetHtmlId,
     inColumns, type,
-    inData
+    inData, showLog
 } = {}) => {
     // debugger
     const localTargetHtmlId = inTargetHtmlId;
     const localData = inData ?? [];
     const localColumns = inColumns;
+
+    console.log("buildSpec 1 :", localTargetHtmlId, localData.localColumns);
 
     let specAsJsonToDom = jsonRenderBuild({
         type,
@@ -19,7 +21,16 @@ const startFunc = ({
         columns: localColumns
     });
 
-    const content = jsonToTag(specAsJsonToDom);
+    let jsonToSend = specAsJsonToDom;
+    // console.log("buildSpec 2 :", specAsJsonToDom);
+
+    if (!("tagName" in specAsJsonToDom) && "children" in specAsJsonToDom) {
+        jsonToSend = specAsJsonToDom.children;
+    };
+
+    const content = jsonToTag(jsonToSend);
+
+    console.log("buildSpec 3 :", content);
 
     return content;
 };
