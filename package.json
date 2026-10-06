@@ -1,7 +1,7 @@
 {
   "name": "json-renderers",
-  "version": "1.13.6",
-  "description": "Standalone, config-driven Table renderer built on top of json-to-dom",
+  "version": "1.13.7",
+  "description": "Browser DOM component renderer built on top of json-renderers-build and @keshavsoft/json-to-tag",
   "type": "module",
   "main": "src/index.js",
   "files": [
@@ -12,16 +12,27 @@
   "exports": {
     ".": "./src/index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keshavsoft/json-renderers.git"
+  },
+  "homepage": "https://keshavsoft.github.io/json-renderers/",
+  "bugs": {
+    "url": "https://github.com/keshavsoft/json-renderers/issues"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build"
   },
   "keywords": [
-    "json-to-dom",
+    "json-renderers",
+    "json-renderers-build",
+    "json-to-tag",
+    "json-to-spec",
+    "dom-renderer",
     "table",
-    "renderer",
-    "aggregates",
-    "totals"
+    "select",
+    "declarative-ui"
   ],
   "author": "KeshavSoft",
   "license": "MIT",

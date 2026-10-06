@@ -15,8 +15,8 @@ const start = () => {
 
     render({
       type: "table",
-      data, appendPosition: "prepend1",
-      targetHtmlId: "main",
+      data: data.slice(0, 50),
+      targetHtmlId: "dom-render-container",
       columns: ["Name"]
     });
 

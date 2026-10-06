@@ -1,128 +1,272 @@
-# JSON Renderers
+# json-renderers
 
-A lightweight JavaScript library for rendering browser UI from JSON-driven specs. It turns structured data into DOM elements using JSON-based schema definitions and is designed for quick UI generation without hand-writing repetitive HTML.
+> **Browser DOM Component Renderer for JSON-Driven UIs**  
+> Consumes declarative component specifications from `json-renderers-build` and mounts real DOM elements into target containers using `@keshavsoft/json-to-tag`.
 
-This repo is centered around a small dispatcher that chooses a renderer by `type` and then uses the matching spec-to-DOM pipeline.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Version](https://img.shields.io/badge/version-1.13.6-emerald.svg)](package.json)
+[![Layer: DOM Runtime](https://img.shields.io/badge/Layer-DOM%20Mounting%20Runtime-indigo.svg)](#the-story-of-json-renderers)
+
+---
+
+## The Story of `json-renderers`
+
+`json-renderers` is the **DOM Mounting & Runtime Renderer** of the KeshavSoft JSON-to-DOM ecosystem.
+
+While its sister library [`json-renderers-build`](https://github.com/keshavsoft/json-renderers-build) handles **headless specification compilation** (pure data ➔ JSON AST), `json-renderers` is responsible for the **browser lifecycle**: resolving the target container, compiling the spec through `json-renderers-build`, instantiating concrete HTML elements via `@keshavsoft/json-to-tag`, and mounting them into the document.
+
+---
+
+## The 3-Tier Declarative Pipeline & The "In-Between" Story
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│ 1. Application Layer: Raw Data & Configurations                       │
+│    data: [{ id: 101, name: "Alpha" }], columns: ["Name"]              │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Calls: render({ type, data, columns, targetHtmlId })
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│ 2. Spec Compiler: json-renderers-build (Headless AST Builder)         │
+│    • Skeletons for table, select, selectOptionsOnly                    │
+│    • Compiled via json-to-spec engine                                  │
+│    • Output: Deterministic JSON-to-DOM AST (specAsJsonToDom)           │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ In-Between Handoff: specAsJsonToDom
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│ 3. DOM Mounting Runtime: json-renderers (THIS REPO)                    │
+│    • Passes spec to @keshavsoft/json-to-tag                            │
+│    • Creates real HTML elements (HTMLTableElement, HTMLSelectElement)  │
+│    • Resolves document.getElementById(targetHtmlId)                   │
+│    • Handles append / prepend / replacement mount strategies          │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Mounts into DOM
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│ 4. Live Browser DOM Container                                          │
+│    <div id="targetHtmlId"> <table>...</table> </div>                   │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+### The "In-Between": How `json-renderers` and `json-renderers-build` Connect
+
+When you call `render({ type, targetHtmlId, data, columns, appendPosition })`:
+
+1. **Spec Request:** `json-renderers` calls `json-renderers-build({ type, data, columns })`.
+2. **Headless AST:** `json-renderers-build` merges the inputs with its internal component blueprints (`skeleton.json`) via `json-to-spec` and returns a pure specification tree (`specAsJsonToDom`).
+3. **Fragment Unwrapping:** If the component is a fragment (such as `selectOptionsOnly` which has `{ children: [...] }` without a root `tagName`), `json-renderers` unwraps the `children` array.
+4. **DOM Instantiation:** The specification is passed to `@keshavsoft/json-to-tag(jsonToSend)`, creating real browser `Node` or `NodeList` instances.
+5. **DOM Mounting:** `json-renderers` locates `document.getElementById(targetHtmlId)`:
+   - If `appendPosition === "prepend"`, it executes `container.prepend(content)`.
+   - Otherwise, it clears `container.innerHTML = ""` and mounts `container.append(content)`.
+   - Returns the updated container element.
+
+---
 
 ## Features
 
-- Config-driven rendering using JSON specs
-- Built on top of `json-to-spec` and `@keshavsoft/json-to-tag`
-- Supports renderers such as:
-  - `datalist`
-  - `select`
-- Legacy renderer layers for table/navTabs/form patterns are present in older source folders
-- Simple browser-based demos and sample apps included in the repo
+- **End-to-End JSON to DOM:** One function call turns your business data into fully rendered, styled UI controls.
+- **Built on `json-renderers-build` (v13):**
+  - **`table`:** Complete responsive table with Bootstrap classes (`table table-hover table-striped mb-0`), headers, and rows.
+  - **`select`:** Standalone `<select id="LedgerName">` populated with dynamic options.
+  - **`selectOptionsOnly`:** Option fragments injected directly into pre-existing `<select>` elements.
+- **Flexible Mounting Modes:** Replace container content (default) or `prepend` to existing content.
+- **Global & ESM Distribution:** Usable via npm or directly in the browser via CDN script (`window.ks.jsonRenderers`).
 
-## Project structure
-
-```text
-json-renderers/
-├── src/                  # main public entry and renderer implementations
-│   ├── index.js          # package entry point
-│   └── v4/              # current renderer implementation set
-├── samples/              # runnable browser examples
-├── examples/             # additional demo usage
-├── docs/                 # docs/static assets
-├── json-to-spec/         # bundled spec engine / related tooling
-├── package.json          # package metadata and scripts
-├── vite.config.js        # Vite config for local dev/build
-├── LICENSE               # package license (if present in your checkout)
-└── README.md             # project documentation
-```
+---
 
 ## Installation
 
-Install from npm:
+### NPM
 
 ```bash
 npm install json-renderers
 ```
 
-For local development in this repo:
+### Browser (CDN / ES Module)
 
-```bash
-npm install
+```html
+<!-- Load ES module bundle directly from CDN -->
+<script type="module" src="https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v13/min.js"></script>
 ```
 
-## Usage
+When loaded via `<script type="module">`, it automatically registers globally on:
+```javascript
+window.ks.jsonRenderers = {
+  meta: {
+    version: "v13.1.0",
+    description: "build table from store data and render to DOM uses json-to-spec, json-to-dom under the hood"
+  },
+  renderToDom: [Function: render]
+};
+```
 
-### Basic select renderer
+---
 
-```js
+## Quick Start & Usage
+
+### 1. Rendering a Table into the DOM (`table`)
+
+HTML:
+```html
+<div id="table-container"></div>
+```
+
+JavaScript:
+```javascript
 import render from "json-renderers";
 
-const data = {
-  LedgerName: [
-    "Apex Industries",
-    "Blue Valley Foods",
-    "Crown Logistics"
-  ]
-};
+const records = [
+  { id: 101, name: "Alpha Enterprise", city: "Hyderabad" },
+  { id: 102, name: "Beta Logistics", city: "Bengaluru" }
+];
+
+render({
+  type: "table",
+  targetHtmlId: "table-container",
+  data: records,
+  columns: ["Name", "City"]
+});
+```
+
+*Result:* The table is rendered directly into `#table-container` with clean Bootstrap table classes.
+
+---
+
+### 2. Rendering a Select Dropdown (`select`)
+
+HTML:
+```html
+<div id="dropdown-container"></div>
+```
+
+JavaScript:
+```javascript
+import render from "json-renderers";
 
 render({
   type: "select",
-  data,
-  targetHtmlId: "dom-render-container"
+  targetHtmlId: "dropdown-container",
+  data: ["Account Receivable", "Account Payable", "Sales Revenue"]
 });
 ```
 
-### Basic datalist renderer
+*Result:* Generates `<select id="LedgerName">` with three `<option>` children and mounts it into `#dropdown-container`.
 
-```js
+---
+
+### 3. Populating an Existing Select Element (`selectOptionsOnly`)
+
+When your page already contains a `<select>` element and you only want to dynamically populate its options:
+
+HTML:
+```html
+<select id="user-role-select" class="form-select">
+  <option value="" disabled selected>Select Role...</option>
+</select>
+```
+
+JavaScript:
+```javascript
 import render from "json-renderers";
 
-const data = {
-  LedgerName: [
-    "Apex Industries",
-    "Blue Valley Foods",
-    "Crown Logistics"
-  ]
-};
-
 render({
-  type: "datalist",
-  data,
-  targetHtmlId: "dom-render-container"
+  type: "selectOptionsOnly",
+  targetHtmlId: "user-role-select",
+  data: ["Administrator", "Editor", "Viewer"]
 });
 ```
 
-The renderer resolves the type, looks up the matching implementation, and appends the resulting DOM into the target element.
+*Result:* The `<option>` elements are appended directly into `#user-role-select`.
 
-## Running examples locally
+---
 
-Start the Vite dev server:
+## API Reference
 
-```bash
-npm run dev
+### `render(options)` / `default export`
+
+The entry point exported by `json-renderers` accepts a single configuration object:
+
+```javascript
+render({
+  type = "table",
+  targetHtmlId,
+  data,
+  columns,
+  appendPosition,
+  showLog = false
+})
 ```
 
-Build the package for production:
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `type` | `string` | `"table"` | The component renderer to invoke: `"table"`, `"select"`, or `"selectOptionsOnly"`. |
+| `targetHtmlId` | `string` | `undefined` | The ID of the DOM element (`document.getElementById(targetHtmlId)`) to mount into. |
+| `data` | `Array` | `[]` | Data array. For `table`: array of row objects. For `select` / `selectOptionsOnly`: array of strings. |
+| `columns` | `Array` | `undefined` | Column headers for `table`. Accepts an array of strings (e.g. `["Name"]`) or objects (e.g. `[{ title: "Name" }]`). |
+| `appendPosition` | `string` | `undefined` | If set to `"prepend"`, prepends to the container. Otherwise replaces (`container.innerHTML = ""`). |
+| `showLog` | `boolean` | `false` | Enables debug console logging during render execution. |
+
+**Returns:** `HTMLElement` — The mounted DOM container.
+
+---
+
+## Comparison: `json-renderers` vs `json-renderers-build`
+
+| Aspect | `json-renderers-build` | `json-renderers` (THIS REPO) |
+|---|---|---|
+| **Role** | Specification Builder / Compiler | DOM Mounting Runtime |
+| **Output** | Declarative JSON AST (`specAsJsonToDom`) | Real HTML DOM Elements inserted into page |
+| **DOM Dependency** | Zero (100% Headless & Isomorphic) | Browser DOM (`document.getElementById`) |
+| **Environments** | Browser, Node.js, SSR, Web Workers | Browser runtime |
+| **Core Dependency** | `json-to-spec` | `json-renderers-build`, `@keshavsoft/json-to-tag` |
+| **Typical Caller** | `json-renderers`, Custom build pipelines | Web Applications, Dashboards, UI Views |
+
+---
+
+## Project Structure
+
+```text
+json-renderers/
+├── docs/                     # Documentation portal & distribution
+│   ├── dist/                 # Production bundles (Vite build)
+│   │   ├── min.js            # Latest bundle
+│   │   └── v13/min.js        # v13 production bundle
+│   └── index.html            # Interactive Documentation & Live DOM Workbench
+├── samples/                  # Runnable browser verification samples
+│   ├── table/                # Table DOM mounting sample
+│   ├── select/               # Select dropdown DOM mounting sample
+│   └── selectOptionsOnly/    # Existing select options population sample
+├── src/                      # Source code
+│   ├── index.js              # Entry router (exports ./v13/index.js)
+│   └── v13/                  # CURRENT: Runtime DOM renderer
+│       ├── buildSpec/        # In-between handoff: calls json-renderers-build & json-to-tag
+│       ├── meta.js           # Version & metadata descriptor
+│       ├── registerGlobal.js # Global window.ks namespace attachment
+│       └── index.js          # DOM resolver and mounter
+├── package.json              # Package definition & scripts
+├── vite.config.js            # Vite build configuration
+└── README.md                 # Complete repository guide
+```
+
+---
+
+## Development & Build
 
 ```bash
+# Install dependencies
+npm install
+
+# Start Vite development server
+npm run dev
+
+# Build production bundle (into docs/dist/v13/min.js and docs/dist/min.js)
 npm run build
 ```
 
-## Example apps included
-
-The repo includes example and sample pages under:
-
-- `samples/`
-- `examples/`
-- `docs/`
-
-These demonstrate how to use the renderers in the browser with JSON input.
-
-## Notes
-
-- The public package entry is `src/index.js`.
-- The main dispatcher currently registers `datalist` and `select` renderers in the `v4` renderer layer.
-- Older versions under `src/v1` through `src/v3` and related folders hint at a broader evolution of table, nav-tab, and form renderers.
+---
 
 ## License
 
-This project is licensed under the MIT License.
-
-## Maintainer
-
-KeshavSoft
+MIT © [KeshavSoft](https://github.com/keshavsoft)
