@@ -1,0 +1,7 @@
+[
+  { "id": "B-101", "name": "Aluminium Rods 25mm", "category": "Raw Materials", "status": "Verified" },
+  { "id": "B-102", "name": "Copper Sheets 1.2mm", "category": "Raw Materials", "status": "In Transit" },
+  { "id": "B-103", "name": "Steel Fasteners M8", "category": "Hardware", "status": "Verified" },
+  { "id": "B-104", "name": "Titanium Bolts M6", "category": "Hardware", "status": "Pending" },
+  { "id": "B-105", "name": "Polymer Resin 50kg", "category": "Chemicals", "status": "Verified" }
+]

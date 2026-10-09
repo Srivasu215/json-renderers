@@ -208,10 +208,44 @@ const R = {
   inData: t
 } = {}) => h(K, {
   arrayOfStrings: t ?? []
-}), w = {
+}), sidebarSpec = ({ inData: t = [] } = {}) => {
+  const defaultIcons = { Dashboard: "house-door-fill", Orders: "file-earmark", Products: "cart" };
+  const items = Array.isArray(t) ? t : [];
+  return {
+    tagName: "ul",
+    attributes: { class: "nav flex-column px-3" },
+    children: items.map((item, idx) => {
+      const name = typeof item === "string" ? item : (item.name || item.text || item.title || "");
+      const iconName = (typeof item === "object" && item.icon) ? item.icon : (defaultIcons[name] || "file-earmark");
+      const isActive = (typeof item === "object" && item.active !== undefined) ? item.active : (idx === 0);
+      return {
+        tagName: "li",
+        attributes: { class: "nav-item" },
+        children: [
+          {
+            tagName: "a",
+            attributes: {
+              class: `nav-link ${isActive ? "active text-primary fw-semibold" : "text-body"}`,
+              href: `#${name.toLowerCase()}`,
+              ...(isActive ? { "aria-current": "page" } : {})
+            },
+            children: [
+              {
+                tagName: "i",
+                attributes: { class: `bi bi-${iconName} ${isActive ? "text-primary" : ""}` }
+              },
+              ` ${name}`
+            ]
+          }
+        ]
+      };
+    })
+  };
+}, w = {
   table: z,
   select: H,
-  selectOptionsOnly: X
+  selectOptionsOnly: X,
+  sidebar: sidebarSpec
 }, y = ({
   type: t = "table",
   data: e,

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Select Component · json-renderers v13</title>
+
+  <!-- Bootstrap CSS v5.3.3 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <style>
+    body {
+      background-color: #0b1120;
+      color: #e2e8f0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+    }
+
+    .navbar-custom {
+      background-color: rgba(15, 23, 42, 0.9);
+      border-bottom: 1px solid rgba(51, 65, 85, 0.8);
+      backdrop-filter: blur(8px);
+    }
+
+    .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(51, 65, 85, 0.7);
+      border-radius: 1rem;
+      backdrop-filter: blur(12px);
+    }
+
+    .badge-teal {
+      background-color: rgba(20, 184, 166, 0.15);
+      color: #5eead4;
+      border: 1px solid rgba(20, 184, 166, 0.3);
+    }
+
+    .code-box {
+      background-color: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 0.75rem;
+      color: #94a3b8;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.825rem;
+      padding: 1rem;
+      overflow-x: auto;
+    }
+
+    .nav-pills .nav-link {
+      color: #94a3b8;
+      border-radius: 0.5rem;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.85rem;
+    }
+
+    .nav-pills .nav-link.active {
+      background-color: #0d9488;
+      color: #ffffff;
+    }
+
+    .nav-pills .nav-link:hover:not(.active) {
+      color: #ffffff;
+      background-color: rgba(51, 65, 85, 0.5);
+    }
+
+    /* Style rendered select element */
+    #selectContainer select {
+      background-color: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      padding: 0.6rem 1rem;
+      border-radius: 0.5rem;
+      max-width: 400px;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top Navigation Header -->
+  <header class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container-fluid px-4 py-1">
+      <a class="navbar-brand d-flex align-items-center gap-2 text-white" href="./index.html">
+        <span class="fs-5">🖥️</span>
+        <span class="fw-bold fs-6">json-renderers</span>
+        <span class="badge badge-teal font-monospace small">v13.1.0</span>
+      </a>
+
+      <ul class="nav nav-pills ms-auto d-flex align-items-center gap-2">
+        <li class="nav-item"><a class="nav-link" href="./index.html">Catalog</a></li>
+        <li class="nav-item"><a class="nav-link" href="./table.html">Table</a></li>
+        <li class="nav-item"><a class="nav-link active" href="./select.html">Select</a></li>
+        <li class="nav-item"><a class="nav-link" href="./selectOptionsOnly.html">SelectOptionsOnly</a></li>
+        <li class="nav-item"><a class="nav-link" href="./sidebar.html">Sidebar</a></li>
+        <li class="nav-item ms-2">
+          <a class="btn btn-outline-secondary btn-sm" href="../index.html">← Back to Docs</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <!-- Component Header (from Image 1) -->
+    <div class="mb-4">
+      <div class="text-uppercase font-monospace text-teal-400 small text-info fw-bold">COMPONENT CATALOG</div>
+      <h1 class="h3 text-white fw-bold">Supported Renderers in v13</h1>
+    </div>
+
+    <!-- Section 1: Tell in HTML (Content from Image 1) -->
+    <div class="glass-card p-4 mb-4">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <span class="font-monospace fw-bold text-white fs-6">TYPE: "SELECT"</span>
+        <span class="badge badge-teal px-2 py-1 font-monospace">Select Element</span>
+      </div>
+      <p class="text-secondary small mb-3">
+        Mounts a newly created <code class="text-info">&lt;select id="LedgerName"&gt;</code> populated with child option elements into the target container.
+      </p>
+      <div class="code-box text-info font-monospace mb-0">
+        render({ type: "select", targetHtmlId, data })
+      </div>
+    </div>
+
+    <!-- Section 2: Second Image Content (JavaScript Code & JSON Data) -->
+    <div class="row g-4 mb-4">
+      <div class="col-lg-7">
+        <div class="glass-card p-4 h-100">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <span class="small font-monospace text-uppercase text-light fw-bold">
+              <i class="bi bi-filetype-js text-warning me-1"></i> Second Image Content · select.js
+            </span>
+            <span class="badge bg-secondary-subtle text-secondary font-monospace small">ES Module</span>
+          </div>
+          <pre class="code-box mb-0"><code>import render from "../dist/v13/min.js";
+import data from "./select.json" with { type: "json" };
+
+const start = () => {
+  try {
+    render({
+      type: "select",
+      data,
+      targetHtmlId: "selectContainer"
+    });
+  } catch (err) {
+    console.log("error : ", err);
+  }
+};
+
+start();</code></pre>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="glass-card p-4 h-100">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <span class="small font-monospace text-uppercase text-light fw-bold">
+              <i class="bi bi-filetype-json text-info me-1"></i> Input Data · select.json
+            </span>
+            <span class="badge bg-secondary-subtle text-secondary font-monospace small">JSON</span>
+          </div>
+          <pre class="code-box mb-0 text-info-emphasis"><code>[
+  "Cash In Hand",
+  "State Bank of India",
+  "Accounts Receivable",
+  "General Reserves",
+  "Sales Account",
+  "Operating Expenses"
+]</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: Live DOM Output Container -->
+    <div class="glass-card p-4">
+      <div class="d-flex align-items-center justify-content-between pb-2 border-bottom border-secondary mb-3">
+        <span class="font-monospace small text-info d-flex align-items-center gap-2">
+          <i class="bi bi-circle-fill text-info fs-6"></i>
+          #selectContainer · Live Mounted DOM Output
+        </span>
+        <span class="badge bg-info-subtle text-info font-monospace small">Mounted via json-renderers</span>
+      </div>
+
+      <!-- Container where select is dynamically created and mounted -->
+      <div class="p-4 bg-dark-subtle rounded border border-secondary">
+        <label for="LedgerName" class="form-label text-secondary small font-monospace d-block mb-2">
+          Newly Created &lt;select&gt; Container:
+        </label>
+        <div id="selectContainer">
+          <div class="text-secondary small">Rendering select dropdown...</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Client-side Logic (Second Image Content Runner) -->
+  <script type="module" src="./select.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+/* Bootstrap 5.3 Dashboard Custom Styles */
+
+.bi {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  vertical-align: -.125em;
+  fill: currentColor;
+}
+
+/*
+ * Sidebar
+ */
+@media (min-width: 768px) {
+  .sidebar .offcanvas-md,
+  .sidebar .offcanvas-lg {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 48px;
+    height: calc(100vh - 48px);
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
+.sidebar .nav-link {
+  font-size: .875rem;
+  font-weight: 500;
+  padding: .5rem .75rem;
+  border-radius: .375rem;
+  color: var(--bs-body-color);
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  transition: all 0.15s ease-in-out;
+}
+
+.sidebar .nav-link:hover {
+  background-color: var(--bs-tertiary-bg);
+  color: var(--bs-primary);
+}
+
+.sidebar .nav-link.active {
+  color: #0d6efd;
+  font-weight: 600;
+  background-color: rgba(13, 110, 253, 0.08);
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+  letter-spacing: .05em;
+  font-weight: 700;
+}
+
+/*
+ * Navbar
+ */
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  background-color: rgba(0, 0, 0, .25);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+}
+
+
+
+/* Demo Cards & Code blocks */
+.demo-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.demo-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
+}
+
+.code-badge {
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.8rem;
+}
