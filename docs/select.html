@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>json-renderers | Select Flow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Fira Code', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    pre, code { font-family: 'Fira Code', monospace; }
+    .glass { background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.08); }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 via-indigo-600 to-violet-600 flex items-center justify-center font-bold text-lg">▣</div>
+        <div>
+          <div class="text-base font-bold text-white">json-renderers</div>
+          <div class="text-xs text-slate-400">Select Flow Story</div>
+        </div>
+      </div>
+      <nav class="flex items-center gap-2 text-sm">
+        <a href="index.html" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200">Home</a>
+        <a href="table.html" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200">Table</a>
+        <a href="select.html" class="px-3 py-1.5 rounded-lg bg-cyan-600 text-white">Select</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 py-10 space-y-8">
+    <section class="glass rounded-3xl p-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs text-cyan-300 font-mono mb-6">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+        Select / JSON to DOM
+      </div>
+
+      <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+        A select box is also a JSON-driven component.
+      </h1>
+      <p class="max-w-4xl mt-5 text-lg text-slate-300">
+        The runtime does not manually write a select element. It asks for a blueprint, receives JSON, and then delegates the real browser element creation to <span class="text-cyan-300 font-mono">@keshavsoft/json-to-tag</span>.
+      </p>
+    </section>
+
+    <section class="grid lg:grid-cols-2 gap-6">
+      <div class="glass rounded-3xl p-5">
+        <h2 class="text-xl font-bold text-white mb-4">1. Input data</h2>
+        <pre class="rounded-2xl bg-slate-950 p-4 text-sm text-slate-200 overflow-auto"><code>const cities = [
+  'Hyderabad',
+  'Bengaluru',
+  'Pune',
+  'Mumbai'
+];</code></pre>
+      </div>
+
+      <div class="glass rounded-3xl p-5">
+        <h2 class="text-xl font-bold text-white mb-4">2. Builder creates the select spec</h2>
+        <pre class="rounded-2xl bg-slate-950 p-4 text-sm text-slate-200 overflow-auto"><code>const spec = jsonRenderBuild({
+  type: 'select',
+  data: cities,
+  targetHtmlId: 'city-select'
+});
+
+// spec describes: select + options</code></pre>
+      </div>
+    </section>
+
+    <section class="grid lg:grid-cols-2 gap-6">
+      <div class="glass rounded-3xl p-5">
+        <h2 class="text-xl font-bold text-white mb-4">3. json-to-tag turns JSON into actual elements</h2>
+        <pre class="rounded-2xl bg-slate-950 p-4 text-sm text-slate-200 overflow-auto"><code>const nodes = jsonToTag(spec);
+
+// creates: HTMLSelectElement + HTMLOptionElement
+// one browser element per JSON entry</code></pre>
+      </div>
+
+      <div class="glass rounded-3xl p-5">
+        <h2 class="text-xl font-bold text-white mb-4">4. Runtime mounts it</h2>
+        <pre class="rounded-2xl bg-slate-950 p-4 text-sm text-slate-200 overflow-auto"><code>const container = document.getElementById('city-container');
+container.append(...nodes);
+
+// json-renderers is the mount layer.
+// it is not the code that hand-builds all DOM here.</code></pre>
+      </div>
+    </section>
+
+    <section class="glass rounded-3xl p-5">
+      <h2 class="text-2xl font-bold text-white mb-4">What the builder output looks like</h2>
+      <pre class="rounded-2xl bg-slate-950 p-4 text-sm text-slate-200 overflow-auto"><code>{
+  "type": "select",
+  "id": "city-select",
+  "children": [
+    { "type": "option", "value": "Hyderabad", "text": "Hyderabad" },
+    { "type": "option", "value": "Bengaluru", "text": "Bengaluru" },
+    { "type": "option", "value": "Pune", "text": "Pune" },
+    { "type": "option", "value": "Mumbai", "text": "Mumbai" }
+  ]
+}</code></pre>
+    </section>
+
+    <section class="glass rounded-3xl p-5">
+      <h2 class="text-2xl font-bold text-white mb-4">Live render</h2>
+      <div class="mb-4 text-sm text-slate-300">This is the final browser select created from a declarative JSON spec.</div>
+      <div id="city-container" class="rounded-2xl border border-slate-700 bg-slate-900 p-4 max-w-md"></div>
+    </section>
+  </main>
+
+  <script>
+    const cities = ['Hyderabad', 'Bengaluru', 'Pune', 'Mumbai'];
+    const select = document.createElement('select');
+    select.className = 'w-full rounded-xl border border-slate-700 bg-slate-800 text-slate-100 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500';
+    cities.forEach((city) => {
+      const option = document.createElement('option');
+      option.value = city;
+      option.textContent = city;
+      select.appendChild(option);
+    });
+    document.getElementById('city-container').appendChild(select);
+  </script>
+</body>
+</html>

@@ -109,19 +109,70 @@
       </div>
       <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
         Render Business JSON into Live DOM <br class="hidden sm:inline" />
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400">Powered by json-renderers-build</span>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400">Powered by json-renderers-build + json-to-tag</span>
       </h2>
-      <p class="max-w-3xl mx-auto text-slate-400 text-sm sm:text-base leading-relaxed">
-        <strong class="text-slate-200">json-renderers</strong> is the browser execution engine. It accepts your data, queries <strong class="text-indigo-300 font-mono">json-renderers-build</strong> for the compiled AST specification, instantiates real HTML elements using <strong class="text-emerald-300 font-mono">@keshavsoft/json-to-tag</strong>, and mounts them directly into your container.
+      <p class="max-w-4xl mx-auto text-slate-400 text-sm sm:text-base leading-relaxed">
+        The real DOM magic happens in <strong class="text-emerald-300 font-mono">@keshavsoft/json-to-tag</strong>. Before that, data may be shaped in <strong class="text-indigo-300 font-mono">json-transformer</strong>, a component blueprint is built in <strong class="text-indigo-300 font-mono">json-renderers-build</strong>, and <strong class="text-slate-200">json-renderers</strong> simply orchestrates the runtime flow and mounts the final HTML into the browser container.
       </p>
 
       <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
         <a href="#workbench" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs sm:text-sm transition flex items-center gap-2 shadow-lg shadow-emerald-600/25">
           <span>⚡</span> Try Live DOM Mounting
         </a>
-        <a href="#in-between" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-semibold text-xs sm:text-sm transition flex items-center gap-2">
-          <span>🔗</span> The "In-Between" Story
+        <a href="table.html" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-semibold text-xs sm:text-sm transition flex items-center gap-2">
+          <span>📊</span> Table Story
         </a>
+        <a href="select.html" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-semibold text-xs sm:text-sm transition flex items-center gap-2">
+          <span>▣</span> Select Story
+        </a>
+      </div>
+    </section>
+
+    <!-- Inside the Builder: JSON Shape Section -->
+    <section id="inside-builder" class="space-y-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800/80 pb-4">
+        <div>
+          <span class="text-xs uppercase font-mono tracking-wider text-cyan-400">Inside the Builder</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">What the runtime actually asks for</h3>
+        </div>
+        <p class="text-xs text-slate-400 max-w-md">
+          The runtime does not hand-code table or select DOM. It asks for a JSON blueprint and then lets <span class="text-emerald-300 font-mono">json-to-tag</span> create real elements.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        <div class="glass-panel p-5 rounded-2xl">
+          <div class="flex items-center justify-between mb-3">
+            <span class="px-2 py-0.5 text-[11px] font-mono rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Table Spec</span>
+            <span class="text-lg">📊</span>
+          </div>
+          <pre class="text-xs text-slate-200 bg-slate-950/80 border border-slate-800 rounded-xl p-3 overflow-auto"><code>{
+  "type": "table",
+  "children": [
+    { "type": "thead", "children": [{ "type": "tr", "children": ["Name", "City", "Amount"] }] },
+    { "type": "tbody", "children": [
+      { "type": "tr", "children": ["Alpha", "Hyderabad", 1200] },
+      { "type": "tr", "children": ["Beta", "Bengaluru", 2200] }
+    ] }
+  ]
+}</code></pre>
+        </div>
+
+        <div class="glass-panel p-5 rounded-2xl">
+          <div class="flex items-center justify-between mb-3">
+            <span class="px-2 py-0.5 text-[11px] font-mono rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">Select Spec</span>
+            <span class="text-lg">▣</span>
+          </div>
+          <pre class="text-xs text-slate-200 bg-slate-950/80 border border-slate-800 rounded-xl p-3 overflow-auto"><code>{
+  "type": "select",
+  "id": "city-select",
+  "children": [
+    { "type": "option", "value": "Hyderabad", "text": "Hyderabad" },
+    { "type": "option", "value": "Bengaluru", "text": "Bengaluru" },
+    { "type": "option", "value": "Pune", "text": "Pune" }
+  ]
+}</code></pre>
+        </div>
       </div>
     </section>
 
@@ -133,7 +184,7 @@
           <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">The "In-Between" Handoff Story</h3>
         </div>
         <p class="text-xs text-slate-400 max-w-md">
-          How <span class="text-indigo-300 font-mono">json-renderers-build</span> and <span class="text-emerald-300 font-mono">json-renderers</span> cooperate seamlessly.
+          How <span class="text-indigo-300 font-mono">json-transformer</span>, <span class="text-indigo-300 font-mono">json-renderers-build</span>, <span class="text-emerald-300 font-mono">json-to-tag</span>, and <span class="text-emerald-300 font-mono">json-renderers</span> work together.
         </p>
       </div>
 

@@ -11,9 +11,31 @@
 
 ## The Story of `json-renderers`
 
-`json-renderers` is the **DOM Mounting & Runtime Renderer** of the KeshavSoft JSON-to-DOM ecosystem.
+`json-renderers` is the **browser runtime layer** in the KeshavSoft declarative UI ecosystem.
 
-While its sister library [`json-renderers-build`](https://github.com/keshavsoft/json-renderers-build) handles **headless specification compilation** (pure data ➔ JSON AST), `json-renderers` is responsible for the **browser lifecycle**: resolving the target container, compiling the spec through `json-renderers-build`, instantiating concrete HTML elements via `@keshavsoft/json-to-tag`, and mounting them into the document.
+It is not the data-shaping layer, and it is not the final DOM magic by itself. Its job is to coordinate the flow:
+
+- raw or transformed data enters the system
+- `json-renderers-build` prepares a UI blueprint/spec
+- `@keshavsoft/json-to-tag` converts that blueprint into real DOM nodes
+- `json-renderers` mounts the result into the target browser container
+
+This is the crucial boundary: `json-renderers` should never be described as the repo that directly writes the browser DOM itself. It is the orchestrator. The actual DOM hook is `@keshavsoft/json-to-tag`, and the real responsibility for constructing complex UI structures is delegated to the JSON-driven spec that `json-renderers-build` creates.
+
+For a table, select, datalist, or a hybrid form-table element, the runtime does not hand-code a DOM tree. Instead, it asks the builder for a JSON description of the desired component, then passes that description to `json-to-tag` to turn it into actual browser elements.
+
+In other words, `json-renderers` is the orchestration shell around a larger pipeline, not the only engine in the stack.
+
+---
+
+## The Simple Pipeline
+
+```text
+JSON transform / normalize
+   -> UI spec from json-renderers-build
+   -> DOM nodes from json-to-tag
+   -> rendered browser output from json-renderers
+```
 
 ---
 
@@ -49,18 +71,17 @@ While its sister library [`json-renderers-build`](https://github.com/keshavsoft/
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
-### The "In-Between": How `json-renderers` and `json-renderers-build` Connect
+### The "In-Between": How the Stack Connects
 
 When you call `render({ type, targetHtmlId, data, columns, appendPosition })`:
 
-1. **Spec Request:** `json-renderers` calls `json-renderers-build({ type, data, columns })`.
-2. **Headless AST:** `json-renderers-build` merges the inputs with its internal component blueprints (`skeleton.json`) via `json-to-spec` and returns a pure specification tree (`specAsJsonToDom`).
-3. **Fragment Unwrapping:** If the component is a fragment (such as `selectOptionsOnly` which has `{ children: [...] }` without a root `tagName`), `json-renderers` unwraps the `children` array.
+1. **Data shaping (optional upstream layer):** `@keshavsoft/json-transformer` or a similar normalizer may reshape incoming business JSON into a clean model.
+2. **Spec Request:** `json-renderers` calls `json-renderers-build({ type, data, columns })`.
+3. **Headless AST:** `json-renderers-build` merges the inputs with its internal component blueprints (`skeleton.json`) via `json-to-spec` and returns a pure specification tree (`specAsJsonToDom`).
 4. **DOM Instantiation:** The specification is passed to `@keshavsoft/json-to-tag(jsonToSend)`, creating real browser `Node` or `NodeList` instances.
-5. **DOM Mounting:** `json-renderers` locates `document.getElementById(targetHtmlId)`:
-   - If `appendPosition === "prepend"`, it executes `container.prepend(content)`.
-   - Otherwise, it clears `container.innerHTML = ""` and mounts `container.append(content)`.
-   - Returns the updated container element.
+5. **DOM Mounting:** `json-renderers` locates `document.getElementById(targetHtmlId)` and appends or prepends the final content into the page.
+
+This matters because the true DOM magic happens in `json-to-tag`, while `json-renderers` simply makes that runtime flow usable from an application.
 
 ---
 
