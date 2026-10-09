@@ -7,7 +7,7 @@ const start = () => {
   try {
     render({
       type: "select", data: data.LedgerName,
-      targetHtmlId: "dom-render-container", showLog: true
+      targetHtmlId: "dom-render-container", showLog: false
     });
   } catch (err) {
     console.log("error : ", err);

@@ -12,7 +12,7 @@ const startFunc = ({
     const localData = inData ?? [];
     const localColumns = inColumns;
 
-    console.log("buildSpec 1 :", localTargetHtmlId, localData.localColumns);
+    if (showLog) console.log("buildSpec 1 :", localTargetHtmlId, localData.localColumns);
 
     let specAsJsonToDom = jsonRenderBuild({
         type,
@@ -22,15 +22,16 @@ const startFunc = ({
     });
 
     let jsonToSend = specAsJsonToDom;
-    // console.log("buildSpec 2 :", specAsJsonToDom);
 
-    if (!("tagName" in specAsJsonToDom) && "children" in specAsJsonToDom) {
-        jsonToSend = specAsJsonToDom.children;
-    };
+
+    // if (!("tagName" in specAsJsonToDom) && "children" in specAsJsonToDom) {
+    //     jsonToSend = specAsJsonToDom.children;
+    // };
 
     const content = jsonToTag(jsonToSend);
+    console.log("buildSpec 2 :", jsonToSend, content);
 
-    console.log("buildSpec 3 :", content);
+    if (showLog) console.log("buildSpec 3 :", content);
 
     return content;
 };
