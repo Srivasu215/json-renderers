@@ -31,22 +31,45 @@ const render = ({
 
     if (showLog) console.log("showLog 3 :", container);
 
-    if (appendPosition === "prepend") {
-        container.prepend(content);
+    const isCollection = Array.isArray(content) ||
+        content instanceof NodeList ||
+        content instanceof HTMLCollection;
+
+    console.log("prepend ---------:", rawType, isCollection, container, content, localData);
+
+
+    if (isCollection) {
+        if (appendPosition === "prepend") {
+            container.prepend(...content);
+        } else {
+            container.append(...content);
+        };
     } else {
-        if (container) container.innerHTML = "";
-
-        console.log("showLog 5 :", container, content);
-
-        container.append(content);
-
-        // if (content != null && typeof content[Symbol.iterator] === "function") {
-        //     container.append(...content);
-        // } else {
-
-        //     container.append(content);
-        // };
+        if (appendPosition === "prepend") {
+            container.prepend(content);
+        } else {
+            if (container) container.innerHTML = "";
+            container.append(content);
+        };
     };
+
+    // if (appendPosition === "prepend") {
+
+    //     container.prepend(content);
+    // } else {
+    //     if (container) container.innerHTML = "";
+
+    //     console.log("showLog 5 ---------:", container, content);
+
+    //     container.append(content);
+
+    //     // if (content != null && typeof content[Symbol.iterator] === "function") {
+    //     //     container.append(...content);
+    //     // } else {
+
+    //     //     container.append(content);
+    //     // };
+    // };
 
     if (showLog) console.log("showLog 5 :", container);
 
