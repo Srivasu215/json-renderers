@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Table | How to Create HTML Tables with CDN & window.ks</title>
+  <meta name="description" content="Beginner-friendly documentation on how to build and mount HTML tables from JSON using json-renderers via CDN import and window.ks." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Fira Code', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    pre, code { font-family: 'Fira Code', monospace; }
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card {
+      background: rgba(30, 41, 59, 0.5);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .gradient-border {
+      position: relative;
+      border-radius: 1rem;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(99, 102, 241, 0.2));
+      padding: 1px;
+    }
+    .step-badge {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.875rem;
+    }
+    /* Style bootstrap table inside our dark container */
+    #live-demo-output table, #cdn-preview-output table, #ks-preview-output table {
+      width: 100%;
+      margin-bottom: 0;
+      color: #e2e8f0;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      border: 1px solid #334155;
+    }
+    #live-demo-output th, #cdn-preview-output th, #ks-preview-output th {
+      background: #1e293b;
+      color: #38bdf8;
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+      border-bottom: 2px solid #334155;
+      text-transform: capitalize;
+    }
+    #live-demo-output td, #cdn-preview-output td, #ks-preview-output td {
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid #1e293b;
+      background: #0f172a;
+      font-size: 0.875rem;
+    }
+    #live-demo-output tr:hover td, #cdn-preview-output tr:hover td, #ks-preview-output tr:hover td {
+      background: #1e293b;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased flex flex-col font-sans selection:bg-emerald-500 selection:text-white">
+
+  <!-- Top Navbar -->
+  <header class="border-b border-slate-800/80 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 via-teal-600 to-indigo-600 flex items-center justify-center font-bold text-white shadow-lg text-lg shadow-emerald-500/20 hover:scale-105 transition">
+          📊
+        </a>
+        <div>
+          <div class="flex items-center gap-2">
+            <a href="index.html" class="text-base font-bold text-white tracking-tight hover:text-emerald-400 transition">json-renderers</a>
+            <span class="px-2 py-0.5 text-xs bg-emerald-500/20 text-emerald-300 rounded-full border border-emerald-500/30 font-mono">Documentation</span>
+          </div>
+          <p class="text-xs text-slate-400">About Table: CDN &amp; window.ks Complete Guide</p>
+        </div>
+      </div>
+
+      <nav class="flex items-center gap-2 text-sm">
+        <a href="index.html" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition">Home</a>
+        <a href="abouutTable.html" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white font-semibold shadow-sm shadow-emerald-600/30">About Table</a>
+        <a href="table.html" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition">Table Flow</a>
+        <a href="select.html" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition">Select Flow</a>
+        <a href="https://github.com/keshavsoft/json-renderers" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition hidden sm:inline-flex items-center gap-1.5">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-12">
+
+    <!-- Hero Section -->
+    <section class="glass-panel rounded-3xl p-6 sm:p-10 relative overflow-hidden">
+      <div class="absolute -top-24 -right-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 space-y-6">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-300 font-mono">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          Beginner's Guide • No Build Tools Required
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+          How to Create HTML Tables <br class="hidden sm:inline" />
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">Using CDN &amp; window.ks</span>
+        </h1>
+
+        <p class="max-w-4xl text-slate-300 text-base sm:text-lg leading-relaxed">
+          If you have never built a dynamic HTML table from JavaScript before, this guide is made for you! 
+          Learn how to turn a list of JSON records into an interactive, beautifully structured HTML table in the browser without writing manual <code class="text-emerald-300">&lt;tr&gt;</code> and <code class="text-emerald-300">&lt;td&gt;</code> loop code.
+        </p>
+
+        <!-- Quick Jump Links -->
+        <div class="flex flex-wrap gap-3 pt-2">
+          <a href="#mental-model" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-semibold transition border border-slate-700 flex items-center gap-1.5">
+            <span>💡</span> How it Works
+          </a>
+          <a href="#method-cdn" class="px-4 py-2 rounded-xl bg-emerald-600/90 hover:bg-emerald-500 text-white text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 shadow-sm shadow-emerald-600/30">
+            <span>⚡</span> Method 1: Direct CDN Import
+          </a>
+          <a href="#method-ks" class="px-4 py-2 rounded-xl bg-indigo-600/90 hover:bg-indigo-500 text-white text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 shadow-sm shadow-indigo-600/30">
+            <span>🌐</span> Method 2: Global window.ks
+          </a>
+          <a href="#comparison" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-semibold transition border border-slate-700 flex items-center gap-1.5">
+            <span>⚖️</span> Side-by-Side Comparison
+          </a>
+          <a href="#interactive-playground" class="px-4 py-2 rounded-xl bg-cyan-600/90 hover:bg-cyan-500 text-white text-xs sm:text-sm font-semibold transition flex items-center gap-1.5">
+            <span>🎮</span> Live Interactive Demo
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mental Model: How It Works -->
+    <section id="mental-model" class="space-y-6">
+      <div class="border-b border-slate-800/80 pb-4">
+        <span class="text-xs uppercase font-mono tracking-wider text-emerald-400">Step 0: The Big Picture</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mt-1">What Happens When You Render a Table?</h2>
+        <p class="text-slate-400 text-sm mt-1">Understanding the 4 simple stages under the hood.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <!-- Stage 1 -->
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 flex flex-col justify-between relative group hover:border-emerald-500/40 transition">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="step-badge bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">1</span>
+              <span class="text-xs font-mono text-slate-400">Data Source</span>
+            </div>
+            <h3 class="font-bold text-white mb-2">Raw JSON Data</h3>
+            <p class="text-xs text-slate-400 leading-relaxed mb-3">
+              You provide plain JavaScript objects, like records from an API or a JSON file:
+            </p>
+            <pre class="bg-slate-950 p-2.5 rounded-lg text-[11px] text-emerald-300 font-mono overflow-x-auto"><code>[
+  { "itemName": "Item A", "baseUnit": "kgs" },
+  { "itemName": "Item B", "baseUnit": "pcs" }
+]</code></pre>
+          </div>
+          <div class="text-[11px] font-mono text-emerald-400/80 mt-3 pt-3 border-t border-slate-800">Input Data &rarr;</div>
+        </div>
+
+        <!-- Stage 2 -->
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 flex flex-col justify-between relative group hover:border-teal-500/40 transition">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="step-badge bg-teal-500/20 text-teal-400 border border-teal-500/30">2</span>
+              <span class="text-xs font-mono text-slate-400">Runtime Call</span>
+            </div>
+            <h3 class="font-bold text-white mb-2">json-renderers Call</h3>
+            <p class="text-xs text-slate-400 leading-relaxed mb-3">
+              You call the renderer with your chosen columns and the target element ID:
+            </p>
+            <pre class="bg-slate-950 p-2.5 rounded-lg text-[11px] text-teal-300 font-mono overflow-x-auto"><code>render({
+  type: "table",
+  data: data,
+  columns: ["itemName", "baseUnit"],
+  targetHtmlId: "container"
+});</code></pre>
+          </div>
+          <div class="text-[11px] font-mono text-teal-400/80 mt-3 pt-3 border-t border-slate-800">Orchestrator &rarr;</div>
+        </div>
+
+        <!-- Stage 3 -->
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 flex flex-col justify-between relative group hover:border-indigo-500/40 transition">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="step-badge bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">3</span>
+              <span class="text-xs font-mono text-slate-400">Spec to Tag</span>
+            </div>
+            <h3 class="font-bold text-white mb-2">JSON Blueprint to DOM</h3>
+            <p class="text-xs text-slate-400 leading-relaxed mb-3">
+              <code class="text-indigo-300 font-mono">json-renderers-build</code> creates a table schema, and <code class="text-indigo-300 font-mono">@keshavsoft/json-to-tag</code> converts that schema into real DOM nodes:
+            </p>
+            <div class="text-[11px] font-mono bg-slate-950 p-2.5 rounded-lg text-indigo-200">
+              &lt;table&gt;<br/>
+              &nbsp;&nbsp;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;...&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;<br/>
+              &nbsp;&nbsp;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;...&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;<br/>
+              &lt;/table&gt;
+            </div>
+          </div>
+          <div class="text-[11px] font-mono text-indigo-400/80 mt-3 pt-3 border-t border-slate-800">Native DOM Creation &rarr;</div>
+        </div>
+
+        <!-- Stage 4 -->
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 flex flex-col justify-between relative group hover:border-cyan-500/40 transition">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="step-badge bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">4</span>
+              <span class="text-xs font-mono text-slate-400">DOM Mount</span>
+            </div>
+            <h3 class="font-bold text-white mb-2">Container Mounted</h3>
+            <p class="text-xs text-slate-400 leading-relaxed mb-3">
+              The engine automatically inserts the finished table into your container:
+            </p>
+            <pre class="bg-slate-950 p-2.5 rounded-lg text-[11px] text-cyan-300 font-mono overflow-x-auto"><code>&lt;div id="container"&gt;
+  &lt;!-- Fully rendered table appears here! --&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <div class="text-[11px] font-mono text-cyan-400/80 mt-3 pt-3 border-t border-slate-800">✅ Live in Browser</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Method 1: CDN Direct Import -->
+    <section id="method-cdn" class="space-y-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800/80 pb-4">
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-xs mb-2">
+            Sample: samples/tableByCdn
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Method 1: Direct CDN Import</h2>
+        </div>
+        <a href="../samples/tableByCdn/index.html" target="_blank" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center gap-2 transition w-fit shadow-lg shadow-emerald-600/20">
+          <span>▶️</span> Run samples/tableByCdn in Browser &rarr;
+        </a>
+      </div>
+
+      <div class="glass-panel p-6 sm:p-8 rounded-2xl space-y-6">
+        <div>
+          <h3 class="text-lg font-bold text-white mb-2">How It Works in Simple Words</h3>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            In this method, your JavaScript file imports the <code class="text-emerald-300 font-mono">render</code> function directly from the CDN link as an ES Module. 
+            You then call <code class="text-emerald-300 font-mono">render({...})</code> with your data and options.
+          </p>
+        </div>
+
+        <!-- 2 Files breakdown -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          
+          <!-- index.html -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span> 1. index.html (The HTML page)
+              </span>
+              <button onclick="copyCode('cdn-html-code')" class="text-xs text-slate-400 hover:text-emerald-300 font-mono transition">📋 Copy</button>
+            </div>
+            <pre class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs text-slate-300 overflow-x-auto"><code id="cdn-html-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Table via CDN - json-renderers&lt;/title&gt;
+
+  &lt;!-- Bootstrap CSS for clean table styling --&gt;
+  &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
+&lt;/head&gt;
+&lt;body class="bg-light"&gt;
+  &lt;main class="container-fluid py-4"&gt;
+    &lt;h1&gt;Table DOM Renderer Demo&lt;/h1&gt;
+
+    &lt;!-- 1. Target container where table will be mounted --&gt;
+    &lt;div id="dom-render-container"&gt;
+      &lt;div class="text-center py-5 text-muted"&gt;Rendering table to DOM...&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/main&gt;
+
+  &lt;!-- 2. Load our module script --&gt;
+  &lt;script type="module" src="./index.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <p class="text-xs text-slate-400">
+              Notice: The only requirement in HTML is an element with an <code class="text-emerald-300 font-mono">id</code> (like <code class="text-emerald-300 font-mono">dom-render-container</code>) and <code class="text-emerald-300 font-mono">&lt;script type="module" src="./index.js"&gt;&lt;/script&gt;</code>.
+            </p>
+          </div>
+
+          <!-- index.js -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span> 2. index.js (The JavaScript logic)
+              </span>
+              <button onclick="copyCode('cdn-js-code')" class="text-xs text-slate-400 hover:text-emerald-300 font-mono transition">📋 Copy</button>
+            </div>
+            <pre class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs text-slate-300 overflow-x-auto"><code id="cdn-js-code">// 1. Import the default render function directly from jsDelivr CDN
+import render from "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v14/min.js";
+
+// 2. Import your JSON data (or fetch it)
+import data from "./batches.json" with { type: "json" };
+
+const start = () => {
+  try {
+    // 3. Call render with your configuration
+    render({
+      type: "table",
+      data: data.slice(0, 50),                 // Only first 50 rows for performance
+      targetHtmlId: "dom-render-container",     // Must match HTML div id
+      columns: ["itemName", "baseUnit"],       // Columns to display
+      showLog: true                            // Prints debug logs in browser console
+    });
+  } catch (err) {
+    console.log("error : ", err);
+  }
+};
+
+start();</code></pre>
+            <p class="text-xs text-slate-400">
+              <strong class="text-emerald-400">Key Feature:</strong> Direct modular import. Clean, explicit, and self-contained.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Method 2: Global window.ks Namespace -->
+    <section id="method-ks" class="space-y-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800/80 pb-4">
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-mono text-xs mb-2">
+            Sample: samples/tableByKs
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Method 2: Global window.ks Namespace</h2>
+        </div>
+        <a href="../samples/tableByKs/index.html" target="_blank" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold flex items-center gap-2 transition w-fit shadow-lg shadow-indigo-600/20">
+          <span>▶️</span> Run samples/tableByKs in Browser &rarr;
+        </a>
+      </div>
+
+      <div class="glass-panel p-6 sm:p-8 rounded-2xl space-y-6">
+        <div>
+          <h3 class="text-lg font-bold text-white mb-2">How It Works in Simple Words</h3>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            In this method, the CDN script is imported for its side effects (or loaded as a script tag). 
+            When loaded, the bundle automatically attaches itself to the browser's global scope: <code class="text-indigo-300 font-mono">window.ks.jsonRenderers.renderToDom</code>.
+            You can call this global function from anywhere in your web application!
+          </p>
+        </div>
+
+        <!-- 2 Files breakdown -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          
+          <!-- index.html -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-indigo-400"></span> 1. index.html (The HTML page)
+              </span>
+              <button onclick="copyCode('ks-html-code')" class="text-xs text-slate-400 hover:text-indigo-300 font-mono transition">📋 Copy</button>
+            </div>
+            <pre class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs text-slate-300 overflow-x-auto"><code id="ks-html-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Table via KS - json-renderers&lt;/title&gt;
+
+  &lt;!-- Bootstrap CSS --&gt;
+  &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
+&lt;/head&gt;
+&lt;body class="bg-light"&gt;
+  &lt;main class="container-fluid py-4"&gt;
+    &lt;h1&gt;Table DOM Renderer Demo&lt;/h1&gt;
+
+    &lt;!-- Target container where table will be mounted --&gt;
+    &lt;div id="dom-render-container"&gt;
+      &lt;div class="text-center py-5 text-muted"&gt;Rendering table to DOM...&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/main&gt;
+
+  &lt;!-- Load your module script --&gt;
+  &lt;script type="module" src="./index.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <p class="text-xs text-slate-400">
+              The HTML markup is identical! The difference is in how the JavaScript accesses the renderer.
+            </p>
+          </div>
+
+          <!-- index.js -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-indigo-400"></span> 2. index.js (Using window.ks)
+              </span>
+              <button onclick="copyCode('ks-js-code')" class="text-xs text-slate-400 hover:text-indigo-300 font-mono transition">📋 Copy</button>
+            </div>
+            <pre class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs text-slate-300 overflow-x-auto"><code id="ks-js-code">// 1. Load the CDN bundle (it registers window.ks globally)
+import "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v14/min.js";
+
+// 2. Import your JSON data
+import data from "./batches.json" with { type: "json" };
+
+const start = () => {
+  try {
+    // 3. Call the globally attached function:
+    // window.ks.jsonRenderers.renderToDom(...)
+    window.ks.jsonRenderers.renderToDom({
+      type: "table",
+      data: data.slice(0, 50),
+      targetHtmlId: "dom-render-container",
+      columns: ["itemName", "baseUnit"],
+      showLog: true
+    });
+  } catch (err) {
+    console.log("error : ", err);
+  }
+};
+
+start();</code></pre>
+            <p class="text-xs text-slate-400">
+              <strong class="text-indigo-400">Key Feature:</strong> Perfect when multiple scripts, legacy code, or inline buttons need access to <code class="text-indigo-300 font-mono">window.ks</code> without re-importing.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Side-by-Side Comparison -->
+    <section id="comparison" class="space-y-6">
+      <div class="border-b border-slate-800/80 pb-4">
+        <span class="text-xs uppercase font-mono tracking-wider text-cyan-400">Comparison</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mt-1">tableByCdn vs tableByKs Side-by-Side</h2>
+        <p class="text-slate-400 text-sm mt-1">Which method should you pick for your project?</p>
+      </div>
+
+      <div class="glass-panel rounded-2xl overflow-hidden border border-slate-800">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm text-slate-300">
+            <thead class="bg-slate-900/90 text-xs uppercase font-mono text-slate-400 border-b border-slate-800">
+              <tr>
+                <th class="p-4">Aspect</th>
+                <th class="p-4 text-emerald-400">tableByCdn (Direct Module)</th>
+                <th class="p-4 text-indigo-400">tableByKs (Global Window)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800">
+              <tr class="hover:bg-slate-900/40">
+                <td class="p-4 font-semibold text-white">Import Statement</td>
+                <td class="p-4 font-mono text-xs text-emerald-300"><code>import render from "...";</code></td>
+                <td class="p-4 font-mono text-xs text-indigo-300"><code>import "...";</code></td>
+              </tr>
+              <tr class="hover:bg-slate-900/40">
+                <td class="p-4 font-semibold text-white">Execution Function</td>
+                <td class="p-4 font-mono text-xs text-emerald-300"><code>render({ ... });</code></td>
+                <td class="p-4 font-mono text-xs text-indigo-300"><code>window.ks.jsonRenderers.renderToDom({ ... });</code></td>
+              </tr>
+              <tr class="hover:bg-slate-900/40">
+                <td class="p-4 font-semibold text-white">Global Scope Pollution</td>
+                <td class="p-4 text-xs">Does not modify window (clean encapsulation)</td>
+                <td class="p-4 text-xs">Attaches to <code>window.ks.jsonRenderers</code></td>
+              </tr>
+              <tr class="hover:bg-slate-900/40">
+                <td class="p-4 font-semibold text-white">Best Used For</td>
+                <td class="p-4 text-xs">Modern ES Module projects, clean modular architecture</td>
+                <td class="p-4 text-xs">Multi-script setups, browser console testing, CMS pages</td>
+              </tr>
+              <tr class="hover:bg-slate-900/40">
+                <td class="p-4 font-semibold text-white">Sample Directory</td>
+                <td class="p-4 font-mono text-xs"><a href="../samples/tableByCdn/index.html" class="text-emerald-400 hover:underline">samples/tableByCdn/</a></td>
+                <td class="p-4 font-mono text-xs"><a href="../samples/tableByKs/index.html" class="text-indigo-400 hover:underline">samples/tableByKs/</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Configuration Options Breakdown -->
+    <section class="space-y-6">
+      <div class="border-b border-slate-800/80 pb-4">
+        <span class="text-xs uppercase font-mono tracking-wider text-teal-400">Parameter Guide</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mt-1">All Configuration Options Explained</h2>
+        <p class="text-slate-400 text-sm mt-1">Everything you can pass to the render function.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        
+        <div class="glass-card p-5 rounded-2xl border border-slate-800">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-mono text-sm font-bold text-emerald-400">type</span>
+            <span class="text-[10px] uppercase font-mono bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20">Required</span>
+          </div>
+          <p class="text-xs text-slate-300 mb-2">Specify <code class="text-emerald-300 font-mono">"table"</code> to instruct the builder to construct an HTML table component.</p>
+          <div class="text-[11px] font-mono text-slate-500 bg-slate-950 p-2 rounded">type: "table"</div>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-mono text-sm font-bold text-emerald-400">targetHtmlId</span>
+            <span class="text-[10px] uppercase font-mono bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20">Required</span>
+          </div>
+          <p class="text-xs text-slate-300 mb-2">The <code class="text-emerald-300 font-mono">id</code> of the DOM element on your page where the table should be mounted.</p>
+          <div class="text-[11px] font-mono text-slate-500 bg-slate-950 p-2 rounded">targetHtmlId: "dom-render-container"</div>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-mono text-sm font-bold text-emerald-400">data</span>
+            <span class="text-[10px] uppercase font-mono bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20">Required</span>
+          </div>
+          <p class="text-xs text-slate-300 mb-2">An array of JavaScript objects containing the rows of information you want to display.</p>
+          <div class="text-[11px] font-mono text-slate-500 bg-slate-950 p-2 rounded">data: [ { itemName: "...", ... } ]</div>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-mono text-sm font-bold text-emerald-400">columns</span>
+            <span class="text-[10px] uppercase font-mono bg-teal-500/10 text-teal-400 px-2 py-0.5 rounded border border-teal-500/20">Recommended</span>
+          </div>
+          <p class="text-xs text-slate-300 mb-2">Array of object keys to render as columns in the table header and body. Filters out unwanted keys.</p>
+          <div class="text-[11px] font-mono text-slate-500 bg-slate-950 p-2 rounded">columns: ["itemName", "baseUnit"]</div>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-mono text-sm font-bold text-emerald-400">showLog</span>
+            <span class="text-[10px] uppercase font-mono bg-slate-700 text-slate-300 px-2 py-0.5 rounded">Optional</span>
+          </div>
+          <p class="text-xs text-slate-300 mb-2">Boolean (<code class="text-emerald-300 font-mono">true</code> / <code class="text-emerald-300 font-mono">false</code>). Enables informative console debug messages.</p>
+          <div class="text-[11px] font-mono text-slate-500 bg-slate-950 p-2 rounded">showLog: true</div>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl border border-slate-800">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-mono text-sm font-bold text-emerald-400">appendPosition</span>
+            <span class="text-[10px] uppercase font-mono bg-slate-700 text-slate-300 px-2 py-0.5 rounded">Optional</span>
+          </div>
+          <p class="text-xs text-slate-300 mb-2">Set to <code class="text-emerald-300 font-mono">"prepend"</code> to add before existing content, or omit to replace content.</p>
+          <div class="text-[11px] font-mono text-slate-500 bg-slate-950 p-2 rounded">appendPosition: "prepend"</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Alternative: Loading Data with fetch() -->
+    <section class="glass-panel p-6 sm:p-8 rounded-2xl space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="text-xl">💡</span>
+        <h3 class="text-lg font-bold text-white">How to Load Data Using fetch() Instead of JSON Import</h3>
+      </div>
+      <p class="text-slate-300 text-sm leading-relaxed">
+        If your browser doesn't support <code class="text-emerald-300 font-mono">import data from "./data.json" with { type: "json" }</code>, or if you are retrieving live data from a REST API backend, use the standard modern <code class="text-emerald-300 font-mono">fetch()</code> API:
+      </p>
+
+      <pre class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs text-slate-300 overflow-x-auto"><code>// 1. Import renderer
+import render from "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v14/min.js";
+
+// 2. Fetch the JSON file or API endpoint
+async function loadTable() {
+  try {
+    const response = await fetch("./batches.json");
+    const data = await response.json();
+
+    // 3. Mount table into DOM
+    render({
+      type: "table",
+      data: data.slice(0, 20),
+      targetHtmlId: "dom-render-container",
+      columns: ["itemName", "baseUnit"]
+    });
+  } catch (error) {
+    console.error("Failed to load table:", error);
+  }
+}
+
+loadTable();</code></pre>
+    </section>
+
+    <!-- Interactive Live Demo & Workbench -->
+    <section id="interactive-playground" class="space-y-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800/80 pb-4">
+        <div>
+          <span class="text-xs uppercase font-mono tracking-wider text-cyan-400">Live Demo</span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mt-1">Interactive Table Playground</h2>
+          <p class="text-slate-400 text-sm mt-1">Try both CDN import and window.ks rendering right here on this page!</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Controls Column -->
+        <div class="lg:col-span-5 glass-panel p-6 rounded-2xl space-y-5">
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2">
+            <span>⚙️</span> Interactive Controls
+          </h3>
+
+          <!-- Method Selector -->
+          <div>
+            <label class="text-xs font-mono text-slate-400 block mb-2">Rendering Mode:</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button id="btn-mode-cdn" class="px-3 py-2 text-xs font-semibold rounded-lg bg-emerald-600 text-white transition flex items-center justify-center gap-1.5 shadow-sm shadow-emerald-600/30">
+                <span>⚡</span> CDN Import
+              </button>
+              <button id="btn-mode-ks" class="px-3 py-2 text-xs font-semibold rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex items-center justify-center gap-1.5">
+                <span>🌐</span> window.ks Global
+              </button>
+            </div>
+          </div>
+
+          <!-- Columns Selector -->
+          <div>
+            <label class="text-xs font-mono text-slate-400 block mb-2">Select Visible Columns:</label>
+            <div class="flex flex-wrap gap-2 text-xs font-mono">
+              <label class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-slate-200 cursor-pointer hover:border-slate-700">
+                <input type="checkbox" id="col-itemName" checked class="rounded bg-slate-800 border-slate-700 text-emerald-500">
+                <span>itemName</span>
+              </label>
+              <label class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-slate-200 cursor-pointer hover:border-slate-700">
+                <input type="checkbox" id="col-baseUnit" checked class="rounded bg-slate-800 border-slate-700 text-emerald-500">
+                <span>baseUnit</span>
+              </label>
+              <label class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-slate-200 cursor-pointer hover:border-slate-700">
+                <input type="checkbox" id="col-category" checked class="rounded bg-slate-800 border-slate-700 text-emerald-500">
+                <span>category</span>
+              </label>
+              <label class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-slate-200 cursor-pointer hover:border-slate-700">
+                <input type="checkbox" id="col-stock" class="rounded bg-slate-800 border-slate-700 text-emerald-500">
+                <span>stock</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Row Count Slider -->
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1">
+              <span class="text-slate-400">Rows to Render:</span>
+              <span id="row-count-label" class="text-emerald-400 font-bold">5</span>
+            </div>
+            <input id="row-slider" type="range" min="2" max="15" value="5" class="w-full accent-emerald-500 bg-slate-800 rounded-lg cursor-pointer">
+          </div>
+
+          <!-- Action Button -->
+          <button id="btn-run-renderer" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-emerald-600/25 transition flex items-center justify-center gap-2">
+            <span>🚀</span> Render Table to DOM Now
+          </button>
+
+          <!-- Generated Code Snippet Preview -->
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-mono text-slate-400">Corresponding Code:</span>
+              <button onclick="copyCode('active-snippet')" class="text-[11px] text-emerald-400 hover:underline">Copy</button>
+            </div>
+            <pre class="bg-slate-950 p-3 rounded-xl text-[11px] text-slate-300 font-mono border border-slate-800 overflow-x-auto"><code id="active-snippet">render({
+  type: "table",
+  data: sampleData.slice(0, 5),
+  targetHtmlId: "live-demo-output",
+  columns: ["itemName", "baseUnit", "category"],
+  showLog: true
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Render Target & Console Output Column -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="glass-panel p-6 rounded-2xl">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
+                <h3 class="text-sm font-bold text-white uppercase tracking-wider font-mono">
+                  DOM Container: <code class="text-emerald-300">#live-demo-output</code>
+                </h3>
+              </div>
+              <span id="status-badge" class="px-2 py-0.5 text-[11px] font-mono rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                Ready
+              </span>
+            </div>
+
+            <!-- The Real Container where Table mounts -->
+            <div id="live-demo-output" class="overflow-x-auto min-h-[220px] flex items-center justify-center text-slate-500 text-sm">
+              Click "Render Table to DOM Now" to see the table mounted here.
+            </div>
+          </div>
+
+          <!-- Console Simulator -->
+          <div class="glass-panel p-4 rounded-2xl">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-mono text-slate-400 flex items-center gap-1.5">
+                <span>💻</span> Execution Status &amp; Console
+              </span>
+              <button id="btn-clear-console" class="text-[11px] text-slate-500 hover:text-slate-300 font-mono">Clear</button>
+            </div>
+            <pre id="demo-console" class="bg-slate-950 p-3 rounded-xl text-xs text-emerald-400/90 font-mono border border-slate-800 h-28 overflow-y-auto"><code>[Ready] Loaded runtime. Ready to render table.</code></pre>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Quick Links & Samples Hub -->
+    <section class="glass-panel p-8 rounded-2xl space-y-6">
+      <div class="border-b border-slate-800/80 pb-4">
+        <h3 class="text-xl font-bold text-white tracking-tight">Try the Sample Folders Directly</h3>
+        <p class="text-slate-400 text-sm mt-1">Both sample folders are included in this repository and can be opened in your browser right now:</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <a href="../samples/tableByCdn/index.html" class="glass-card p-5 rounded-xl border border-slate-800 hover:border-emerald-500/50 transition group flex flex-col justify-between">
+          <div>
+            <div class="text-2xl mb-2">⚡</div>
+            <h4 class="font-bold text-white group-hover:text-emerald-300 transition text-sm">samples/tableByCdn</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Direct ES Module CDN import demo.</p>
+          </div>
+          <span class="text-xs text-emerald-400 font-mono mt-4">Open Demo &rarr;</span>
+        </a>
+
+        <a href="../samples/tableByKs/index.html" class="glass-card p-5 rounded-xl border border-slate-800 hover:border-indigo-500/50 transition group flex flex-col justify-between">
+          <div>
+            <div class="text-2xl mb-2">🌐</div>
+            <h4 class="font-bold text-white group-hover:text-indigo-300 transition text-sm">samples/tableByKs</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Global window.ks namespace demo.</p>
+          </div>
+          <span class="text-xs text-indigo-400 font-mono mt-4">Open Demo &rarr;</span>
+        </a>
+
+        <a href="../samples/table/index.html" class="glass-card p-5 rounded-xl border border-slate-800 hover:border-teal-500/50 transition group flex flex-col justify-between">
+          <div>
+            <div class="text-2xl mb-2">📊</div>
+            <h4 class="font-bold text-white group-hover:text-teal-300 transition text-sm">samples/table</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Standard local build table demo.</p>
+          </div>
+          <span class="text-xs text-teal-400 font-mono mt-4">Open Demo &rarr;</span>
+        </a>
+
+        <a href="index.html" class="glass-card p-5 rounded-xl border border-slate-800 hover:border-cyan-500/50 transition group flex flex-col justify-between">
+          <div>
+            <div class="text-2xl mb-2">🏠</div>
+            <h4 class="font-bold text-white group-hover:text-cyan-300 transition text-sm">Main Documentation</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Return to the complete json-renderers homepage.</p>
+          </div>
+          <span class="text-xs text-cyan-400 font-mono mt-4">Visit Home &rarr;</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800/80 bg-slate-900/40 py-6 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <div>
+        <span class="text-slate-300 font-semibold">json-renderers</span> &bull; Documentation for <code class="text-emerald-400">tableByCdn</code> &amp; <code class="text-indigo-400">tableByKs</code>
+      </div>
+      <div>
+        Created for easy understanding of browser DOM table mounting.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script for Copying and Interactive Playground -->
+  <script type="module">
+    // Import both local distribution and support window.ks
+    import renderDirect from "./dist/v14/min.js";
+
+    // Sample data for beginners
+    const sampleData = [
+      { itemName: "0.09/30mm Steel Wire", baseUnit: "kgs", category: "Raw Materials", stock: 1200 },
+      { itemName: "0.11-25 Copper Alloy", baseUnit: "kgs", category: "Metals", stock: 450 },
+      { itemName: "0.11-30 Aluminum Rod", baseUnit: "kgs", category: "Metals", stock: 890 },
+      { itemName: "0.11/32mm Brass Tube", baseUnit: "kgs", category: "Pipes", stock: 320 },
+      { itemName: "Industrial Gear G-14", baseUnit: "pcs", category: "Machinery", stock: 75 },
+      { itemName: "High-Tensile Fastener", baseUnit: "pcs", category: "Hardware", stock: 2500 },
+      { itemName: "Hydraulic Seal Ring", baseUnit: "pcs", category: "Seals", stock: 640 },
+      { itemName: "Precision Bearing 6205", baseUnit: "pcs", category: "Bearings", stock: 180 },
+      { itemName: "Synthetic Oil 5W-40", baseUnit: "ltrs", category: "Lubricants", stock: 95 },
+      { itemName: "Carbon Fiber Sheet 3mm", baseUnit: "sqm", category: "Composites", stock: 40 },
+      { itemName: "Stainless Bolt M8x40", baseUnit: "pcs", category: "Hardware", stock: 5000 },
+      { itemName: "Neoprene Rubber Gasket", baseUnit: "pcs", category: "Seals", stock: 830 },
+      { itemName: "Ceramic Insulator Pin", baseUnit: "pcs", category: "Electrical", stock: 210 },
+      { itemName: "Lithium Grease Cartridge", baseUnit: "tubes", category: "Lubricants", stock: 150 },
+      { itemName: "Tungsten Carbide Tip", baseUnit: "pcs", category: "Tooling", stock: 55 }
+    ];
+
+    let currentMode = "cdn"; // "cdn" or "ks"
+
+    const btnCdn = document.getElementById("btn-mode-cdn");
+    const btnKs = document.getElementById("btn-mode-ks");
+    const slider = document.getElementById("row-slider");
+    const rowCountLabel = document.getElementById("row-count-label");
+    const runBtn = document.getElementById("btn-run-renderer");
+    const statusBadge = document.getElementById("status-badge");
+    const demoConsole = document.getElementById("demo-console");
+    const snippetCode = document.getElementById("active-snippet");
+    const clearBtn = document.getElementById("btn-clear-console");
+
+    function logConsole(msg) {
+      demoConsole.innerHTML += "\n" + msg;
+      demoConsole.scrollTop = demoConsole.scrollHeight;
+    }
+
+    if (clearBtn) {
+      clearBtn.addEventListener("click", () => {
+        demoConsole.innerHTML = "<code>Console cleared.</code>";
+      });
+    }
+
+    // Toggle Modes
+    btnCdn.addEventListener("click", () => {
+      currentMode = "cdn";
+      btnCdn.className = "px-3 py-2 text-xs font-semibold rounded-lg bg-emerald-600 text-white transition flex items-center justify-center gap-1.5 shadow-sm shadow-emerald-600/30";
+      btnKs.className = "px-3 py-2 text-xs font-semibold rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex items-center justify-center gap-1.5";
+      updateSnippet();
+      logConsole("[Mode Changed] Switched to Method 1: Direct CDN Import (render)");
+    });
+
+    btnKs.addEventListener("click", () => {
+      currentMode = "ks";
+      btnKs.className = "px-3 py-2 text-xs font-semibold rounded-lg bg-indigo-600 text-white transition flex items-center justify-center gap-1.5 shadow-sm shadow-indigo-600/30";
+      btnCdn.className = "px-3 py-2 text-xs font-semibold rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex items-center justify-center gap-1.5";
+      updateSnippet();
+      logConsole("[Mode Changed] Switched to Method 2: Global window.ks (window.ks.jsonRenderers.renderToDom)");
+    });
+
+    slider.addEventListener("input", (e) => {
+      rowCountLabel.textContent = e.target.value;
+      updateSnippet();
+    });
+
+    const colCheckboxes = ["itemName", "baseUnit", "category", "stock"];
+    colCheckboxes.forEach((id) => {
+      const el = document.getElementById("col-" + id);
+      if (el) el.addEventListener("change", updateSnippet);
+    });
+
+    function getSelectedColumns() {
+      return colCheckboxes.filter(id => {
+        const el = document.getElementById("col-" + id);
+        return el && el.checked;
+      });
+    }
+
+    function updateSnippet() {
+      const cols = getSelectedColumns();
+      const count = slider.value;
+      const colsJson = JSON.stringify(cols);
+
+      if (currentMode === "cdn") {
+        snippetCode.textContent = `// Method 1: CDN ES Module import
+import render from "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v14/min.js";
+
+render({
+  type: "table",
+  data: sampleData.slice(0, ${count}),
+  targetHtmlId: "live-demo-output",
+  columns: ${colsJson},
+  showLog: true
+});`;
+      } else {
+        snippetCode.textContent = `// Method 2: window.ks Global
+import "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v14/min.js";
+
+window.ks.jsonRenderers.renderToDom({
+  type: "table",
+  data: sampleData.slice(0, ${count}),
+  targetHtmlId: "live-demo-output",
+  columns: ${colsJson},
+  showLog: true
+});`;
+      }
+    }
+
+    // Execute Renderer
+    runBtn.addEventListener("click", () => {
+      const cols = getSelectedColumns();
+      if (cols.length === 0) {
+        alert("Please select at least one column to display!");
+        return;
+      }
+      const count = parseInt(slider.value, 10);
+      const rows = sampleData.slice(0, count);
+
+      statusBadge.textContent = "Rendering...";
+      statusBadge.className = "px-2 py-0.5 text-[11px] font-mono rounded bg-amber-500/20 text-amber-300 border border-amber-500/30";
+
+      try {
+        if (currentMode === "cdn") {
+          logConsole(`[Executing] Calling render() with ${count} rows and columns: [${cols.join(", ")}]...`);
+          renderDirect({
+            type: "table",
+            data: rows,
+            targetHtmlId: "live-demo-output",
+            columns: cols,
+            showLog: true
+          });
+          logConsole(`[Success] render() completed! Mounted table into #live-demo-output.`);
+        } else {
+          logConsole(`[Executing] Calling window.ks.jsonRenderers.renderToDom() with ${count} rows and columns: [${cols.join(", ")}]...`);
+          if (window.ks && window.ks.jsonRenderers && window.ks.jsonRenderers.renderToDom) {
+            window.ks.jsonRenderers.renderToDom({
+              type: "table",
+              data: rows,
+              targetHtmlId: "live-demo-output",
+              columns: cols,
+              showLog: true
+            });
+            logConsole(`[Success] window.ks.jsonRenderers.renderToDom() completed! Mounted table into #live-demo-output.`);
+          } else {
+            // Fallback to direct if registerGlobal wasn't attached
+            renderDirect({
+              type: "table",
+              data: rows,
+              targetHtmlId: "live-demo-output",
+              columns: cols,
+              showLog: true
+            });
+            logConsole(`[Note] window.ks fallback executed.`);
+          }
+        }
+
+        statusBadge.textContent = "Mounted (" + count + " rows)";
+        statusBadge.className = "px-2 py-0.5 text-[11px] font-mono rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+
+      } catch (err) {
+        logConsole(`[Error] ` + err.message);
+        statusBadge.textContent = "Error";
+        statusBadge.className = "px-2 py-0.5 text-[11px] font-mono rounded bg-red-500/20 text-red-300 border border-red-500/30";
+      }
+    });
+
+    // Auto-render on page load for immediate visual delight
+    setTimeout(() => {
+      runBtn.click();
+    }, 200);
+
+    // Copy to clipboard helper
+    window.copyCode = (elementId) => {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      navigator.clipboard.writeText(el.textContent).then(() => {
+        alert("Code snippet copied to clipboard!");
+      }).catch(() => {
+        // Fallback
+        const textarea = document.createElement("textarea");
+        textarea.value = el.textContent;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        alert("Code snippet copied to clipboard!");
+      });
+    };
+  </script>
+</body>
+</html>

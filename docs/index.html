@@ -5,10 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>json-renderers | Browser DOM Component Renderer</title>
-  <meta name="description" content="Browser DOM component renderer built on top of json-renderers-build and @keshavsoft/json-to-tag.">
+  <meta name="description"
+    content="Browser DOM component renderer built on top of json-renderers-build and @keshavsoft/json-to-tag.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -36,28 +39,35 @@
     };
   </script>
   <style>
-    pre, code {
+    pre,
+    code {
       font-family: 'Fira Code', monospace;
     }
+
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
+
     .custom-scrollbar::-webkit-scrollbar-track {
       background: rgba(15, 23, 42, 0.6);
     }
+
     .custom-scrollbar::-webkit-scrollbar-thumb {
       background: rgba(99, 102, 241, 0.3);
       border-radius: 4px;
     }
+
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
       background: rgba(99, 102, 241, 0.6);
     }
+
     .glass-panel {
       background: rgba(15, 23, 42, 0.75);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
+
     .glass-card {
       background: rgba(30, 41, 59, 0.5);
       backdrop-filter: blur(8px);
@@ -66,33 +76,46 @@
   </style>
 </head>
 
-<body class="bg-slate-950 text-slate-100 min-h-screen antialiased flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+<body
+  class="bg-slate-950 text-slate-100 min-h-screen antialiased flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
 
   <!-- Top Navbar -->
   <header class="border-b border-slate-800/80 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 via-teal-600 to-indigo-600 flex items-center justify-center font-bold text-white shadow-lg text-lg shadow-emerald-500/20">
+        <div
+          class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 via-teal-600 to-indigo-600 flex items-center justify-center font-bold text-white shadow-lg text-lg shadow-emerald-500/20">
           🖥️
         </div>
         <div>
           <div class="flex items-center gap-2">
             <h1 class="text-base font-bold text-white tracking-tight">json-renderers</h1>
-            <span class="px-2 py-0.5 text-xs bg-emerald-500/20 text-emerald-300 rounded-full border border-emerald-500/30 font-mono">v13.1.0</span>
+            <span
+              class="px-2 py-0.5 text-xs bg-emerald-500/20 text-emerald-300 rounded-full border border-emerald-500/30 font-mono">v13.1.0</span>
           </div>
           <p class="text-xs text-slate-400">Browser DOM Component Renderer Runtime</p>
         </div>
       </div>
 
       <div class="flex items-center gap-2.5">
-        <a href="#workbench" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition flex items-center gap-1.5 shadow-sm shadow-emerald-600/30">
+        <a href="aboutTable.html"
+          class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1.5 shadow-sm shadow-indigo-600/30">
+          <span>📖</span> About Table Guide
+        </a>
+        <a href="#workbench"
+          class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition flex items-center gap-1.5 shadow-sm shadow-emerald-600/30">
           <span>⚡</span> Live DOM Workbench
         </a>
-        <a href="#samples" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition hidden sm:flex items-center gap-1">
+        <a href="#samples"
+          class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition hidden sm:flex items-center gap-1">
           <span>📂</span> Samples
         </a>
-        <a href="https://github.com/keshavsoft/json-renderers" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
-          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        <a href="https://github.com/keshavsoft/json-renderers" target="_blank" rel="noopener noreferrer"
+          class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+            <path
+              d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+          </svg>
           <span class="hidden md:inline">GitHub</span>
         </a>
       </div>
@@ -103,26 +126,39 @@
 
     <!-- Hero Section -->
     <section class="text-center py-6 sm:py-10 space-y-5">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-300 font-mono">
+      <div
+        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-300 font-mono">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
         Ecosystem Story: DOM Mounting Runtime
       </div>
       <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
         Render Business JSON into Live DOM <br class="hidden sm:inline" />
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400">Powered by json-renderers-build + json-to-tag</span>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400">Powered
+          by json-renderers-build + json-to-tag</span>
       </h2>
       <p class="max-w-4xl mx-auto text-slate-400 text-sm sm:text-base leading-relaxed">
-        The real DOM magic happens in <strong class="text-emerald-300 font-mono">@keshavsoft/json-to-tag</strong>. Before that, data may be shaped in <strong class="text-indigo-300 font-mono">json-transformer</strong>, a component blueprint is built in <strong class="text-indigo-300 font-mono">json-renderers-build</strong>, and <strong class="text-slate-200">json-renderers</strong> simply orchestrates the runtime flow and mounts the final HTML into the browser container.
+        The real DOM magic happens in <strong class="text-emerald-300 font-mono">@keshavsoft/json-to-tag</strong>.
+        Before that, data may be shaped in <strong class="text-indigo-300 font-mono">json-transformer</strong>, a
+        component blueprint is built in <strong class="text-indigo-300 font-mono">json-renderers-build</strong>, and
+        <strong class="text-slate-200">json-renderers</strong> simply orchestrates the runtime flow and mounts the final
+        HTML into the browser container.
       </p>
 
       <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-        <a href="#workbench" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs sm:text-sm transition flex items-center gap-2 shadow-lg shadow-emerald-600/25">
+        <a href="abouutTable.html"
+          class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-indigo-600 hover:from-emerald-500 hover:to-indigo-500 text-white font-semibold text-xs sm:text-sm transition flex items-center gap-2 shadow-lg shadow-indigo-600/25">
+          <span>📖</span> Table Guide (CDN &amp; KS)
+        </a>
+        <a href="#workbench"
+          class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs sm:text-sm transition flex items-center gap-2 shadow-lg shadow-emerald-600/25">
           <span>⚡</span> Try Live DOM Mounting
         </a>
-        <a href="table.html" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-semibold text-xs sm:text-sm transition flex items-center gap-2">
+        <a href="table.html"
+          class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-semibold text-xs sm:text-sm transition flex items-center gap-2">
           <span>📊</span> Table Story
         </a>
-        <a href="select.html" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-semibold text-xs sm:text-sm transition flex items-center gap-2">
+        <a href="select.html"
+          class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-semibold text-xs sm:text-sm transition flex items-center gap-2">
           <span>▣</span> Select Story
         </a>
       </div>
@@ -136,14 +172,17 @@
           <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">What the runtime actually asks for</h3>
         </div>
         <p class="text-xs text-slate-400 max-w-md">
-          The runtime does not hand-code table or select DOM. It asks for a JSON blueprint and then lets <span class="text-emerald-300 font-mono">json-to-tag</span> create real elements.
+          The runtime does not hand-code table or select DOM. It asks for a JSON blueprint and then lets <span
+            class="text-emerald-300 font-mono">json-to-tag</span> create real elements.
         </p>
       </div>
 
       <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
         <div class="glass-panel p-5 rounded-2xl">
           <div class="flex items-center justify-between mb-3">
-            <span class="px-2 py-0.5 text-[11px] font-mono rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Table Spec</span>
+            <span
+              class="px-2 py-0.5 text-[11px] font-mono rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Table
+              Spec</span>
             <span class="text-lg">📊</span>
           </div>
           <pre class="text-xs text-slate-200 bg-slate-950/80 border border-slate-800 rounded-xl p-3 overflow-auto"><code>{
@@ -160,7 +199,9 @@
 
         <div class="glass-panel p-5 rounded-2xl">
           <div class="flex items-center justify-between mb-3">
-            <span class="px-2 py-0.5 text-[11px] font-mono rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">Select Spec</span>
+            <span
+              class="px-2 py-0.5 text-[11px] font-mono rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">Select
+              Spec</span>
             <span class="text-lg">▣</span>
           </div>
           <pre class="text-xs text-slate-200 bg-slate-950/80 border border-slate-800 rounded-xl p-3 overflow-auto"><code>{
@@ -184,7 +225,10 @@
           <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">The "In-Between" Handoff Story</h3>
         </div>
         <p class="text-xs text-slate-400 max-w-md">
-          How <span class="text-indigo-300 font-mono">json-transformer</span>, <span class="text-indigo-300 font-mono">json-renderers-build</span>, <span class="text-emerald-300 font-mono">json-to-tag</span>, and <span class="text-emerald-300 font-mono">json-renderers</span> work together.
+          How <span class="text-indigo-300 font-mono">json-transformer</span>, <span
+            class="text-indigo-300 font-mono">json-renderers-build</span>, <span
+            class="text-emerald-300 font-mono">json-to-tag</span>, and <span
+            class="text-emerald-300 font-mono">json-renderers</span> work together.
         </p>
       </div>
 
@@ -192,14 +236,21 @@
         <!-- Step 1 -->
         <div class="glass-panel p-5 rounded-2xl relative">
           <div class="flex items-center justify-between mb-3">
-            <span class="px-2 py-0.5 text-[11px] font-mono rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Step 1 • Spec Request</span>
+            <span
+              class="px-2 py-0.5 text-[11px] font-mono rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Step
+              1 • Spec Request</span>
             <span class="text-lg">📦</span>
           </div>
           <h4 class="text-base font-bold text-white mb-2">json-renderers-build</h4>
           <p class="text-xs text-slate-400 leading-relaxed mb-4">
-            <code class="text-emerald-300 font-mono">json-renderers</code> calls <code class="text-indigo-300 font-mono">jsonRenderBuild({ type, data, columns })</code>. The builder matches the skeleton blueprint (<code class="text-indigo-300 font-mono">table</code>, <code class="text-indigo-300 font-mono">select</code>) and evaluates it with <code class="text-indigo-300 font-mono">json-to-spec</code>.
+            <code class="text-emerald-300 font-mono">json-renderers</code> calls <code
+              class="text-indigo-300 font-mono">jsonRenderBuild({ type, data, columns })</code>. The builder matches the
+            skeleton blueprint (<code class="text-indigo-300 font-mono">table</code>, <code
+              class="text-indigo-300 font-mono">select</code>) and evaluates it with <code
+              class="text-indigo-300 font-mono">json-to-spec</code>.
           </p>
-          <div class="p-2.5 rounded-lg bg-slate-950/80 border border-indigo-500/30 text-[11px] font-mono text-indigo-300">
+          <div
+            class="p-2.5 rounded-lg bg-slate-950/80 border border-indigo-500/30 text-[11px] font-mono text-indigo-300">
             Returns: specAsJsonToDom (AST)
           </div>
         </div>
@@ -207,32 +258,45 @@
         <!-- Step 2 -->
         <div class="glass-panel p-5 rounded-2xl relative">
           <div class="flex items-center justify-between mb-3">
-            <span class="px-2 py-0.5 text-[11px] font-mono rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">Step 2 • Instantiation</span>
+            <span
+              class="px-2 py-0.5 text-[11px] font-mono rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">Step
+              2 • Instantiation</span>
             <span class="text-lg">🏷️</span>
           </div>
           <h4 class="text-base font-bold text-white mb-2">@keshavsoft/json-to-tag</h4>
           <p class="text-xs text-slate-400 leading-relaxed mb-4">
-            The generated specification AST is unwrapped (if fragment) and handed to <code class="text-purple-300 font-mono">jsonToTag(spec)</code>. Real browser DOM elements (<code class="text-purple-300 font-mono">HTMLTableElement</code>, <code class="text-purple-300 font-mono">DocumentFragment</code>) are constructed.
+            The generated specification AST is unwrapped (if fragment) and handed to <code
+              class="text-purple-300 font-mono">jsonToTag(spec)</code>. Real browser DOM elements (<code
+              class="text-purple-300 font-mono">HTMLTableElement</code>, <code
+              class="text-purple-300 font-mono">DocumentFragment</code>) are constructed.
           </p>
-          <div class="p-2.5 rounded-lg bg-slate-950/80 border border-purple-500/30 text-[11px] font-mono text-purple-300">
+          <div
+            class="p-2.5 rounded-lg bg-slate-950/80 border border-purple-500/30 text-[11px] font-mono text-purple-300">
             Returns: content (DOM Node / List)
           </div>
         </div>
 
         <!-- Step 3 -->
-        <div class="glass-panel p-5 rounded-2xl border-emerald-500/50 shadow-xl shadow-emerald-500/10 bg-slate-900/90 relative">
-          <div class="absolute top-0 right-0 bg-emerald-600 text-white text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-bl-lg">
+        <div
+          class="glass-panel p-5 rounded-2xl border-emerald-500/50 shadow-xl shadow-emerald-500/10 bg-slate-900/90 relative">
+          <div
+            class="absolute top-0 right-0 bg-emerald-600 text-white text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-bl-lg">
             This Repo
           </div>
           <div class="flex items-center justify-between mb-3">
-            <span class="px-2 py-0.5 text-[11px] font-mono rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Step 3 • Container Mount</span>
+            <span
+              class="px-2 py-0.5 text-[11px] font-mono rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Step
+              3 • Container Mount</span>
             <span class="text-lg">🖥️</span>
           </div>
           <h4 class="text-base font-bold text-emerald-300 mb-2">json-renderers</h4>
           <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Locates <code class="text-emerald-300 font-mono">document.getElementById(targetHtmlId)</code>. Clears or prepends content based on <code class="text-emerald-300 font-mono">appendPosition</code>, mounts the nodes, and returns the mounted container.
+            Locates <code class="text-emerald-300 font-mono">document.getElementById(targetHtmlId)</code>. Clears or
+            prepends content based on <code class="text-emerald-300 font-mono">appendPosition</code>, mounts the nodes,
+            and returns the mounted container.
           </p>
-          <div class="p-2.5 rounded-lg bg-slate-950/80 border border-emerald-500/30 text-[11px] font-mono text-emerald-200">
+          <div
+            class="p-2.5 rounded-lg bg-slate-950/80 border border-emerald-500/30 text-[11px] font-mono text-emerald-200">
             container.append(content)
           </div>
         </div>
@@ -248,12 +312,14 @@
         </div>
         <div class="flex items-center gap-3">
           <label for="component-type" class="text-xs text-slate-400 font-medium">Type:</label>
-          <select id="component-type" class="bg-slate-900 border border-slate-700 text-xs rounded-lg px-3 py-1.5 text-white font-mono focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+          <select id="component-type"
+            class="bg-slate-900 border border-slate-700 text-xs rounded-lg px-3 py-1.5 text-white font-mono focus:ring-2 focus:ring-emerald-500 focus:outline-none">
             <option value="table" selected>table</option>
             <option value="select">select</option>
             <option value="selectOptionsOnly">selectOptionsOnly</option>
           </select>
-          <button id="btn-render-dom" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center gap-1 shadow-emerald-600/30">
+          <button id="btn-render-dom"
+            class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center gap-1 shadow-emerald-600/30">
             <span>▶</span> Mount to DOM
           </button>
         </div>
@@ -269,15 +335,19 @@
                 <span>📝</span> Input Data (JSON)
               </span>
               <div class="flex items-center gap-2">
-                <select id="preset-selector" class="bg-slate-800 border border-slate-700 text-[11px] rounded px-2 py-1 text-slate-300 font-mono">
+                <select id="preset-selector"
+                  class="bg-slate-800 border border-slate-700 text-[11px] rounded px-2 py-1 text-slate-300 font-mono">
                   <option value="batches">Preset: Batches</option>
                   <option value="employees">Preset: Employees</option>
                   <option value="ledgers">Preset: Ledgers</option>
                 </select>
-                <button id="btn-format-data" class="text-[11px] text-slate-400 hover:text-white px-2 py-0.5 rounded bg-slate-800">Format</button>
+                <button id="btn-format-data"
+                  class="text-[11px] text-slate-400 hover:text-white px-2 py-0.5 rounded bg-slate-800">Format</button>
               </div>
             </div>
-            <textarea id="input-data" rows="8" class="w-full bg-slate-950 text-emerald-200 border border-slate-800 rounded-xl p-3 font-mono text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none custom-scrollbar" spellcheck="false"></textarea>
+            <textarea id="input-data" rows="8"
+              class="w-full bg-slate-950 text-emerald-200 border border-slate-800 rounded-xl p-3 font-mono text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none custom-scrollbar"
+              spellcheck="false"></textarea>
           </div>
 
           <div id="columns-panel" class="glass-panel p-4 rounded-2xl space-y-3">
@@ -285,9 +355,12 @@
               <span class="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
                 <span>📊</span> Columns (for table)
               </span>
-              <button id="btn-format-columns" class="text-[11px] text-slate-400 hover:text-white px-2 py-0.5 rounded bg-slate-800">Format</button>
+              <button id="btn-format-columns"
+                class="text-[11px] text-slate-400 hover:text-white px-2 py-0.5 rounded bg-slate-800">Format</button>
             </div>
-            <textarea id="input-columns" rows="5" class="w-full bg-slate-950 text-emerald-200 border border-slate-800 rounded-xl p-3 font-mono text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none custom-scrollbar" spellcheck="false"></textarea>
+            <textarea id="input-columns" rows="5"
+              class="w-full bg-slate-950 text-emerald-200 border border-slate-800 rounded-xl p-3 font-mono text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none custom-scrollbar"
+              spellcheck="false"></textarea>
           </div>
 
           <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800/80 text-xs text-slate-400 space-y-1">
@@ -295,7 +368,10 @@
               <span>🎯</span> Mounting Contract
             </div>
             <p>
-              Calls <code class="text-emerald-300 font-mono">render({ type, targetHtmlId: "live-mount-container", data, columns })</code>. Ingests spec from <code class="text-indigo-300 font-mono">json-renderers-build</code> and instantiates into DOM.
+              Calls <code
+                class="text-emerald-300 font-mono">render({ type, targetHtmlId: "live-mount-container", data, columns })</code>.
+              Ingests spec from <code class="text-indigo-300 font-mono">json-renderers-build</code> and instantiates
+              into DOM.
             </p>
           </div>
         </div>
@@ -305,16 +381,19 @@
           <!-- View Toggle -->
           <div class="flex items-center justify-between bg-slate-900/80 p-1.5 rounded-xl border border-slate-800">
             <div class="flex items-center gap-1">
-              <button id="tab-dom" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-600 text-white transition flex items-center gap-1.5">
+              <button id="tab-dom"
+                class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-600 text-white transition flex items-center gap-1.5">
                 <span>🖥️</span> Live Mounted DOM
               </button>
-              <button id="tab-in-between" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition flex items-center gap-1.5">
+              <button id="tab-in-between"
+                class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition flex items-center gap-1.5">
                 <span>🔗</span> "In-Between" Spec AST
               </button>
             </div>
 
             <div class="flex items-center gap-2 pr-1">
-              <span id="mount-status-badge" class="px-2 py-0.5 text-[11px] bg-emerald-500/20 text-emerald-300 rounded font-mono border border-emerald-500/30">
+              <span id="mount-status-badge"
+                class="px-2 py-0.5 text-[11px] bg-emerald-500/20 text-emerald-300 rounded font-mono border border-emerald-500/30">
                 Mounted
               </span>
             </div>
@@ -322,27 +401,33 @@
 
           <!-- View 1: Real DOM Container -->
           <div id="view-dom" class="glass-panel p-4 rounded-2xl flex-1 flex flex-col min-h-[460px]">
-            <div class="flex items-center justify-between pb-2 border-b border-slate-800/80 mb-3 text-xs text-slate-400">
+            <div
+              class="flex items-center justify-between pb-2 border-b border-slate-800/80 mb-3 text-xs text-slate-400">
               <span class="font-mono text-emerald-400 flex items-center gap-1.5">
                 <span class="w-2 h-2 rounded-full bg-emerald-400"></span> #live-mount-container
               </span>
               <span class="font-mono text-[11px]">Real HTML Elements</span>
             </div>
 
-            <div id="live-mount-container" class="flex-1 p-3 bg-slate-900/60 rounded-xl border border-slate-800 overflow-auto custom-scrollbar">
+            <div id="live-mount-container"
+              class="flex-1 p-3 bg-slate-900/60 rounded-xl border border-slate-800 overflow-auto custom-scrollbar">
               <!-- Elements mounted by json-renderers here -->
             </div>
           </div>
 
           <!-- View 2: "In-Between" Spec AST from json-renderers-build -->
           <div id="view-in-between" class="glass-panel p-4 rounded-2xl flex-1 flex flex-col min-h-[460px] hidden">
-            <div class="flex items-center justify-between pb-2 border-b border-slate-800/80 mb-3 text-xs text-slate-400">
+            <div
+              class="flex items-center justify-between pb-2 border-b border-slate-800/80 mb-3 text-xs text-slate-400">
               <span class="font-mono text-indigo-400 flex items-center gap-1.5">
                 <span>📦</span> Generated by json-renderers-build before mounting
               </span>
-              <button id="btn-copy-ast" class="px-2 py-0.5 text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-mono">Copy AST</button>
+              <button id="btn-copy-ast"
+                class="px-2 py-0.5 text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-mono">Copy
+                AST</button>
             </div>
-            <pre class="flex-1 m-0 p-3 bg-slate-950 rounded-xl text-indigo-200 font-mono text-xs overflow-auto custom-scrollbar leading-relaxed max-h-[500px]"><code id="code-output-ast">// Loading in-between spec...</code></pre>
+            <pre
+              class="flex-1 m-0 p-3 bg-slate-950 rounded-xl text-indigo-200 font-mono text-xs overflow-auto custom-scrollbar leading-relaxed max-h-[500px]"><code id="code-output-ast">// Loading in-between spec...</code></pre>
           </div>
 
         </div>
@@ -366,7 +451,8 @@
             <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[11px] font-mono">Data Grid</span>
           </div>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Mounts complete Bootstrap-styled table into the target element. Supports multi-column headers and automated cell value bindings.
+            Mounts complete Bootstrap-styled table into the target element. Supports multi-column headers and automated
+            cell value bindings.
           </p>
           <div class="text-[11px] font-mono text-slate-400 bg-slate-950 p-2.5 rounded-lg border border-slate-800">
             render({ type: "table", targetHtmlId, data, columns })
@@ -380,7 +466,8 @@
             <span class="px-2 py-0.5 rounded bg-teal-500/20 text-teal-300 text-[11px] font-mono">Select Element</span>
           </div>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Mounts a newly created <code class="text-teal-300">&lt;select id="LedgerName"&gt;</code> populated with child option elements into the target container.
+            Mounts a newly created <code class="text-teal-300">&lt;select id="LedgerName"&gt;</code> populated with
+            child option elements into the target container.
           </p>
           <div class="text-[11px] font-mono text-slate-400 bg-slate-950 p-2.5 rounded-lg border border-slate-800">
             render({ type: "select", targetHtmlId, data })
@@ -390,11 +477,14 @@
         <!-- Select Options Only Card -->
         <div class="glass-card p-5 rounded-2xl space-y-3">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-mono font-bold text-white uppercase tracking-wider">type: "selectOptionsOnly"</span>
-            <span class="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 text-[11px] font-mono">Option Injection</span>
+            <span class="text-xs font-mono font-bold text-white uppercase tracking-wider">type:
+              "selectOptionsOnly"</span>
+            <span class="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 text-[11px] font-mono">Option
+              Injection</span>
           </div>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Populates dynamic option items directly into a pre-existing <code class="text-indigo-300">&lt;select&gt;</code> element without modifying outer wrapper tags.
+            Populates dynamic option items directly into a pre-existing <code
+              class="text-indigo-300">&lt;select&gt;</code> element without modifying outer wrapper tags.
           </p>
           <div class="text-[11px] font-mono text-slate-400 bg-slate-950 p-2.5 rounded-lg border border-slate-800">
             render({ type: "selectOptionsOnly", targetHtmlId, data })
@@ -406,34 +496,99 @@
 
     <!-- Runnable Samples Section -->
     <section id="samples" class="space-y-6">
-      <div class="border-b border-slate-800/80 pb-4">
-        <span class="text-xs uppercase font-mono tracking-wider text-emerald-400">Browser Demos</span>
-        <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Included Verification Samples</h3>
+      <div class="border-b border-slate-800/80 pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+        <div>
+          <span class="text-xs uppercase font-mono tracking-wider text-emerald-400">Browser Demos</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Included Verification Samples</h3>
+        </div>
+        <a href="abouutTable.html"
+          class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 font-mono transition">
+          <span>📖</span> Read Complete Table Guide (CDN &amp; window.ks) &rarr;
+        </a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Spotlight Banner for Table Guide -->
+      <div
+        class="glass-panel p-5 rounded-2xl border border-indigo-500/30 bg-gradient-to-r from-indigo-950/40 via-slate-900 to-emerald-950/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div
+            class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-mono">
+            New Documentation
+          </div>
+          <h4 class="text-base font-bold text-white">How to Create HTML Tables with CDN &amp; window.ks</h4>
+          <p class="text-xs text-slate-400 max-w-2xl leading-relaxed">
+            Beginner-friendly walkthrough explaining step-by-step how to render tables using CDN imports vs the global
+            <code class="text-indigo-300 font-mono">window.ks</code> namespace, complete with live playground and
+            side-by-side comparison.
+          </p>
+        </div>
+        <a href="abouutTable.html"
+          class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition whitespace-nowrap shadow-md shadow-indigo-600/30 flex items-center gap-1.5">
+          <span>📖</span> Open Table Guide &rarr;
+        </a>
+      </div>
 
-        <a href="../samples/table/index.html" class="glass-panel p-5 rounded-2xl group hover:border-emerald-500/50 transition flex flex-col justify-between">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <a href="../samples/tableByCdn/index.html"
+          class="glass-panel p-5 rounded-2xl group hover:border-emerald-500/50 transition flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xl">⚡</span>
+              <span class="text-xs text-emerald-400 font-mono group-hover:translate-x-1 transition">Open Demo
+                &rarr;</span>
+            </div>
+            <h4 class="text-base font-bold text-white mb-1 group-hover:text-emerald-300 transition">Table via CDN Sample
+            </h4>
+            <p class="text-xs text-slate-400 leading-relaxed mb-4">
+              Mounts batches table via direct ES module import from jsDelivr CDN (<code
+                class="text-emerald-300 font-mono">import render from "..."</code>).
+            </p>
+          </div>
+          <div class="text-[11px] font-mono text-slate-500">samples/tableByCdn/index.html</div>
+        </a>
+
+        <a href="../samples/tableByKs/index.html"
+          class="glass-panel p-5 rounded-2xl group hover:border-indigo-500/50 transition flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xl">🌐</span>
+              <span class="text-xs text-indigo-400 font-mono group-hover:translate-x-1 transition">Open Demo
+                &rarr;</span>
+            </div>
+            <h4 class="text-base font-bold text-white mb-1 group-hover:text-indigo-300 transition">Table via window.ks
+              Sample</h4>
+            <p class="text-xs text-slate-400 leading-relaxed mb-4">
+              Mounts table using the globally attached namespace (<code
+                class="text-indigo-300 font-mono">window.ks.jsonRenderers.renderToDom</code>).
+            </p>
+          </div>
+          <div class="text-[11px] font-mono text-slate-500">samples/tableByKs/index.html</div>
+        </a>
+
+        <a href="../samples/table/index.html"
+          class="glass-panel p-5 rounded-2xl group hover:border-teal-500/50 transition flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-3">
               <span class="text-xl">📊</span>
-              <span class="text-xs text-emerald-400 font-mono group-hover:translate-x-1 transition">Open Demo &rarr;</span>
+              <span class="text-xs text-teal-400 font-mono group-hover:translate-x-1 transition">Open Demo &rarr;</span>
             </div>
-            <h4 class="text-base font-bold text-white mb-1 group-hover:text-emerald-300 transition">Table DOM Sample</h4>
+            <h4 class="text-base font-bold text-white mb-1 group-hover:text-teal-300 transition">Table DOM Sample</h4>
             <p class="text-xs text-slate-400 leading-relaxed mb-4">
-              Mounts a responsive batches table into the browser DOM using <code class="text-emerald-300 font-mono">json-renderers</code>.
+              Mounts a responsive batches table into the browser DOM using local dist/v14 bundle.
             </p>
           </div>
           <div class="text-[11px] font-mono text-slate-500">samples/table/index.html</div>
         </a>
 
-        <a href="../samples/select/index.html" class="glass-panel p-5 rounded-2xl group hover:border-teal-500/50 transition flex flex-col justify-between">
+        <a href="../samples/select/index.html"
+          class="glass-panel p-5 rounded-2xl group hover:border-cyan-500/50 transition flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-3">
               <span class="text-xl">🔽</span>
-              <span class="text-xs text-teal-400 font-mono group-hover:translate-x-1 transition">Open Demo &rarr;</span>
+              <span class="text-xs text-cyan-400 font-mono group-hover:translate-x-1 transition">Open Demo &rarr;</span>
             </div>
-            <h4 class="text-base font-bold text-white mb-1 group-hover:text-teal-300 transition">Select DOM Sample</h4>
+            <h4 class="text-base font-bold text-white mb-1 group-hover:text-cyan-300 transition">Select DOM Sample</h4>
             <p class="text-xs text-slate-400 leading-relaxed mb-4">
               Mounts a ledger accounts dropdown element into the DOM container.
             </p>
@@ -441,18 +596,38 @@
           <div class="text-[11px] font-mono text-slate-500">samples/select/index.html</div>
         </a>
 
-        <a href="../samples/selectOptionsOnly/index.html" class="glass-panel p-5 rounded-2xl group hover:border-indigo-500/50 transition flex flex-col justify-between">
+        <a href="../samples/selectOptionsOnly/index.html"
+          class="glass-panel p-5 rounded-2xl group hover:border-violet-500/50 transition flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-3">
               <span class="text-xl">📑</span>
-              <span class="text-xs text-indigo-400 font-mono group-hover:translate-x-1 transition">Open Demo &rarr;</span>
+              <span class="text-xs text-violet-400 font-mono group-hover:translate-x-1 transition">Open Demo
+                &rarr;</span>
             </div>
-            <h4 class="text-base font-bold text-white mb-1 group-hover:text-indigo-300 transition">Options Injection Sample</h4>
+            <h4 class="text-base font-bold text-white mb-1 group-hover:text-violet-300 transition">Options Injection
+              Sample</h4>
             <p class="text-xs text-slate-400 leading-relaxed mb-4">
               Populates option tags into an existing select dropdown on the page.
             </p>
           </div>
           <div class="text-[11px] font-mono text-slate-500">samples/selectOptionsOnly/index.html</div>
+        </a>
+
+        <a href="abouutTable.html"
+          class="glass-panel p-5 rounded-2xl group hover:border-emerald-500/50 transition flex flex-col justify-between border-dashed border-emerald-500/40">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xl">📖</span>
+              <span class="text-xs text-emerald-400 font-mono group-hover:translate-x-1 transition">Read Guide
+                &rarr;</span>
+            </div>
+            <h4 class="text-base font-bold text-white mb-1 group-hover:text-emerald-300 transition">About Table Guide
+            </h4>
+            <p class="text-xs text-slate-400 leading-relaxed mb-4">
+              Detailed step-by-step documentation explaining table creation for beginners.
+            </p>
+          </div>
+          <div class="text-[11px] font-mono text-emerald-400/80">docs/abouutTable.html</div>
         </a>
 
       </div>
@@ -467,12 +642,14 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label class="text-xs text-slate-400 mb-1 block font-mono">NPM Package:</label>
-          <pre class="p-3 bg-slate-950 rounded-xl text-xs text-emerald-300 font-mono border border-slate-800 overflow-x-auto"><code>npm install json-renderers</code></pre>
+          <pre
+            class="p-3 bg-slate-950 rounded-xl text-xs text-emerald-300 font-mono border border-slate-800 overflow-x-auto"><code>npm install json-renderers</code></pre>
         </div>
 
         <div>
           <label class="text-xs text-slate-400 mb-1 block font-mono">ES Module CDN:</label>
-          <pre class="p-3 bg-slate-950 rounded-xl text-xs text-emerald-300 font-mono border border-slate-800 overflow-x-auto"><code>import render from "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v13/min.js";</code></pre>
+          <pre
+            class="p-3 bg-slate-950 rounded-xl text-xs text-emerald-300 font-mono border border-slate-800 overflow-x-auto"><code>import render from "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v13/min.js";</code></pre>
         </div>
       </div>
     </section>
@@ -487,7 +664,8 @@
       </div>
       <div class="flex items-center gap-4 text-slate-400">
         <a href="https://github.com/keshavsoft/json-renderers" class="hover:text-white transition">json-renderers</a>
-        <a href="https://github.com/keshavsoft/json-renderers-build" class="hover:text-white transition">json-renderers-build</a>
+        <a href="https://github.com/keshavsoft/json-renderers-build"
+          class="hover:text-white transition">json-renderers-build</a>
         <a href="https://github.com/keshavsoft/json-to-spec" class="hover:text-white transition">json-to-spec</a>
       </div>
     </div>
@@ -698,13 +876,13 @@
     btnFormatData.addEventListener("click", () => {
       try {
         inputDataEl.value = JSON.stringify(JSON.parse(inputDataEl.value), null, 2);
-      } catch (e) {}
+      } catch (e) { }
     });
 
     btnFormatColumns.addEventListener("click", () => {
       try {
         inputColumnsEl.value = JSON.stringify(JSON.parse(inputColumnsEl.value), null, 2);
-      } catch (e) {}
+      } catch (e) { }
     });
 
     btnCopyAst.addEventListener("click", () => {
@@ -728,4 +906,5 @@
     syncTypeUI();
   </script>
 </body>
+
 </html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Table DOM Renderer Sample - json-renderers</title>
+  <script>
+    if (!location.pathname.endsWith('/') && !location.pathname.endsWith('.html')) {
+      location.replace(location.pathname + '/' + location.search + location.hash);
+    }
+  </script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body class="bg-light">
+  <main class="container-fluid py-4">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <div>
+        <h1 id="head1" style="margin-top:0;font-size:1.5rem" class="mb-1">Table DOM Renderer Demo</h1>
+        <p class="text-muted small mb-0">Mounted via <code>json-renderers</code> (powered by <code>json-renderers-build</code> &amp; <code>json-to-tag</code>)</p>
+      </div>
+      <div class="d-flex gap-2">
+        <a href="../../docs/abouutTable.html" class="btn btn-outline-primary btn-sm">📖 About Table Guide</a>
+        <a href="../../docs/index.html" class="btn btn-outline-secondary btn-sm">← Back to Docs</a>
+      </div>
+    </div>
+    <div id="dom-render-container">
+      <div class="text-center py-5 text-muted">Rendering table to DOM...</div>
+    </div>
+  </main>
+  <script type="module" src="./index.js"></script>
+</body>
+
+</html>
