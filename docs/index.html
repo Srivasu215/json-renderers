@@ -98,6 +98,10 @@
       </div>
 
       <div class="flex items-center gap-2.5">
+        <a href="aboutSelect.html"
+          class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white transition flex items-center gap-1.5 shadow-sm shadow-cyan-600/30">
+          <span>▣</span> About Select Guide
+        </a>
         <a href="aboutTable.html"
           class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1.5 shadow-sm shadow-indigo-600/30">
           <span>📖</span> About Table Guide
@@ -145,7 +149,11 @@
       </p>
 
       <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-        <a href="abouutTable.html"
+        <a href="aboutSelect.html"
+          class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-500 hover:to-teal-500 text-white font-semibold text-xs sm:text-sm transition flex items-center gap-2 shadow-lg shadow-cyan-600/25">
+          <span>▣</span> Select Guide (CDN &amp; KS)
+        </a>
+        <a href="aboutTable.html"
           class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-indigo-600 hover:from-emerald-500 hover:to-indigo-500 text-white font-semibold text-xs sm:text-sm transition flex items-center gap-2 shadow-lg shadow-indigo-600/25">
           <span>📖</span> Table Guide (CDN &amp; KS)
         </a>
@@ -513,7 +521,7 @@
         <div class="space-y-1">
           <div
             class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-mono">
-            New Documentation
+            Table Guide
           </div>
           <h4 class="text-base font-bold text-white">How to Create HTML Tables with CDN &amp; window.ks</h4>
           <p class="text-xs text-slate-400 max-w-2xl leading-relaxed">
@@ -522,13 +530,77 @@
             side-by-side comparison.
           </p>
         </div>
-        <a href="abouutTable.html"
+        <a href="aboutTable.html"
           class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition whitespace-nowrap shadow-md shadow-indigo-600/30 flex items-center gap-1.5">
           <span>📖</span> Open Table Guide &rarr;
         </a>
       </div>
 
+      <!-- Spotlight Banner for Select Guide -->
+      <div
+        class="glass-panel p-5 rounded-2xl border border-cyan-500/30 bg-gradient-to-r from-cyan-950/40 via-slate-900 to-teal-950/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div
+            class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-mono">
+            Select Guide (White BG Edition)
+          </div>
+          <h4 class="text-base font-bold text-white">How to Create HTML Select Dropdowns with CDN &amp; window.ks</h4>
+          <p class="text-xs text-slate-400 max-w-2xl leading-relaxed">
+            Complete guide on populating dropdown elements from JSON data using <code class="text-cyan-300 font-mono">byCdn</code> and <code class="text-cyan-300 font-mono">byKs</code> with interactive testing and live selection tracking.
+          </p>
+        </div>
+        <a href="aboutSelect.html"
+          class="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-semibold text-xs transition whitespace-nowrap shadow-md shadow-cyan-600/30 flex items-center gap-1.5">
+          <span>▣</span> Open Select Guide &rarr;
+        </a>
+      </div>
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <a href="../samples/select/byCdn/index.html"
+          class="glass-panel p-5 rounded-2xl group hover:border-cyan-500/50 transition flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xl">⚡</span>
+              <span class="text-xs text-cyan-400 font-mono group-hover:translate-x-1 transition">Open Demo &rarr;</span>
+            </div>
+            <h4 class="text-base font-bold text-white mb-1 group-hover:text-cyan-300 transition">Select via CDN (byCdn)</h4>
+            <p class="text-xs text-slate-400 leading-relaxed mb-4">
+              Mounts select dropdown via direct ES module import from jsDelivr CDN (<code class="text-cyan-300 font-mono">samples/select/byCdn</code>).
+            </p>
+          </div>
+          <div class="text-[11px] font-mono text-slate-500">samples/select/byCdn/index.html</div>
+        </a>
+
+        <a href="../samples/select/byKs/index.html"
+          class="glass-panel p-5 rounded-2xl group hover:border-indigo-500/50 transition flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xl">🌐</span>
+              <span class="text-xs text-indigo-400 font-mono group-hover:translate-x-1 transition">Open Demo &rarr;</span>
+            </div>
+            <h4 class="text-base font-bold text-white mb-1 group-hover:text-indigo-300 transition">Select via window.ks (byKs)</h4>
+            <p class="text-xs text-slate-400 leading-relaxed mb-4">
+              Mounts select dropdown using the global namespace (<code class="text-indigo-300 font-mono">samples/select/byKs</code>).
+            </p>
+          </div>
+          <div class="text-[11px] font-mono text-slate-500">samples/select/byKs/index.html</div>
+        </a>
+
+        <a href="aboutSelect.html"
+          class="glass-panel p-5 rounded-2xl group hover:border-cyan-500/50 transition flex flex-col justify-between border-dashed border-cyan-500/40">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xl">▣</span>
+              <span class="text-xs text-cyan-400 font-mono group-hover:translate-x-1 transition">Read Guide &rarr;</span>
+            </div>
+            <h4 class="text-base font-bold text-white mb-1 group-hover:text-cyan-300 transition">About Select Guide</h4>
+            <p class="text-xs text-slate-400 leading-relaxed mb-4">
+              Complete beginner documentation with white background and suitable font colors.
+            </p>
+          </div>
+          <div class="text-[11px] font-mono text-cyan-400/80">docs/aboutSelect.html</div>
+        </a>
 
         <a href="../samples/tableByCdn/index.html"
           class="glass-panel p-5 rounded-2xl group hover:border-emerald-500/50 transition flex flex-col justify-between">
@@ -566,54 +638,7 @@
           <div class="text-[11px] font-mono text-slate-500">samples/tableByKs/index.html</div>
         </a>
 
-        <a href="../samples/table/index.html"
-          class="glass-panel p-5 rounded-2xl group hover:border-teal-500/50 transition flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xl">📊</span>
-              <span class="text-xs text-teal-400 font-mono group-hover:translate-x-1 transition">Open Demo &rarr;</span>
-            </div>
-            <h4 class="text-base font-bold text-white mb-1 group-hover:text-teal-300 transition">Table DOM Sample</h4>
-            <p class="text-xs text-slate-400 leading-relaxed mb-4">
-              Mounts a responsive batches table into the browser DOM using local dist/v14 bundle.
-            </p>
-          </div>
-          <div class="text-[11px] font-mono text-slate-500">samples/table/index.html</div>
-        </a>
-
-        <a href="../samples/select/index.html"
-          class="glass-panel p-5 rounded-2xl group hover:border-cyan-500/50 transition flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xl">🔽</span>
-              <span class="text-xs text-cyan-400 font-mono group-hover:translate-x-1 transition">Open Demo &rarr;</span>
-            </div>
-            <h4 class="text-base font-bold text-white mb-1 group-hover:text-cyan-300 transition">Select DOM Sample</h4>
-            <p class="text-xs text-slate-400 leading-relaxed mb-4">
-              Mounts a ledger accounts dropdown element into the DOM container.
-            </p>
-          </div>
-          <div class="text-[11px] font-mono text-slate-500">samples/select/index.html</div>
-        </a>
-
-        <a href="../samples/selectOptionsOnly/index.html"
-          class="glass-panel p-5 rounded-2xl group hover:border-violet-500/50 transition flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xl">📑</span>
-              <span class="text-xs text-violet-400 font-mono group-hover:translate-x-1 transition">Open Demo
-                &rarr;</span>
-            </div>
-            <h4 class="text-base font-bold text-white mb-1 group-hover:text-violet-300 transition">Options Injection
-              Sample</h4>
-            <p class="text-xs text-slate-400 leading-relaxed mb-4">
-              Populates option tags into an existing select dropdown on the page.
-            </p>
-          </div>
-          <div class="text-[11px] font-mono text-slate-500">samples/selectOptionsOnly/index.html</div>
-        </a>
-
-        <a href="abouutTable.html"
+        <a href="aboutTable.html"
           class="glass-panel p-5 rounded-2xl group hover:border-emerald-500/50 transition flex flex-col justify-between border-dashed border-emerald-500/40">
           <div>
             <div class="flex items-center justify-between mb-3">
@@ -627,7 +652,7 @@
               Detailed step-by-step documentation explaining table creation for beginners.
             </p>
           </div>
-          <div class="text-[11px] font-mono text-emerald-400/80">docs/abouutTable.html</div>
+          <div class="text-[11px] font-mono text-emerald-400/80">docs/aboutTable.html</div>
         </a>
 
       </div>

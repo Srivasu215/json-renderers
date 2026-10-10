@@ -1,11 +1,11 @@
 
-import render from "../../docs/dist/v13/min.js";
+import "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v14/min.js";
 
 import data from "./data.json" with {type: "json"};
 
 const start = () => {
   try {
-    render({
+    window.ks.jsonRenderers.renderToDom({
       type: "select", data: data.LedgerName,
       targetHtmlId: "dom-render-container", showLog: false
     });
