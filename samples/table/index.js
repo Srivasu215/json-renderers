@@ -1,5 +1,5 @@
 // import render from "../../src/index.js";
-import render from "../../docs/dist/v13/min.js";
+import render from "../../docs/dist/v14/min.js";
 
 // import "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v12/min.js";
 
@@ -17,7 +17,8 @@ const start = () => {
       type: "table",
       data: data.slice(0, 50),
       targetHtmlId: "dom-render-container",
-      columns: ["Name"]
+      columns: ["itemName"],
+      showLog: true
     });
 
   } catch (err) {

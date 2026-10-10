@@ -35,7 +35,7 @@ const render = ({
         content instanceof NodeList ||
         content instanceof HTMLCollection;
 
-    console.log("prepend ---------:", rawType, isCollection, container, content, localData);
+    // console.log("prepend ---------:", rawType, isCollection, container, content, localData);
 
 
     if (isCollection) {

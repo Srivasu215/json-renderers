@@ -1,6 +1,6 @@
 {
   "name": "json-renderers",
-  "version": "1.14.0",
+  "version": "1.14.1",
   "description": "Browser DOM component renderer built on top of json-renderers-build and @keshavsoft/json-to-tag",
   "type": "module",
   "main": "src/index.js",
@@ -41,6 +41,6 @@
   },
   "dependencies": {
     "@keshavsoft/json-to-tag": "^1.9.3",
-    "json-renderers-build": "^1.7.1"
+    "json-renderers-build": "^1.9.2"
   }
 }
