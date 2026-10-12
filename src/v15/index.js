@@ -17,10 +17,17 @@ const render = ({
     const localTargetHtmlId = targetHtmlId;
     const localData = data;
     const localColumns = columns;
+    const localShowLog = showLog;
 
-    gaurdFunc({ intype: rawType, indata: localData });
+    gaurdFunc({
+        intype: rawType,
+        indata: localData,
+        intargetHtmlId: localTargetHtmlId,
+        incoumns: localColumns,
+        inshowLog: localShowLog
+    });
 
-    if (showLog) console.log("showLog 1 :", rawType, targetHtmlId, data, classToApply, columns, appendPosition);
+    if (localShowLog);
 
     // Default to table renderer
     const content = buildSpec({

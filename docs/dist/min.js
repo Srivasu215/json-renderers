@@ -1,242 +1,250 @@
-const E = {
+const k = {
   version: "v15.0.0",
   description: "build table from store data and render to DOM uses json-to-spec, json-to-dom under the hood"
-}, k = (t) => {
+}, B = (t) => {
   var e;
   typeof globalThis > "u" || !t || (globalThis.ks ?? (globalThis.ks = {}), (e = globalThis.ks).jsonRenderers ?? (e.jsonRenderers = {
-    meta: E,
+    meta: k,
     renderToDom: t
   }));
-}, B = ({ intype: t, indata: e }) => {
+}, U = ({ intype: t, indata: e, intargetHtmlId: n, incoumns: o, inshowLog: r }) => {
   if (typeof t != "string" || t.trim() === "")
     throw console.error("type must be a string"), new Error("type must be a string");
   if (!Array.isArray(e))
     throw console.error("data must be an Array"), new Error("data must be an Array");
+  if (typeof n != "string" || !n.trim())
+    throw console.error("targetHtmlId must be a non-empty string"), new TypeError("targetHtmlId must be a non-empty string");
+  if (!Array.isArray(o))
+    throw console.error("columns must be an array"), new TypeError("columns must be an array");
+  if (typeof r != "boolean")
+    throw console.error("showLog must be a boolean"), new TypeError("showLog must be a boolean");
+  if (r !== !0)
+    throw console.error("showLog must be true"), new TypeError("showLog must be true");
   return !0;
-}, U = {
+}, j = {
   version: "v10.0.0",
   description: "build table from store data and render to DOM uses json-to-spec, json-to-dom under the hood"
-}, j = (t) => {
+}, v = (t) => {
   var e;
   typeof globalThis > "u" || !t || (globalThis.ks ?? (globalThis.ks = {}), (e = globalThis.ks).jsonRenderersBuild ?? (e.jsonRenderersBuild = {
-    meta: U,
+    meta: j,
     renderToDom: t
   }));
-}, v = "table", O = {
+}, O = "table", I = {
   class: "table table-hover table-striped mb-0"
-}, W = [], I = {
-  tagName: v,
-  attributes: O,
+}, W = [], F = {
+  tagName: O,
+  attributes: I,
   children: W
-}, F = "thead", J = [], D = {
-  tagName: F,
-  children: J
-}, V = "tr", R = [], H = {
-  tagName: V,
-  children: R
-}, M = "th", K = {
+}, J = "thead", D = [], V = {
+  tagName: J,
+  children: D
+}, R = "tr", H = [], M = {
+  tagName: R,
+  children: H
+}, L = "th", K = {
   value: ""
 }, q = "", G = {
-  tagName: M,
+  tagName: L,
   attributes: K,
   textContent: q
 }, z = ({ inColumn: t } = {}) => {
   const e = structuredClone(G);
   return e.attributes.value = t, e.textContent = t, e;
-}, L = ({ inColumns: t = [] } = {}) => {
-  const e = structuredClone(H), o = t.map((n) => z({ inColumn: n }));
-  return e.children = o, e;
 }, P = ({ inColumns: t = [] } = {}) => {
-  const e = structuredClone(D), o = [
-    L({ inColumns: t })
+  const e = structuredClone(M), n = t.map((o) => z({ inColumn: o }));
+  return e.children = n, e;
+}, _ = ({ inColumns: t = [] } = {}) => {
+  const e = structuredClone(V), n = [
+    P({ inColumns: t })
   ];
-  return e.children = o, e;
-}, _ = "tbody", X = [], Q = {
-  tagName: _,
-  children: X
-}, Y = "tr", Z = [], tt = {
-  tagName: Y,
-  children: Z
-}, et = "td", nt = {
+  return e.children = n, e;
+}, X = "tbody", Q = [], Y = {
+  tagName: X,
+  children: Q
+}, Z = "tr", tt = [], et = {
+  tagName: Z,
+  children: tt
+}, ot = "td", nt = {
   value: ""
-}, ot = "", rt = {
-  tagName: et,
+}, rt = "", st = {
+  tagName: ot,
   attributes: nt,
-  textContent: ot
-}, st = ({ inValue: t } = {}) => {
-  const e = structuredClone(rt);
+  textContent: rt
+}, lt = ({ inValue: t } = {}) => {
+  const e = structuredClone(st);
   return e.attributes.value = t, e.textContent = t, e;
-}, lt = ({ inRow: t, inColumns: e = [] } = {}) => {
-  const o = structuredClone(tt), n = e.map((r) => {
+}, at = ({ inRow: t, inColumns: e = [] } = {}) => {
+  const n = structuredClone(et), o = e.map((r) => {
     const s = Array.isArray(t) ? t[r] : t == null ? void 0 : t[r];
-    return st({ inValue: s });
+    return lt({ inValue: s });
   });
-  return o.children = n, o;
-}, at = ({ inData: t = [], inColumns: e = [] } = {}) => {
-  const o = structuredClone(Q), n = t.map((r) => lt({
+  return n.children = o, n;
+}, ct = ({ inData: t = [], inColumns: e = [] } = {}) => {
+  const n = structuredClone(Y), o = t.map((r) => at({
     inRow: r,
     inColumns: e
   }));
-  return o.children = n, o;
-}, ct = "tfoot", it = {
+  return n.children = o, n;
+}, it = "tfoot", ut = {
   class: "table-light"
-}, ut = [], dt = {
-  tagName: ct,
-  attributes: it,
-  children: ut
-}, bt = "tr", mt = {
+}, dt = [], bt = {
+  tagName: it,
+  attributes: ut,
+  children: dt
+}, mt = "tr", ht = {
   class: "align-middle"
-}, ht = [], pt = {
-  tagName: bt,
-  attributes: mt,
-  children: ht
-}, ft = "td", gt = {
+}, pt = [], ft = {
+  tagName: mt,
+  attributes: ht,
+  children: pt
+}, gt = "td", yt = {
   class: "align-middle py-2"
-}, yt = [], wt = {
-  tagName: ft,
-  attributes: gt,
-  children: yt
-}, Ct = "input", $t = {
+}, wt = [], Ct = {
+  tagName: gt,
+  attributes: yt,
+  children: wt
+}, $t = "input", Nt = {
   type: "text",
   name: "",
   placeholder: "",
   class: "form-control form-control-sm"
-}, Nt = {
-  tagName: Ct,
-  attributes: $t
-}, At = ({ inColumn: t } = {}) => {
-  const e = structuredClone(wt), o = structuredClone(Nt);
-  return o.attributes.name = t, o.attributes.placeholder = t, e.children.push(o), e;
+}, At = {
+  tagName: $t,
+  attributes: Nt
+}, Tt = ({ inColumn: t } = {}) => {
+  const e = structuredClone(Ct), n = structuredClone(At);
+  return n.attributes.name = t, n.attributes.placeholder = t, e.children.push(n), e;
 }, St = ({ inColumns: t = [] } = {}) => {
-  const e = structuredClone(pt);
-  return e.children = t.map((o) => At({ inColumn: o })), e;
-}, Tt = ({ inColumns: t = [] } = {}) => St({ inColumns: t }), xt = "tr", Et = {
+  const e = structuredClone(ft);
+  return e.children = t.map((n) => Tt({ inColumn: n })), e;
+}, xt = ({ inColumns: t = [] } = {}) => St({ inColumns: t }), Et = "tr", kt = {
   class: "align-middle"
-}, kt = [], Bt = {
-  tagName: xt,
-  attributes: Et,
-  children: kt
-}, Ut = "td", jt = {
+}, Bt = [], Ut = {
+  tagName: Et,
+  attributes: kt,
+  children: Bt
+}, jt = "td", vt = {
   class: "align-middle py-2"
-}, vt = [], Ot = {
-  tagName: Ut,
-  attributes: jt,
-  children: vt
-}, Wt = "input", It = {
+}, Ot = [], It = {
+  tagName: jt,
+  attributes: vt,
+  children: Ot
+}, Wt = "input", Ft = {
   type: "text",
   name: "",
   placeholder: "",
   class: "form-control form-control-sm"
-}, Ft = {
+}, Jt = {
   tagName: Wt,
-  attributes: It
-}, Jt = "button", Dt = {
+  attributes: Ft
+}, Dt = "button", Vt = {
   type: "button",
   class: "btn btn-primary btn-sm ms-2"
-}, Vt = "Save", Rt = {
-  tagName: Jt,
-  attributes: Dt,
-  textContent: Vt
-}, Ht = ({ inColumn: t, inSave: e = !1 } = {}) => {
-  const o = structuredClone(Ot), n = structuredClone(Ft);
-  return n.attributes.name = t, n.attributes.placeholder = t, o.children.push(n), e && o.children.push(structuredClone(Rt)), o;
-}, Mt = ({ inColumns: t = [] } = {}) => {
-  const e = structuredClone(Bt);
-  return e.children = t.map((o, n) => Ht({
-    inColumn: o,
-    inSave: n === t.length - 1
+}, Rt = "Save", Ht = {
+  tagName: Dt,
+  attributes: Vt,
+  textContent: Rt
+}, Mt = ({ inColumn: t, inSave: e = !1 } = {}) => {
+  const n = structuredClone(It), o = structuredClone(Jt);
+  return o.attributes.name = t, o.attributes.placeholder = t, n.children.push(o), e && n.children.push(structuredClone(Ht)), n;
+}, Lt = ({ inColumns: t = [] } = {}) => {
+  const e = structuredClone(Ut);
+  return e.children = t.map((n, o) => Mt({
+    inColumn: n,
+    inSave: o === t.length - 1
   })), e;
-}, Kt = ({ inColumns: t = [] } = {}) => Mt({ inColumns: t }), qt = "tr", Gt = {
+}, Kt = ({ inColumns: t = [] } = {}) => Lt({ inColumns: t }), qt = "tr", Gt = {
   class: "fw-semibold align-middle"
-}, zt = [], Lt = {
+}, zt = [], Pt = {
   tagName: qt,
   attributes: Gt,
   children: zt
-}, Pt = "td", _t = {
+}, _t = "td", Xt = {
   class: "align-middle py-2"
-}, Xt = "", Qt = {
-  tagName: Pt,
-  attributes: _t,
-  textContent: Xt
-}, Yt = (t, e) => Array.isArray(t) ? t[e] : t == null ? void 0 : t[e], Zt = ({ inColumn: t, inIndex: e, inData: o = [] } = {}) => {
-  const n = structuredClone(Qt), r = o.map((s) => Yt(s, t)).filter((s) => s != null && String(s).trim() !== "").map(Number).filter(Number.isFinite);
-  return n.textContent = r.length ? String(r.reduce((s, l) => s + l, 0)) : e === 0 ? "Total" : "", n;
-}, te = ({ inColumns: t = [], inData: e = [] } = {}) => {
-  const o = structuredClone(Lt);
-  return o.children = t.map(
-    (n, r) => Zt({ inColumn: n, inIndex: r, inData: e })
-  ), o;
-}, ee = ({ inColumns: t = [], inData: e = [] } = {}) => te({ inColumns: t, inData: e }), ne = "tr", oe = {
+}, Qt = "", Yt = {
+  tagName: _t,
+  attributes: Xt,
+  textContent: Qt
+}, Zt = (t, e) => Array.isArray(t) ? t[e] : t == null ? void 0 : t[e], te = ({ inColumn: t, inIndex: e, inData: n = [] } = {}) => {
+  const o = structuredClone(Yt), r = n.map((s) => Zt(s, t)).filter((s) => s != null && String(s).trim() !== "").map(Number).filter(Number.isFinite);
+  return o.textContent = r.length ? String(r.reduce((s, l) => s + l, 0)) : e === 0 ? "Total" : "", o;
+}, ee = ({ inColumns: t = [], inData: e = [] } = {}) => {
+  const n = structuredClone(Pt);
+  return n.children = t.map(
+    (o, r) => te({ inColumn: o, inIndex: r, inData: e })
+  ), n;
+}, oe = ({ inColumns: t = [], inData: e = [] } = {}) => ee({ inColumns: t, inData: e }), ne = "tr", re = {
   class: "align-middle"
-}, re = [], se = {
+}, se = [], le = {
   tagName: ne,
-  attributes: oe,
-  children: re
-}, le = "td", ae = {
+  attributes: re,
+  children: se
+}, ae = "td", ce = {
   class: "align-middle py-2"
-}, ce = {
-  tagName: le,
-  attributes: ae
-}, ie = () => structuredClone(ce), ue = ({ inColumns: t = [] } = {}) => {
-  const e = structuredClone(se);
-  return e.children = t.map(() => ie()), e;
-}, de = ({ inColumns: t = [] } = {}) => ue({ inColumns: t }), f = {
-  inputs: Tt,
+}, ie = {
+  tagName: ae,
+  attributes: ce
+}, ue = () => structuredClone(ie), de = ({ inColumns: t = [] } = {}) => {
+  const e = structuredClone(le);
+  return e.children = t.map(() => ue()), e;
+}, be = ({ inColumns: t = [] } = {}) => de({ inColumns: t }), g = {
+  inputs: xt,
   inputsWithSave: Kt,
-  totals: ee,
-  empty: de
-}, be = ({ inFooter: t = [], inColumns: e = [], inData: o = [] } = {}) => {
-  const n = structuredClone(dt);
-  return n.children = t.map((r) => {
-    if (!Object.hasOwn(f, r))
+  totals: oe,
+  empty: be
+}, me = ({ inFooter: t = [], inColumns: e = [], inData: n = [] } = {}) => {
+  const o = structuredClone(bt);
+  return o.children = t.map((r) => {
+    if (!Object.hasOwn(g, r))
       throw new Error(`Unknown footer "${r}".`);
-    return f[r]({ inColumns: e, inData: o });
-  }), n;
-}, me = ({
+    return g[r]({ inColumns: e, inData: n });
+  }), o;
+}, he = ({
   inColumns: t = [],
   inData: e = [],
-  inFooter: o = []
+  inFooter: n = []
 } = {}) => {
-  const n = structuredClone(I), r = [
-    P({ inColumns: t }),
-    at({ inData: e, inColumns: t })
+  const o = structuredClone(F), r = [
+    _({ inColumns: t }),
+    ct({ inData: e, inColumns: t })
   ];
-  if (!Array.isArray(o))
+  if (!Array.isArray(n))
     throw new TypeError("The footer property must be an array of footer names.");
-  return o.length > 0 && r.push(be({
-    inFooter: o,
+  return n.length > 0 && r.push(me({
+    inFooter: n,
     inColumns: t,
     inData: e
-  })), n.children = r, n;
-}, he = (t) => {
-  const [e, o] = t.children;
+  })), o.children = r, o;
+}, pe = (t) => {
+  const [e, n] = t.children;
   e.children[0].children.unshift({
     tagName: "th",
     textContent: "#"
-  }), o.children.forEach((n, r) => {
-    n.children.unshift({
+  }), n.children.forEach((o, r) => {
+    o.children.unshift({
       tagName: "td",
       textContent: String(r + 1)
     });
   });
-}, pe = (t) => t === !0 ? [{ label: "Apply", type: "button" }] : Array.isArray(t) ? t : [], fe = (t, e) => {
-  const o = pe(e);
-  if (o.length === 0) return;
-  const [n, r] = t.children;
-  n.children[0].children.push({
+}, fe = (t) => t === !0 ? [{ label: "Apply", type: "button" }] : Array.isArray(t) ? t : [], ge = (t, e) => {
+  const n = fe(e);
+  if (n.length === 0) return;
+  const [o, r] = t.children;
+  o.children[0].children.push({
     tagName: "th",
     textContent: "Actions"
   }), r.children.forEach((s) => {
     s.children.push({
       tagName: "td",
-      children: o.map((l) => ({
+      children: n.map((l) => ({
         tagName: "button",
         attributes: { type: l.type || "button" },
         textContent: l.label
       }))
     });
   });
-}, ge = (t, e = {}) => (e.showSerial && he(t), e.showOptions && fe(t, e.showOptions), t), ye = {
+}, ye = (t, e = {}) => (e.showSerial && pe(t), e.showOptions && ge(t, e.showOptions), t), we = {
   type: "table",
   data: [
     {
@@ -249,7 +257,7 @@ const E = {
     "baseUnit"
   ],
   options: {}
-}, we = {
+}, Ce = {
   type: "table",
   data: [
     {
@@ -264,7 +272,7 @@ const E = {
   options: {
     showSerial: !0
   }
-}, Ce = {
+}, $e = {
   type: "table",
   data: [
     {
@@ -279,7 +287,7 @@ const E = {
   options: {
     showOptions: !0
   }
-}, $e = {
+}, Ne = {
   type: "table",
   data: [
     {
@@ -303,7 +311,7 @@ const E = {
       }
     ]
   }
-}, Ne = {
+}, Ae = {
   type: "table",
   data: [
     {
@@ -324,7 +332,7 @@ const E = {
       }
     ]
   }
-}, Ae = {
+}, Te = {
   type: "table",
   data: [
     {
@@ -356,7 +364,7 @@ const E = {
     "inputsWithSave"
   ],
   options: {}
-}, Te = {
+}, xe = {
   type: "table",
   data: [
     {
@@ -376,7 +384,7 @@ const E = {
     "totals"
   ],
   options: {}
-}, xe = {
+}, Ee = {
   type: "table",
   data: [
     {
@@ -395,7 +403,7 @@ const E = {
     "empty"
   ],
   options: {}
-}, Ee = {
+}, ke = {
   type: "tableHead",
   data: [],
   columns: [
@@ -403,7 +411,7 @@ const E = {
     "baseUnit"
   ],
   options: {}
-}, ke = {
+}, Be = {
   type: "tableBody",
   data: [
     {
@@ -416,266 +424,266 @@ const E = {
     "baseUnit"
   ],
   options: {}
-}, Be = {
-  table: ye,
-  tableWithSerial: we,
-  tableWithDefaultAction: Ce,
-  tableWithCustomActions: $e,
-  tableWithSerialAndActions: Ne,
-  tableWithFooter: Ae,
+}, Ue = {
+  table: we,
+  tableWithSerial: Ce,
+  tableWithDefaultAction: $e,
+  tableWithCustomActions: Ne,
+  tableWithSerialAndActions: Ae,
+  tableWithFooter: Te,
   tableWithFooterSave: Se,
-  tableWithTotals: Te,
-  tableWithMultipleFooters: xe,
-  tableHead: Ee,
-  tableBody: ke
-}, g = ({
+  tableWithTotals: xe,
+  tableWithMultipleFooters: Ee,
+  tableHead: ke,
+  tableBody: Be
+}, y = ({
   type: t = "table",
   inData: e,
-  inColumns: o,
-  footer: n = [],
+  inColumns: n,
+  footer: o = [],
   options: r = {}
 } = {}) => {
   if (t === "table") {
-    const s = me({
-      inColumns: o,
+    const s = he({
+      inColumns: n,
       inData: e,
-      inFooter: n
+      inFooter: o
     });
-    return ge(s, r);
+    return ye(s, r);
   }
   throw new Error(`Unknown table renderer type "${t}".`);
 };
-g.requests = Be;
-const y = ({ inItems: t, inRecipe: e, inExecute: o }) => {
-  const n = t, r = e, s = o;
-  return n.map((l) => p({
+y.requests = Ue;
+const w = ({ inItems: t, inRecipe: e, inExecute: n }) => {
+  const o = t, r = e, s = n;
+  return o.map((l) => f({
     inSource: l,
     inRecipe: r,
     inExecute: s
   })).flat(1 / 0).filter(Boolean);
-}, Ue = ({ inSource: t, inRecipe: e, inExecute: o }) => {
-  const n = t, r = e, s = o;
-  let l = n;
+}, je = ({ inSource: t, inRecipe: e, inExecute: n }) => {
+  const o = t, r = e, s = n;
+  let l = o;
   typeof s == "function" && (l = s({
-    inSource: n,
+    inSource: o,
     inRecipe: r
   }));
-  for (const [a, d] of Object.entries(l))
-    Array.isArray(d) && r && a in r && (l[a] = y({
-      inItems: d,
+  for (const [a, i] of Object.entries(l))
+    Array.isArray(i) && r && a in r && (l[a] = w({
+      inItems: i,
       inRecipe: r[a],
       inExecute: s
     }));
   return l;
-}, p = ({ inSource: t, inRecipe: e, inExecute: o }) => {
-  const n = t, r = e, s = o;
-  return Array.isArray(n) ? y({
-    inItems: n,
+}, f = ({ inSource: t, inRecipe: e, inExecute: n }) => {
+  const o = t, r = e, s = n;
+  return Array.isArray(o) ? w({
+    inItems: o,
     inRecipe: r,
     inExecute: s
-  }) : typeof n == "object" && n !== null ? Ue({
-    inSource: n,
+  }) : typeof o == "object" && o !== null ? je({
+    inSource: o,
     inRecipe: r,
     inExecute: s
-  }) : n;
-}, je = ({ inKey: t, inDirective: e }) => {
-  const o = t, n = e;
-  return (n == null ? void 0 : n.alterKey) || o;
-}, ve = ({ inValue: t, inDirective: e, inExecute: o }) => {
-  const n = t, r = e, s = o;
-  return r && "transform" in r ? p({
-    inSource: n,
+  }) : o;
+}, ve = ({ inKey: t, inDirective: e }) => {
+  const n = t, o = e;
+  return (o == null ? void 0 : o.alterKey) || n;
+}, Oe = ({ inValue: t, inDirective: e, inExecute: n }) => {
+  const o = t, r = e, s = n;
+  return r && "transform" in r ? f({
+    inSource: o,
     inRecipe: r,
     inExecute: s
-  }) : n;
-}, Oe = ({ inValue: t, inDirective: e }) => {
-  const o = t, n = e;
-  return (n == null ? void 0 : n.valueType) === "array" && !Array.isArray(o) ? [o] : o;
+  }) : o;
+}, Ie = ({ inValue: t, inDirective: e }) => {
+  const n = t, o = e;
+  return (o == null ? void 0 : o.valueType) === "array" && !Array.isArray(n) ? [n] : n;
 }, We = ({ inValue: t, inDirective: e }) => {
-  const o = t, n = e;
-  return n != null && n.valueKey && o && typeof o == "object" ? o[n.valueKey] : o;
-}, Ie = ({ inSource: t, inTransform: e, inExecute: o }) => {
-  const n = t, r = e, s = o, l = {};
-  for (const [a, d] of Object.entries(n)) {
+  const n = t, o = e;
+  return o != null && o.valueKey && n && typeof n == "object" ? n[o.valueKey] : n;
+}, Fe = ({ inSource: t, inTransform: e, inExecute: n }) => {
+  const o = t, r = e, s = n, l = {};
+  for (const [a, i] of Object.entries(o)) {
     if (!(a in r))
       continue;
-    const u = r[a], c = je({ inKey: a, inDirective: u });
-    let i = d;
-    i = ve({
-      inValue: i,
+    const u = r[a], c = ve({ inKey: a, inDirective: u });
+    let m = i;
+    m = Oe({
+      inValue: m,
       inDirective: u,
       inExecute: s
-    }), i = Oe({ inValue: i, inDirective: u }), i = We({ inValue: i, inDirective: u }), l[c] = i;
+    }), m = Ie({ inValue: m, inDirective: u }), m = We({ inValue: m, inDirective: u }), l[c] = m;
   }
   return l;
 };
-function w(t, e) {
-  for (const o in t)
-    typeof t[o] == "object" && t[o] !== null ? w(t[o], e) : typeof t[o] == "string" && t[o] === "${}" && (t[o] = e);
+function C(t, e) {
+  for (const n in t)
+    typeof t[n] == "object" && t[n] !== null ? C(t[n], e) : typeof t[n] == "string" && t[n] === "${}" && (t[n] = e);
   return t;
 }
-const Fe = ({ inSource: t, inOperation: e, inExecute: o }) => {
-  const n = t, r = e;
+const Je = ({ inSource: t, inOperation: e, inExecute: n }) => {
+  const o = t, r = e;
   for (const [s, l] of Object.entries(r))
-    if ("operationType" in l && l.operationType === "loopArray" && s in n) {
-      const a = n[s].map((d) => {
+    if ("operationType" in l && l.operationType === "loopArray" && s in o) {
+      const a = o[s].map((i) => {
         const u = structuredClone(l == null ? void 0 : l.template);
-        return w(u, d), u;
+        return C(u, i), u;
       });
-      n[s] = a;
+      o[s] = a;
     }
-  return n;
-}, Je = ({ inSource: t, inTemplate: e }) => {
-  const o = t;
-  let n = [];
-  for (const [r, s] of Object.entries(o)) {
+  return o;
+}, De = ({ inSource: t, inTemplate: e }) => {
+  const n = t;
+  let o = [];
+  for (const [r, s] of Object.entries(n)) {
     const l = structuredClone(e);
-    l.textContent = s, n.push(l);
+    l.textContent = s, o.push(l);
   }
-  return n;
-}, De = ({ inSource: t, inBuild: e, inExecute: o }) => {
-  const n = structuredClone(t), r = structuredClone(e);
+  return o;
+}, Ve = ({ inSource: t, inBuild: e, inExecute: n }) => {
+  const o = structuredClone(t), r = structuredClone(e);
   for (const [s, l] of Object.entries(r)) {
-    const a = Je({
-      inSource: n[s],
+    const a = De({
+      inSource: o[s],
       inTemplate: l
     });
-    n[s] = a;
+    o[s] = a;
   }
-  return n;
-}, Ve = ({ inSource: t, inTemplate: e }) => t.map((n) => {
-  const r = structuredClone(e == null ? void 0 : e.row), s = Re({
-    inSource: n,
+  return o;
+}, Re = ({ inSource: t, inTemplate: e }) => t.map((o) => {
+  const r = structuredClone(e == null ? void 0 : e.row), s = He({
+    inSource: o,
     inTemplate: e == null ? void 0 : e.cell
   });
   return r.children = s, r;
-}), Re = ({ inSource: t, inTemplate: e }) => {
-  const o = t;
-  let n = [];
-  for (const [r, s] of Object.entries(o)) {
+}), He = ({ inSource: t, inTemplate: e }) => {
+  const n = t;
+  let o = [];
+  for (const [r, s] of Object.entries(n)) {
     const l = structuredClone(e);
-    l.textContent = s, n.push(l);
+    l.textContent = s, o.push(l);
   }
-  return n;
-}, He = ({ inSource: t, inBuild: e, inExecute: o }) => {
-  const n = structuredClone(t), r = structuredClone(e);
+  return o;
+}, Me = ({ inSource: t, inBuild: e, inExecute: n }) => {
+  const o = structuredClone(t), r = structuredClone(e);
   for (const [s, l] of Object.entries(r)) {
-    const a = Ve({
-      inSource: n[s],
+    const a = Re({
+      inSource: o[s],
       inTemplate: l
     });
-    n[s] = a;
+    o[s] = a;
   }
-  return n;
-}, Me = ({ inSource: t, inTemplate: e }) => t.map((r) => {
+  return o;
+}, Le = ({ inSource: t, inTemplate: e }) => t.map((r) => {
   const s = structuredClone(e);
   return s.textContent = r == null ? void 0 : r.columnName, s;
-}), Ke = ({ inSource: t, inBuild: e, inExecute: o }) => {
-  const n = structuredClone(t), r = structuredClone(e);
+}), Ke = ({ inSource: t, inBuild: e, inExecute: n }) => {
+  const o = structuredClone(t), r = structuredClone(e);
   for (const [s, l] of Object.entries(r)) {
-    const a = Me({
-      inSource: n[s],
+    const a = Le({
+      inSource: o[s],
       inTemplate: l == null ? void 0 : l.cell
     });
-    n[s] = l == null ? void 0 : l.row, n[s].children = a;
+    o[s] = l == null ? void 0 : l.row, o[s].children = a;
   }
-  return n;
-}, qe = ({ inSource: t, inTemplate: e }) => t.map((n) => {
+  return o;
+}, qe = ({ inSource: t, inTemplate: e }) => t.map((o) => {
   const r = structuredClone(e == null ? void 0 : e.row), s = Ge({
-    inSource: n,
+    inSource: o,
     inTemplate: e == null ? void 0 : e.cell
   });
   return r.children = s, r;
 }), Ge = ({ inSource: t, inTemplate: e }) => {
-  const o = t;
-  let n = [];
-  for (const [r, s] of Object.entries(o)) {
+  const n = t;
+  let o = [];
+  for (const [r, s] of Object.entries(n)) {
     const l = structuredClone(e);
-    l.textContent = s, n.push(l);
+    l.textContent = s, o.push(l);
   }
-  return n;
-}, ze = ({ inSource: t, inBuild: e, inExecute: o }) => {
-  const n = structuredClone(t), r = structuredClone(e);
+  return o;
+}, ze = ({ inSource: t, inBuild: e, inExecute: n }) => {
+  const o = structuredClone(t), r = structuredClone(e);
   for (const [s, l] of Object.entries(r)) {
     const a = qe({
-      inSource: n[s],
+      inSource: o[s],
       inTemplate: l
     });
-    n[s] = l == null ? void 0 : l.body, n[s].children = a;
+    o[s] = l == null ? void 0 : l.body, o[s].children = a;
   }
-  return n;
-}, Le = ({ inSource: t, inTemplate: e }) => t.map((n) => {
-  const r = structuredClone(e == null ? void 0 : e.row), s = Pe({
-    inSource: n,
+  return o;
+}, Pe = ({ inSource: t, inTemplate: e }) => t.map((o) => {
+  const r = structuredClone(e == null ? void 0 : e.row), s = _e({
+    inSource: o,
     inTemplate: e == null ? void 0 : e.cell
   });
   return r.children = s, r;
-}), Pe = ({ inSource: t, inTemplate: e }) => {
-  const o = t;
-  let n = [];
-  for (const [r, s] of Object.entries(o)) {
+}), _e = ({ inSource: t, inTemplate: e }) => {
+  const n = t;
+  let o = [];
+  for (const [r, s] of Object.entries(n)) {
     const l = structuredClone(e);
-    l.textContent = s, n.push(l);
+    l.textContent = s, o.push(l);
   }
-  return n;
-}, _e = ({ inSource: t, inBuild: e, inExecute: o }) => {
-  const n = structuredClone(t), r = structuredClone(e);
+  return o;
+}, Xe = ({ inSource: t, inBuild: e, inExecute: n }) => {
+  const o = structuredClone(t), r = structuredClone(e);
   for (const [s, l] of Object.entries(r)) {
-    const a = Le({
-      inSource: n[s],
+    const a = Pe({
+      inSource: o[s],
       inTemplate: l
     });
-    n[s] = l == null ? void 0 : l.body, n[s].children = a;
+    o[s] = l == null ? void 0 : l.body, o[s].children = a;
   }
-  return n;
-}, Xe = ({ inSource: t, inTransform: e, inExecute: o }) => {
-  const n = e, r = {};
-  for (let [s, l] of Object.entries(n))
+  return o;
+}, Qe = ({ inSource: t, inTransform: e, inExecute: n }) => {
+  const o = e, r = {};
+  for (let [s, l] of Object.entries(o))
     console.log("aaaaaaaaa : ", s);
   return r;
-}, m = ({ inSource: t, inRecipe: e }) => {
-  let o = t;
-  const n = e;
-  return n && typeof n == "object" && "transform" in n && (o = Ie({
-    inSource: o,
-    inTransform: n.transform,
-    inExecute: m
-  })), n && typeof n == "object" && "operation" in n && (o = Fe({
-    inSource: o,
-    inOperation: n.operation,
-    inExecute: m
-  })), n && typeof n == "object" && "build" in n && (o = De({
-    inSource: o,
-    inBuild: n == null ? void 0 : n.build,
-    inExecute: m
-  })), n && typeof n == "object" && "buildCollection" in n && (o = He({
-    inSource: o,
-    inBuild: n == null ? void 0 : n.buildCollection,
-    inExecute: m
-  })), n && typeof n == "object" && "buildArray" in n && (o = Ke({
-    inSource: o,
-    inBuild: n == null ? void 0 : n.buildArray,
-    inExecute: m
-  })), n && typeof n == "object" && "buildBody" in n && (o = ze({
-    inSource: o,
-    inBuild: n == null ? void 0 : n.buildBody,
-    inExecute: m
-  })), n && typeof n == "object" && "objectToArray" in n && (o = _e({
-    inSource: o,
-    inBuild: n == null ? void 0 : n.objectToArray,
-    inExecute: m
-  })), n && typeof n == "object" && "spec" in n && (o = Xe({
-    inSource: o,
-    inTransform: n == null ? void 0 : n.spec,
-    inExecute: m
-  })), o;
-}, C = (t, e) => p({
+}, b = ({ inSource: t, inRecipe: e }) => {
+  let n = t;
+  const o = e;
+  return o && typeof o == "object" && "transform" in o && (n = Fe({
+    inSource: n,
+    inTransform: o.transform,
+    inExecute: b
+  })), o && typeof o == "object" && "operation" in o && (n = Je({
+    inSource: n,
+    inOperation: o.operation,
+    inExecute: b
+  })), o && typeof o == "object" && "build" in o && (n = Ve({
+    inSource: n,
+    inBuild: o == null ? void 0 : o.build,
+    inExecute: b
+  })), o && typeof o == "object" && "buildCollection" in o && (n = Me({
+    inSource: n,
+    inBuild: o == null ? void 0 : o.buildCollection,
+    inExecute: b
+  })), o && typeof o == "object" && "buildArray" in o && (n = Ke({
+    inSource: n,
+    inBuild: o == null ? void 0 : o.buildArray,
+    inExecute: b
+  })), o && typeof o == "object" && "buildBody" in o && (n = ze({
+    inSource: n,
+    inBuild: o == null ? void 0 : o.buildBody,
+    inExecute: b
+  })), o && typeof o == "object" && "objectToArray" in o && (n = Xe({
+    inSource: n,
+    inBuild: o == null ? void 0 : o.objectToArray,
+    inExecute: b
+  })), o && typeof o == "object" && "spec" in o && (n = Qe({
+    inSource: n,
+    inTransform: o == null ? void 0 : o.spec,
+    inExecute: b
+  })), n;
+}, $ = (t, e) => f({
   inSource: t,
   inRecipe: e,
-  inExecute: m
-}), Qe = {
+  inExecute: b
+}), Ye = {
   children: ""
-}, Ye = {
+}, Ze = {
   children: {
     operationType: "loopArray",
     template: {
@@ -686,33 +694,33 @@ const Fe = ({ inSource: t, inOperation: e, inExecute: o }) => {
       textContent: "${}"
     }
   }
-}, Ze = {
-  transform: Qe,
-  operation: Ye
-}, $ = ({
+}, to = {
+  transform: Ye,
+  operation: Ze
+}, N = ({
   inData: t
 }) => {
-  let o = C({
+  let n = $({
     children: t
-  }, Ze);
-  return o == null ? void 0 : o.children;
-}, tn = "select", en = {
+  }, to);
+  return n == null ? void 0 : n.children;
+}, eo = "select", oo = {
   id: "LedgerName"
-}, nn = [], on = {
-  tagName: tn,
-  attributes: en,
-  children: nn
-}, rn = ({
+}, no = [], ro = {
+  tagName: eo,
+  attributes: oo,
+  children: no
+}, so = ({
   inData: t
 }) => {
-  let o = $({
+  let n = N({
     inData: t
   });
-  const n = structuredClone(on);
-  return n.children = o, n;
-}, sn = "table", ln = {
+  const o = structuredClone(ro);
+  return o.children = n, o;
+}, lo = "table", ao = {
   class: "table table-hover table-striped align-middle border mb-0"
-}, an = [
+}, co = [
   {
     tagName: "thead",
     attributes: {
@@ -729,11 +737,11 @@ const Fe = ({ inSource: t, inOperation: e, inExecute: o }) => {
     tagName: "tbody",
     children: []
   }
-], cn = {
-  tagName: sn,
-  attributes: ln,
-  children: an
-}, un = {
+], io = {
+  tagName: lo,
+  attributes: ao,
+  children: co
+}, uo = {
   columns: {
     row: {
       tagName: "tr"
@@ -743,7 +751,7 @@ const Fe = ({ inSource: t, inOperation: e, inExecute: o }) => {
       textContent: "${}"
     }
   }
-}, dn = {
+}, bo = {
   rows: {
     body: {
       tagName: "tbody"
@@ -756,47 +764,47 @@ const Fe = ({ inSource: t, inOperation: e, inExecute: o }) => {
       textContent: "${}"
     }
   }
-}, bn = {
-  buildArray: un,
-  buildBody: dn
-}, mn = ({
+}, mo = {
+  buildArray: uo,
+  buildBody: bo
+}, ho = ({
   inColumns: t = [],
   inData: e = [],
-  inFooter: o = []
+  inFooter: n = []
 } = {}) => {
-  const n = structuredClone(cn), r = t.map((l) => ({
+  const o = structuredClone(io), r = t.map((l) => ({
     columnName: l
-  })), s = C({ columns: r, rows: e }, bn);
-  return n.children[0].children = [s == null ? void 0 : s.columns], n.children[1] = s == null ? void 0 : s.rows, n;
-}, hn = (t) => {
-  const [e, o] = t.children;
+  })), s = $({ columns: r, rows: e }, mo);
+  return o.children[0].children = [s == null ? void 0 : s.columns], o.children[1] = s == null ? void 0 : s.rows, o;
+}, po = (t) => {
+  const [e, n] = t.children;
   console.log("aaaaaaa--", e.children[0]), e.children[0].children.unshift({
     tagName: "th",
     textContent: "#"
-  }), o.children.forEach((n, r) => {
-    n.children.unshift({
+  }), n.children.forEach((o, r) => {
+    o.children.unshift({
       tagName: "td",
       textContent: String(r + 1)
     });
   });
-}, pn = (t) => t === !0 ? [{ label: "Apply", type: "button" }] : Array.isArray(t) ? t : [], fn = (t, e) => {
-  const o = pn(e);
-  if (o.length === 0) return;
-  const [n, r] = t.children;
-  n.children[0].children.push({
+}, fo = (t) => t === !0 ? [{ label: "Apply", type: "button" }] : Array.isArray(t) ? t : [], go = (t, e) => {
+  const n = fo(e);
+  if (n.length === 0) return;
+  const [o, r] = t.children;
+  o.children[0].children.push({
     tagName: "th",
     textContent: "Actions"
   }), r.children.forEach((s) => {
     s.children.push({
       tagName: "td",
-      children: o.map((l) => ({
+      children: n.map((l) => ({
         tagName: "button",
         attributes: { type: l.type || "button" },
         textContent: l.label
       }))
     });
   });
-}, gn = (t, e = {}) => (e.showSerial && hn(t), e.showOptions && fn(t, e.showOptions), t), yn = {
+}, yo = (t, e = {}) => (e.showSerial && po(t), e.showOptions && go(t, e.showOptions), t), wo = {
   type: "table",
   data: [
     {
@@ -809,7 +817,7 @@ const Fe = ({ inSource: t, inOperation: e, inExecute: o }) => {
     "baseUnit"
   ],
   options: {}
-}, wn = {
+}, Co = {
   type: "table",
   data: [
     {
@@ -824,7 +832,7 @@ const Fe = ({ inSource: t, inOperation: e, inExecute: o }) => {
   options: {
     showSerial: !0
   }
-}, Cn = {
+}, $o = {
   type: "table",
   data: [
     {
@@ -839,7 +847,7 @@ const Fe = ({ inSource: t, inOperation: e, inExecute: o }) => {
   options: {
     showOptions: !0
   }
-}, $n = {
+}, No = {
   type: "table",
   data: [
     {
@@ -863,7 +871,7 @@ const Fe = ({ inSource: t, inOperation: e, inExecute: o }) => {
       }
     ]
   }
-}, Nn = {
+}, Ao = {
   type: "table",
   data: [
     {
@@ -884,7 +892,7 @@ const Fe = ({ inSource: t, inOperation: e, inExecute: o }) => {
       }
     ]
   }
-}, An = {
+}, To = {
   type: "table",
   data: [
     {
@@ -900,7 +908,7 @@ const Fe = ({ inSource: t, inOperation: e, inExecute: o }) => {
     "inputs"
   ],
   options: {}
-}, Sn = {
+}, So = {
   type: "table",
   data: [
     {
@@ -916,7 +924,7 @@ const Fe = ({ inSource: t, inOperation: e, inExecute: o }) => {
     "inputsWithSave"
   ],
   options: {}
-}, Tn = {
+}, xo = {
   type: "table",
   data: [
     {
@@ -936,7 +944,7 @@ const Fe = ({ inSource: t, inOperation: e, inExecute: o }) => {
     "totals"
   ],
   options: {}
-}, xn = {
+}, Eo = {
   type: "table",
   data: [
     {
@@ -955,7 +963,7 @@ const Fe = ({ inSource: t, inOperation: e, inExecute: o }) => {
     "empty"
   ],
   options: {}
-}, En = {
+}, ko = {
   type: "tableHead",
   data: [],
   columns: [
@@ -963,7 +971,7 @@ const Fe = ({ inSource: t, inOperation: e, inExecute: o }) => {
     "baseUnit"
   ],
   options: {}
-}, kn = {
+}, Bo = {
   type: "tableBody",
   data: [
     {
@@ -976,64 +984,64 @@ const Fe = ({ inSource: t, inOperation: e, inExecute: o }) => {
     "baseUnit"
   ],
   options: {}
-}, Bn = {
-  table: yn,
-  tableWithSerial: wn,
-  tableWithDefaultAction: Cn,
-  tableWithCustomActions: $n,
-  tableWithSerialAndActions: Nn,
-  tableWithFooter: An,
-  tableWithFooterSave: Sn,
-  tableWithTotals: Tn,
-  tableWithMultipleFooters: xn,
-  tableHead: En,
-  tableBody: kn
-}, N = ({
+}, Uo = {
+  table: wo,
+  tableWithSerial: Co,
+  tableWithDefaultAction: $o,
+  tableWithCustomActions: No,
+  tableWithSerialAndActions: Ao,
+  tableWithFooter: To,
+  tableWithFooterSave: So,
+  tableWithTotals: xo,
+  tableWithMultipleFooters: Eo,
+  tableHead: ko,
+  tableBody: Bo
+}, A = ({
   inData: t,
   inColumns: e,
-  footer: o = [],
-  options: n
+  footer: n = [],
+  options: o
 } = {}) => {
-  const r = mn({
+  const r = ho({
     inColumns: e,
     inData: t,
-    inFooter: o
+    inFooter: n
   });
-  return n ? gn(r, n) : r;
+  return o ? yo(r, o) : r;
 };
-N.requests = Bn;
-const Un = {
-  table: g,
-  select: rn,
-  selectOptionsOnly: $,
-  tableFromSpec: N
-}, A = ({
+A.requests = Uo;
+const jo = {
+  table: y,
+  select: so,
+  selectOptionsOnly: N,
+  tableFromSpec: A
+}, T = ({
   type: t = "table",
   data: e,
-  columns: o,
-  options: n
+  columns: n,
+  options: o
 }) => {
-  const s = Un[t];
+  const s = jo[t];
   return s({
-    inColumns: o,
+    inColumns: n,
     inData: e,
-    options: n
+    options: o
   });
 };
-j(A);
-const jn = {
+v(T);
+const vo = {
   version: "v9",
   description: "JSON-to-DOM engine with SVG namespace support, mixed text content, and centralized traversal"
-}, vn = ({ inFuncDefinition: t, inReviewSpec: e } = {}) => {
+}, Oo = ({ inFuncDefinition: t, inReviewSpec: e } = {}) => {
   if (typeof globalThis > "u" || !t) return;
   globalThis.ks ?? (globalThis.ks = {});
-  const o = {
-    meta: jn,
+  const n = {
+    meta: vo,
     buildSpecElement: t,
     reviewSpec: e
   };
-  globalThis.ks["json-to-tag"] = o, globalThis.ks.jsonToTag = o;
-}, On = (t) => t == null ? null : typeof Node < "u" && t instanceof Node ? t : typeof t == "string" || typeof t == "number" ? document.createTextNode(String(t)) : typeof t == "object" && (t.nodeType === 3 || t.tagName === "#text" || !t.tagName && (t.textContent !== void 0 || t.text !== void 0)) ? document.createTextNode(t.textContent ?? t.text ?? "") : T(t), S = (t) => Array.isArray(t) ? t.map(On).flat(1 / 0).filter(Boolean) : [], Wn = (t) => (t == null, t), In = "http://www.w3.org/2000/svg", Fn = /* @__PURE__ */ new Set([
+  globalThis.ks["json-to-tag"] = n, globalThis.ks.jsonToTag = n;
+}, Io = (t) => t == null ? null : typeof Node < "u" && t instanceof Node ? t : typeof t == "string" || typeof t == "number" ? document.createTextNode(String(t)) : typeof t == "object" && (t.nodeType === 3 || t.tagName === "#text" || !t.tagName && (t.textContent !== void 0 || t.text !== void 0)) ? document.createTextNode(t.textContent ?? t.text ?? "") : x(t), S = (t) => Array.isArray(t) ? t.map(Io).flat(1 / 0).filter(Boolean) : [], Wo = (t) => (t == null, t), Fo = "http://www.w3.org/2000/svg", Jo = /* @__PURE__ */ new Set([
   "svg",
   "path",
   "symbol",
@@ -1060,22 +1068,22 @@ const jn = {
   "fegaussianblur",
   "femerge",
   "femergenode"
-]), Jn = ({ inTagName: t }) => {
+]), Do = ({ inTagName: t }) => {
   const e = t == null ? void 0 : t.toLowerCase();
   if (!e) return null;
   if (e === "checkbox") {
-    const o = document.createElement("input");
-    return o.type = "checkbox", o;
+    const n = document.createElement("input");
+    return n.type = "checkbox", n;
   }
-  return Fn.has(e) ? document.createElementNS(In, e) : document.createElement(e);
-}, Dn = ({ inElement: t, inTextContent: e }) => (!t || e === void 0 || e === null || (t.textContent = e), t), Vn = ({ inElement: t, inProperties: e }) => (t && e && typeof e == "object" && Object.assign(t, e), t), Rn = "http://www.w3.org/1999/xlink", Hn = ({ inElement: t, inAttributes: e }) => {
-  const o = t, n = e;
-  if (!o || !n || typeof n != "object")
-    return o;
-  const r = typeof SVGElement < "u" ? o instanceof SVGElement : o.namespaceURI === "http://www.w3.org/2000/svg";
-  return Object.entries(n).forEach(([s, l]) => {
+  return Jo.has(e) ? document.createElementNS(Fo, e) : document.createElement(e);
+}, Vo = ({ inElement: t, inTextContent: e }) => (!t || e === void 0 || e === null || (t.textContent = e), t), Ro = ({ inElement: t, inProperties: e }) => (t && e && typeof e == "object" && Object.assign(t, e), t), Ho = "http://www.w3.org/1999/xlink", Mo = ({ inElement: t, inAttributes: e }) => {
+  const n = t, o = e;
+  if (!n || !o || typeof o != "object")
+    return n;
+  const r = typeof SVGElement < "u" ? n instanceof SVGElement : n.namespaceURI === "http://www.w3.org/2000/svg";
+  return Object.entries(o).forEach(([s, l]) => {
     if (s === "class") {
-      r ? o.setAttribute("class", String(l)) : o.className = l;
+      r ? n.setAttribute("class", String(l)) : n.className = l;
       return;
     }
     if (s === "xlink:href" || s === "href") {
@@ -1083,46 +1091,46 @@ const jn = {
         const a = String(l);
         if (r)
           try {
-            o.setAttributeNS(Rn, "href", a);
+            n.setAttributeNS(Ho, "href", a);
           } catch {
           }
-        o.setAttribute("href", a), o.setAttribute("xlink:href", a);
+        n.setAttribute("href", a), n.setAttribute("xlink:href", a);
       }
       return;
     }
     if (typeof l == "boolean") {
-      l ? o.setAttribute(s, "") : o.removeAttribute(s);
+      l ? n.setAttribute(s, "") : n.removeAttribute(s);
       return;
     }
-    l != null && o.setAttribute(s, String(l));
-  }), o;
-}, Mn = ({ inElement: t, inClassList: e }) => {
+    l != null && n.setAttribute(s, String(l));
+  }), n;
+}, Lo = ({ inElement: t, inClassList: e }) => {
   if (!t || !e) return t;
-  const o = typeof e == "string" ? e.split(/\s+/).filter(Boolean) : Array.isArray(e) ? e.filter((n) => typeof n == "string" && n.trim()) : [];
-  return o.length && t.classList.add(...o), t;
-}, Kn = (t) => {
+  const n = typeof e == "string" ? e.split(/\s+/).filter(Boolean) : Array.isArray(e) ? e.filter((o) => typeof o == "string" && o.trim()) : [];
+  return n.length && t.classList.add(...n), t;
+}, Ko = (t) => {
   if (!t || typeof t != "object" || Array.isArray(t) || !t.tagName) return null;
-  const e = Jn({ inTagName: t.tagName });
+  const e = Do({ inTagName: t.tagName });
   if (!e) return null;
-  if (Dn({
+  if (Vo({
     inElement: e,
-    inTextContent: Wn(t.textContent),
+    inTextContent: Wo(t.textContent),
     inTagName: t.tagName
-  }), Vn({
+  }), Ro({
     inElement: e,
     inProperties: t.properties
-  }), Hn({
+  }), Mo({
     inElement: e,
     inAttributes: t.attributes
-  }), Mn({
+  }), Lo({
     inElement: e,
     inClassList: t.classList
   }), Array.isArray(t.children)) {
-    const o = S(t.children);
-    o.length && e.append(...o);
+    const n = S(t.children);
+    n.length && e.append(...n);
   }
   return e;
-}, T = (t) => t == null ? null : typeof Node < "u" && t instanceof Node ? t : Array.isArray(t) ? S(t) : typeof t == "object" ? Kn(t) : typeof t == "string" || typeof t == "number" ? document.createTextNode(String(t)) : null, qn = "./tags.schema.json", Gn = {
+}, x = (t) => t == null ? null : typeof Node < "u" && t instanceof Node ? t : Array.isArray(t) ? S(t) : typeof t == "object" ? Ko(t) : typeof t == "string" || typeof t == "number" ? document.createTextNode(String(t)) : null, qo = "./tags.schema.json", Go = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
@@ -1130,7 +1138,7 @@ const jn = {
     "role"
   ],
   childTags: []
-}, zn = {
+}, zo = {
   allowsTextContent: !1,
   allowsChildren: !1,
   allowedAttributes: [
@@ -1143,7 +1151,7 @@ const jn = {
     "required",
     "list"
   ]
-}, Ln = {
+}, Po = {
   allowsTextContent: !1,
   allowsChildren: !1,
   allowedAttributes: [
@@ -1154,7 +1162,7 @@ const jn = {
     "disabled",
     "required"
   ]
-}, Pn = {
+}, _o = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
@@ -1163,7 +1171,7 @@ const jn = {
   childTags: [
     "col"
   ]
-}, _n = {
+}, Xo = {
   allowsTextContent: !1,
   allowsChildren: !1,
   allowedAttributes: [
@@ -1171,14 +1179,14 @@ const jn = {
     "style",
     "width"
   ]
-}, Xn = {
+}, Qo = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
     "for"
   ],
   childTags: []
-}, Qn = {
+}, Yo = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
@@ -1191,7 +1199,7 @@ const jn = {
     "target"
   ],
   childTags: []
-}, Yn = {
+}, Zo = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
@@ -1204,27 +1212,27 @@ const jn = {
   childTags: [
     "option"
   ]
-}, Zn = {
+}, tn = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: []
-}, to = {
+}, en = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: []
-}, eo = {
+}, on = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: []
-}, no = {
+}, nn = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: []
-}, oo = {
+}, rn = {
   allowsTextContent: !1,
   allowsChildren: !1,
   allowedAttributes: [
@@ -1234,7 +1242,7 @@ const jn = {
     "height",
     "loading"
   ]
-}, ro = {
+}, sn = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
@@ -1244,7 +1252,7 @@ const jn = {
     "value"
   ],
   childTags: []
-}, so = {
+}, ln = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
@@ -1260,28 +1268,28 @@ const jn = {
     "tfoot",
     "tr"
   ]
-}, lo = {
+}, an = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: [
     "tr"
   ]
-}, ao = {
+}, cn = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: [
     "tr"
   ]
-}, co = {
+}, un = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: [
     "tr"
   ]
-}, io = {
+}, dn = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [],
@@ -1289,7 +1297,7 @@ const jn = {
     "td",
     "th"
   ]
-}, uo = {
+}, bn = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
@@ -1298,7 +1306,7 @@ const jn = {
     "rowspan"
   ],
   childTags: []
-}, bo = {
+}, mn = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
@@ -1306,14 +1314,14 @@ const jn = {
     "rowspan"
   ],
   childTags: []
-}, mo = {
+}, hn = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: [
     "option"
   ]
-}, ho = {
+}, pn = {
   allowsTextContent: !0,
   allowsChildren: !1,
   allowedAttributes: [
@@ -1322,14 +1330,14 @@ const jn = {
     "selected",
     "disabled"
   ]
-}, po = {
+}, fn = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
     "role"
   ],
   childTags: []
-}, fo = {
+}, gn = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
@@ -1340,19 +1348,19 @@ const jn = {
     "download"
   ],
   childTags: []
-}, go = {
+}, yn = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
     "aria-hidden"
   ],
   childTags: []
-}, yo = {
+}, wn = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: []
-}, wo = {
+}, Cn = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
@@ -1361,80 +1369,80 @@ const jn = {
   childTags: [
     "li"
   ]
-}, Co = {
+}, $n = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [
     "value"
   ],
   childTags: []
-}, $o = {
+}, Nn = {
   allowsTextContent: !1,
   allowsChildren: !1,
   allowedAttributes: []
-}, No = {
-  $schema: qn,
-  div: Gn,
-  input: zn,
-  checkbox: Ln,
-  colgroup: Pn,
-  col: _n,
-  label: Xn,
-  form: Qn,
-  select: Yn,
-  p: Zn,
-  h1: to,
-  h2: eo,
-  span: no,
-  img: oo,
-  button: ro,
-  table: so,
-  thead: lo,
-  tbody: ao,
-  tfoot: co,
-  tr: io,
-  th: uo,
-  td: bo,
-  datalist: mo,
-  option: ho,
-  header: po,
-  a: fo,
-  i: go,
-  small: yo,
-  ul: wo,
-  li: Co,
-  hr: $o
-}, h = ({ inSpec: t }) => {
+}, An = {
+  $schema: qo,
+  div: Go,
+  input: zo,
+  checkbox: Po,
+  colgroup: _o,
+  col: Xo,
+  label: Qo,
+  form: Yo,
+  select: Zo,
+  p: tn,
+  h1: en,
+  h2: on,
+  span: nn,
+  img: rn,
+  button: sn,
+  table: ln,
+  thead: an,
+  tbody: cn,
+  tfoot: un,
+  tr: dn,
+  th: bn,
+  td: mn,
+  datalist: hn,
+  option: pn,
+  header: fn,
+  a: gn,
+  i: yn,
+  small: wn,
+  ul: Cn,
+  li: $n,
+  hr: Nn
+}, p = ({ inSpec: t }) => {
   const e = t;
   if (!e) return [];
   if (Array.isArray(e))
-    return e.flatMap((n) => h({ inSpec: n }));
+    return e.flatMap((o) => p({ inSpec: o }));
   if (typeof e != "object") return [];
-  const o = [];
-  return typeof e.tagName == "string" && e.tagName.trim().length > 0 && o.push(e.tagName.toLowerCase()), Array.isArray(e.children) && e.children.length > 0 && e.children.forEach((n) => {
-    const r = h({ inSpec: n });
-    o.push(...r);
-  }), o;
-}, Ao = ({ inTagsFound: t, inAllowedTags: e }) => {
-  const o = t ?? [], n = e ?? {}, r = new Set(
-    Object.keys(n).filter((c) => c !== "$schema").map((c) => c.toLowerCase())
+  const n = [];
+  return typeof e.tagName == "string" && e.tagName.trim().length > 0 && n.push(e.tagName.toLowerCase()), Array.isArray(e.children) && e.children.length > 0 && e.children.forEach((o) => {
+    const r = p({ inSpec: o });
+    n.push(...r);
+  }), n;
+}, Tn = ({ inTagsFound: t, inAllowedTags: e }) => {
+  const n = t ?? [], o = e ?? {}, r = new Set(
+    Object.keys(o).filter((c) => c !== "$schema").map((c) => c.toLowerCase())
   ), s = {}, l = [], a = [];
-  o.forEach((c) => {
+  n.forEach((c) => {
     s[c] = (s[c] || 0) + 1, r.has(c) ? l.includes(c) || l.push(c) : a.includes(c) || a.push(c);
   });
-  const d = o.length, u = a.length === 0;
+  const i = n.length, u = a.length === 0;
   return {
-    totalTags: d,
+    totalTags: i,
     tagCounts: s,
     uniqueTags: Object.keys(s),
     recognizedTags: l,
     unrecognizedTags: a,
     areAllTagsPresent: u
   };
-}, So = ({ inSpec: t, inTags: e = No } = {}) => {
-  const o = t, n = e, r = h({ inSpec: o }), s = Ao({
+}, Sn = ({ inSpec: t, inTags: e = An } = {}) => {
+  const n = t, o = e, r = p({ inSpec: n }), s = Tn({
     inTagsFound: r,
-    inAllowedTags: n
+    inAllowedTags: o
   });
   return {
     areAllTagsPresent: s.areAllTagsPresent,
@@ -1444,53 +1452,59 @@ const jn = {
     recognizedTags: s.recognizedTags,
     unrecognizedTags: s.unrecognizedTags
   };
-}, x = (t = {}) => {
+}, E = (t = {}) => {
   const e = (t == null ? void 0 : t.spec) ?? (t == null ? void 0 : t.inSpec) ?? t;
-  return T(e);
+  return x(e);
 };
-vn({
-  inFuncDefinition: x,
-  inReviewSpec: So
+Oo({
+  inFuncDefinition: E,
+  inReviewSpec: Sn
 });
-const To = ({
+const xn = ({
   inTargetHtmlId: t,
   inColumns: e,
-  type: o,
-  inData: n,
+  type: n,
+  inData: o,
   showLog: r
 } = {}) => {
-  const s = t, l = n ?? [], a = e;
+  const s = t, l = o ?? [], a = e;
   r && console.log("buildSpec 1 :", s, l.localColumns);
-  let u = A({
-    type: o,
+  let u = T({
+    type: n,
     data: l,
     columns: a
   });
-  const c = x(u);
+  const c = E(u);
   return console.log("buildSpec 2 :", u, c), r && console.log("buildSpec 3 :", c), c;
-}, xo = ({
+}, En = ({
   type: t = "table",
   targetHtmlId: e,
-  data: o,
-  classToApply: n,
+  data: n,
+  classToApply: o,
   columns: r,
   appendPosition: s,
   showLog: l = !1
 } = {}) => {
-  const a = t, d = e, u = o, c = r;
-  B({ intype: a, indata: u }), l && console.log("showLog 1 :", a, e, o, n, r, s);
-  const i = To({
-    inTargetHtmlId: d,
+  const a = t, i = e, u = n, c = r;
+  U({
+    intype: a,
+    indata: u,
+    intargetHtmlId: i,
+    incoumns: c,
+    inshowLog: l
+  });
+  const h = xn({
+    inTargetHtmlId: i,
     inColumns: c,
     showLog: l,
     inData: u,
     type: a
   });
-  l && console.log("showLog 2 :", i);
-  const b = document.getElementById(d);
-  return l && console.log("showLog 3 :", b), Array.isArray(i) || i instanceof NodeList || i instanceof HTMLCollection ? s === "prepend" ? b.prepend(...i) : b.append(...i) : s === "prepend" ? b.prepend(i) : (b && (b.innerHTML = ""), b.append(i)), l && console.log("showLog 5 :", b), b;
+  l && console.log("showLog 2 :", h);
+  const d = document.getElementById(i);
+  return l && console.log("showLog 3 :", d), Array.isArray(h) || h instanceof NodeList || h instanceof HTMLCollection ? s === "prepend" ? d.prepend(...h) : d.append(...h) : s === "prepend" ? d.prepend(h) : (d && (d.innerHTML = ""), d.append(h)), l && console.log("showLog 5 :", d), d;
 };
-k(xo);
+B(En);
 export {
-  xo as default
+  En as default
 };
