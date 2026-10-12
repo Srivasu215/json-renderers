@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTML Table Process &amp; Architecture | json-renderers</title>
+  <meta name="description"
+    content="Learn the internal process of rendering HTML tables from JSON data using json-renderers, json-renderers-build, and @keshavsoft/json-to-tag." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Fira Code', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #1e293b;
+    }
+
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    .step-badge {
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.875rem;
+    }
+
+    /* Style bootstrap table inside our light container */
+    #live-process-output table {
+      width: 100%;
+      margin-bottom: 0;
+      color: #1e293b;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      background-color: #ffffff;
+    }
+
+    #live-process-output th {
+      background: #f8fafc;
+      color: #0f172a;
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+      border-bottom: 2px solid #e2e8f0;
+      text-transform: capitalize;
+      font-size: 0.875rem;
+    }
+
+    #live-process-output td {
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid #f1f5f9;
+      background: #ffffff;
+      font-size: 0.875rem;
+      color: #334155;
+    }
+
+    #live-process-output tr:hover td {
+      background: #f8fafc;
+    }
+  </style>
+</head>
+
+<body
+  class="bg-white text-slate-800 min-h-screen antialiased flex flex-col font-sans selection:bg-emerald-500 selection:text-white">
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="border-b border-slate-200 bg-white/95 backdrop-blur sticky top-0 z-50 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="../index.html"
+          class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 via-teal-600 to-indigo-600 flex items-center justify-center font-bold text-white shadow-md text-lg hover:scale-105 transition">
+          📊
+        </a>
+        <div>
+          <div class="flex items-center gap-2">
+            <a href="../index.html"
+              class="text-base font-bold text-slate-900 tracking-tight hover:text-emerald-600 transition">json-renderers</a>
+            <span
+              class="px-2 py-0.5 text-xs bg-emerald-100 text-emerald-800 rounded-full border border-emerald-200 font-mono font-medium">Table
+              Documentation</span>
+          </div>
+          <p class="text-xs text-slate-500">HTML Table Generation Process &amp; Architecture</p>
+        </div>
+      </div>
+
+      <nav class="flex items-center gap-1.5 sm:gap-2 text-sm">
+        <a href="../index.html"
+          class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition text-xs sm:text-sm">Home</a>
+        <a href="index.html"
+          class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white font-semibold shadow-sm transition text-xs sm:text-sm">HTML
+          Process</a>
+        <a href="cdn.html"
+          class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition text-xs sm:text-sm">Using
+          CDN</a>
+        <a href="windowKs.html"
+          class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition text-xs sm:text-sm">window.ks</a>
+        <a href="../aboutSelect.html"
+          class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition hidden md:inline text-xs sm:text-sm">About
+          Select</a>
+        <a href="https://github.com/keshavsoft/json-renderers" target="_blank" rel="noopener noreferrer"
+          class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 font-medium transition hidden lg:inline-flex items-center gap-1.5 text-xs sm:text-sm">
+          <svg class="w-4 h-4 fill-current text-slate-700" viewBox="0 0 24 24">
+            <path
+              d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+          </svg>
+          <span>GitHub</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-10">
+
+    <!-- Hero Section -->
+    <section
+      class="bg-gradient-to-br from-slate-50 via-emerald-50/40 to-teal-50/30 rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-sm relative overflow-hidden">
+      <div class="relative z-10 space-y-5">
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 border border-emerald-200 text-xs text-emerald-800 font-mono font-medium">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          HTML Rendering Pipeline &bull; Mental Model
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          The Process of Rendering HTML Tables <br class="hidden sm:inline" />
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-600">From
+            Raw JSON to Browser DOM</span>
+        </h1>
+
+        <p class="max-w-4xl text-slate-600 text-base sm:text-lg leading-relaxed">
+          Understanding the inner mechanics of how <code
+            class="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-mono font-semibold">json-renderers</code>
+          orchestrates data parsing, JSON blueprint generation via <code
+            class="text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded font-mono font-semibold">json-renderers-build</code>,
+          and tag construction via <code
+            class="text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded font-mono font-semibold">@keshavsoft/json-to-tag</code>.
+        </p>
+
+
+      </div>
+    </section>
+
+    <!-- SHORT NOTE SECTION -->
+    <section id="short-note"
+      class="bg-gradient-to-r from-emerald-50 via-teal-50 to-indigo-50 rounded-2xl p-6 sm:p-8 border-2 border-emerald-200 shadow-sm space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl">📝</span>
+        <div>
+          <span class="text-xs uppercase font-mono tracking-wider text-emerald-800 font-bold">Executive Summary</span>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Short Note: How the HTML Process Works
+          </h2>
+        </div>
+      </div>
+
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-3">
+        <p>
+          In traditional frontend development, rendering an HTML table from dynamic data requires manual <code
+            class="text-slate-800 bg-white px-1.5 py-0.5 rounded border border-slate-200 font-mono text-xs">&lt;tr&gt;</code>
+          and <code
+            class="text-slate-800 bg-white px-1.5 py-0.5 rounded border border-slate-200 font-mono text-xs">&lt;td&gt;</code>
+          loops, repetitive string concatenation, or hazardous <code
+            class="text-rose-700 bg-white px-1.5 py-0.5 rounded border border-slate-200 font-mono text-xs">innerHTML</code>
+          assignments.
+        </p>
+        <p>
+          <strong>json-renderers</strong> abstracts this entirely into a clean, 4-stage pipeline:
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 pt-2">
+          <div class="bg-white p-3.5 rounded-xl border border-emerald-200 shadow-xs">
+            <div class="text-xs font-mono font-bold text-emerald-700 mb-1">1. Business JSON</div>
+            <p class="text-xs text-slate-600">You pass an array of raw JavaScript objects (from API or static file) and
+              chosen columns.</p>
+          </div>
+          <div class="bg-white p-3.5 rounded-xl border border-teal-200 shadow-xs">
+            <div class="text-xs font-mono font-bold text-teal-700 mb-1">2. Runtime Call</div>
+            <p class="text-xs text-slate-600"><code class="font-mono text-[11px] text-teal-800">render({...})</code>
+              acts as orchestrator and initiates the transformation.</p>
+          </div>
+          <div class="bg-white p-3.5 rounded-xl border border-indigo-200 shadow-xs">
+            <div class="text-xs font-mono font-bold text-indigo-700 mb-1">3. Spec to DOM</div>
+            <p class="text-xs text-slate-600"><code class="font-mono text-[11px] text-indigo-800">json-to-tag</code>
+              transforms the JSON schema into native browser table elements.</p>
+          </div>
+          <div class="bg-white p-3.5 rounded-xl border border-cyan-200 shadow-xs">
+            <div class="text-xs font-mono font-bold text-cyan-700 mb-1">4. DOM Mount</div>
+            <p class="text-xs text-slate-600">The browser mounts the live table directly into your target container with
+              zero reload.</p>
+          </div>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-600 bg-white p-3.5 rounded-xl border border-slate-200 mt-2">
+          💡 <strong>Key Takeaway:</strong> You never write loop code. The library converts your data specification into
+          an abstract syntax tree and converts that tree into true HTML nodes using standard DOM APIs.
+        </p>
+      </div>
+    </section>
+
+    <!-- 4 PROCESS STAGES DEEP DIVE -->
+    <section id="pipeline-steps" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4">
+        <span class="text-xs uppercase font-mono tracking-wider text-emerald-700 font-bold">Deep Dive</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mt-1">The 4 Process Stages of HTML Table
+          Generation</h2>
+        <p class="text-slate-600 text-sm mt-1">What happens behind the scenes from the moment you call render to when
+          pixels draw on screen.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+
+        <!-- Stage 1 -->
+        <div
+          class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:border-emerald-400 hover:shadow-md transition">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="step-badge bg-emerald-100 text-emerald-800 border border-emerald-300">1</span>
+              <span class="text-xs font-mono text-slate-500 font-medium">Input Phase</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-base">Raw Business Data</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Your application supplies data as plain JSON records:
+            </p>
+            <pre class="bg-slate-950 p-3 rounded-xl text-[11px] text-emerald-300 font-mono overflow-x-auto"><code>[
+  { "itemName": "Steel Wire", "baseUnit": "kgs" },
+  { "itemName": "Alloy Rod", "baseUnit": "pcs" }
+]</code></pre>
+          </div>
+          <div class="text-[11px] font-mono text-emerald-700 pt-3 border-t border-slate-100 mt-3 font-semibold">
+            Input Data &rarr;
+          </div>
+        </div>
+
+        <!-- Stage 2 -->
+        <div
+          class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:border-teal-400 hover:shadow-md transition">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="step-badge bg-teal-100 text-teal-800 border border-teal-300">2</span>
+              <span class="text-xs font-mono text-slate-500 font-medium">Invocation</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-base">Runtime Orchestration</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              You invoke the renderer with column definitions and container id:
+            </p>
+            <pre class="bg-slate-950 p-3 rounded-xl text-[11px] text-teal-300 font-mono overflow-x-auto"><code>render({
+  type: "table",
+  data: data,
+  columns: ["itemName", "baseUnit"],
+  targetHtmlId: "dom-container"
+});</code></pre>
+          </div>
+          <div class="text-[11px] font-mono text-teal-700 pt-3 border-t border-slate-100 mt-3 font-semibold">
+            Orchestrator &rarr;
+          </div>
+        </div>
+
+        <!-- Stage 3 -->
+        <div
+          class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:border-indigo-400 hover:shadow-md transition">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="step-badge bg-indigo-100 text-indigo-800 border border-indigo-300">3</span>
+              <span class="text-xs font-mono text-slate-500 font-medium">Schema to Tag</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-base">Blueprint to DOM Nodes</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              <code class="text-indigo-700 font-mono text-[11px]">json-renderers-build</code> creates an AST spec, and
+              <code class="text-indigo-700 font-mono text-[11px]">json-to-tag</code> instantiates real browser nodes:
+            </p>
+            <div class="text-[11px] font-mono bg-slate-950 p-3 rounded-xl text-indigo-200 leading-relaxed">
+              &lt;table class="table"&gt;<br />
+              &nbsp;&nbsp;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;...&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;<br />
+              &nbsp;&nbsp;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;...&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;<br />
+              &lt;/table&gt;
+            </div>
+          </div>
+          <div class="text-[11px] font-mono text-indigo-700 pt-3 border-t border-slate-100 mt-3 font-semibold">
+            Native DOM Creation &rarr;
+          </div>
+        </div>
+
+        <!-- Stage 4 -->
+        <div
+          class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:border-cyan-400 hover:shadow-md transition">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="step-badge bg-cyan-100 text-cyan-800 border border-cyan-300">4</span>
+              <span class="text-xs font-mono text-slate-500 font-medium">Mounting</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-base">Container Mounted</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              The engine safely appends the generated table into the host DOM element:
+            </p>
+            <pre class="bg-slate-950 p-3 rounded-xl text-[11px] text-cyan-300 font-mono overflow-x-auto"><code>&lt;div id="dom-container"&gt;
+  &lt;!-- Cleanly mounted table --&gt;
+  &lt;table ...&gt;...&lt;/table&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <div class="text-[11px] font-mono text-cyan-700 pt-3 border-t border-slate-100 mt-3 font-semibold">
+            ✅ Live in Browser
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- LIVE PROCESS DEMONSTRATION -->
+    <section id="live-pipeline" class="bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-200 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+        <div>
+          <span class="text-xs uppercase font-mono tracking-wider text-emerald-700 font-bold">Interactive
+            Verification</span>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mt-1">Live Process Pipeline in Action
+          </h2>
+          <p class="text-slate-600 text-xs sm:text-sm mt-0.5">Watch the HTML process transform sample data into live DOM
+            table elements right now.</p>
+        </div>
+        <button id="btn-trigger-pipeline"
+          class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm shadow-sm transition flex items-center gap-2 w-fit">
+          <span>⚡</span> Re-run Process Pipeline
+        </button>
+      </div>
+
+      <!-- Pipeline Steps Visualizer -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Controls & Stages Summary -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+            <h3 class="text-xs font-bold text-slate-700 uppercase font-mono tracking-wider">Process Status Tracker</h3>
+
+            <div class="space-y-2 text-xs font-mono">
+              <div class="flex items-center justify-between p-2 rounded bg-slate-50 border border-slate-100">
+                <span class="text-slate-600">Stage 1: Input JSON</span>
+                <span class="text-emerald-700 font-bold">✓ 3 Records Loaded</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded bg-slate-50 border border-slate-100">
+                <span class="text-slate-600">Stage 2: Orchestrator Call</span>
+                <span class="text-teal-700 font-bold">✓ Config Validated</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded bg-slate-50 border border-slate-100">
+                <span class="text-slate-600">Stage 3: DOM Construction</span>
+                <span class="text-indigo-700 font-bold">✓ json-to-tag Active</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded bg-slate-50 border border-slate-100">
+                <span class="text-slate-600">Stage 4: Mount Status</span>
+                <span id="pipeline-status" class="text-emerald-700 font-bold">✓ Table Mounted</span>
+              </div>
+            </div>
+
+            <!-- Console Log Output -->
+            <div class="pt-2">
+              <div class="text-[11px] font-mono text-slate-500 mb-1 flex items-center justify-between">
+                <span>Pipeline Event Log:</span>
+                <span class="text-[10px] text-emerald-600 font-bold">Live</span>
+              </div>
+              <pre id="process-log"
+                class="bg-slate-950 p-3 rounded-lg text-xs text-emerald-400 font-mono h-28 overflow-y-auto border border-slate-800"><code>[Process] Ready to execute pipeline...</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Render Target Output -->
+        <div class="lg:col-span-7 bg-white p-5 sm:p-6 rounded-xl border border-slate-200 shadow-sm space-y-3">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <h3 class="text-xs font-bold text-slate-800 uppercase font-mono tracking-wider">
+                Rendered HTML Output: <code class="text-emerald-700">#live-process-output</code>
+              </h3>
+            </div>
+            <span class="text-[11px] font-mono text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Live HTML Table</span>
+          </div>
+
+          <div id="live-process-output"
+            class="overflow-x-auto min-h-[180px] flex items-center justify-center text-slate-400 text-sm">
+            Rendering table via json-renderers...
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CHOOSE YOUR INTEGRATION (SEPARATE HTML FILES) -->
+    <section id="integration-files" class="space-y-6 pt-4">
+      <div class="border-b border-slate-200 pb-4">
+        <span class="text-xs uppercase font-mono tracking-wider text-indigo-700 font-bold">Integration Methods</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mt-1">Ready to Use in Your Project?</h2>
+        <p class="text-slate-600 text-sm mt-1">We have prepared dedicated, standalone guides for each implementation
+          approach:</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Card 1: Using CDN -->
+        <div
+          class="bg-white p-6 sm:p-8 rounded-2xl border-2 border-emerald-200 shadow-sm hover:border-emerald-400 hover:shadow-md transition flex flex-col justify-between">
+          <div class="space-y-4">
+            <div
+              class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-mono font-bold">
+              <span>⚡</span> Method 1: Standalone Guide
+            </div>
+            <h3 class="text-2xl font-bold text-slate-900 tracking-tight">Using CDN (Direct Import)</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              Import the <code class="text-emerald-700 font-mono font-semibold">render</code> function directly from the
+              jsDelivr CDN into an ES Module. Clean scope, zero global variables, and modern modular structure.
+            </p>
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs font-mono text-slate-700">
+              <code>import render from "https://cdn.jsdelivr.net/...";</code>
+            </div>
+            <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
+              <li>Complete <code class="font-mono">index.html</code> and <code class="font-mono">index.js</code>
+                breakdown</li>
+              <li>Parameter options guide</li>
+              <li>Dedicated live interactive playground</li>
+              <li>Direct link to <code class="font-mono text-emerald-700">samples/table/byCdn/</code></li>
+            </ul>
+          </div>
+
+          <div class="pt-6">
+            <a href="cdn.html"
+              class="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-sm transition flex items-center justify-center gap-2">
+              <span>Open Using CDN Guide</span> &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 2: Using window.ks -->
+        <div
+          class="bg-white p-6 sm:p-8 rounded-2xl border-2 border-indigo-200 shadow-sm hover:border-indigo-400 hover:shadow-md transition flex flex-col justify-between">
+          <div class="space-y-4">
+            <div
+              class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-mono font-bold">
+              <span>🌐</span> Method 2: Standalone Guide
+            </div>
+            <h3 class="text-2xl font-bold text-slate-900 tracking-tight">Using window.ks (Global Namespace)</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              Load the bundle and call <code
+                class="text-indigo-700 font-mono font-semibold">window.ks.jsonRenderers.renderToDom</code> from anywhere
+              in your web app, multi-script layouts, or browser console.
+            </p>
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs font-mono text-slate-700">
+              <code>window.ks.jsonRenderers.renderToDom({ ... });</code>
+            </div>
+            <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
+              <li>Ideal for multi-script, non-module, or legacy projects</li>
+              <li>Global window access without repetitive imports</li>
+              <li>Dedicated live interactive playground</li>
+              <li>Direct link to <code class="font-mono text-indigo-700">samples/table/byKs/</code></li>
+            </ul>
+          </div>
+
+          <div class="pt-6">
+            <a href="windowKs.html"
+              class="w-full py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm shadow-sm transition flex items-center justify-center gap-2">
+              <span>Open window.ks Guide</span> &rarr;
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+  </main>
+
+  <!-- Clean Light Footer -->
+  <footer class="border-t border-slate-200 bg-slate-50 py-6 mt-12">
+    <div
+      class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-600">
+      <div>
+        <span class="text-slate-900 font-semibold">json-renderers</span> &bull; HTML Table Process Guide
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="cdn.html" class="text-emerald-700 hover:underline">Using CDN Guide</a>
+        <a href="windowKs.html" class="text-indigo-700 hover:underline">window.ks Guide</a>
+        <a href="../index.html" class="text-slate-700 hover:underline">Main Docs</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script for Live Pipeline Demonstration -->
+  <script type="module">
+    import renderDirect from "../dist/v14/min.js";
+
+    const sampleRows = [
+      { itemName: "0.09/30mm Steel Wire", baseUnit: "kgs", category: "Raw Materials" },
+      { itemName: "0.11-25 Copper Alloy", baseUnit: "kgs", category: "Metals" },
+      { itemName: "Industrial Gear G-14", baseUnit: "pcs", category: "Machinery" }
+    ];
+
+    const logEl = document.getElementById("process-log");
+    const statusEl = document.getElementById("pipeline-status");
+    const triggerBtn = document.getElementById("btn-trigger-pipeline");
+
+    function appendLog(msg) {
+      if (!logEl) return;
+      logEl.innerHTML += "\n" + msg;
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function runPipeline() {
+      if (logEl) logEl.innerHTML = "<code>[Process] Starting table rendering pipeline...</code>";
+      if (statusEl) {
+        statusEl.textContent = "Processing...";
+        statusEl.className = "text-amber-600 font-bold";
+      }
+
+      setTimeout(() => {
+        appendLog("[Stage 1] 3 sample records provided as input data.");
+      }, 50);
+
+      setTimeout(() => {
+        appendLog("[Stage 2] Invoking render({ type: 'table', columns: ['itemName', 'baseUnit', 'category'] })...");
+      }, 120);
+
+      setTimeout(() => {
+        appendLog("[Stage 3] json-to-tag converting spec schema into native DOM elements...");
+      }, 200);
+
+      setTimeout(() => {
+        try {
+          renderDirect({
+            type: "table",
+            data: sampleRows,
+            targetHtmlId: "live-process-output",
+            columns: ["itemName", "baseUnit", "category"],
+            showLog: true
+          });
+          appendLog("[Stage 4] Successfully mounted table into #live-process-output!");
+          if (statusEl) {
+            statusEl.textContent = "✓ Table Mounted";
+            statusEl.className = "text-emerald-700 font-bold";
+          }
+        } catch (err) {
+          appendLog("[Error] Failed: " + err.message);
+          if (statusEl) {
+            statusEl.textContent = "Error";
+            statusEl.className = "text-rose-600 font-bold";
+          }
+        }
+      }, 280);
+    }
+
+    if (triggerBtn) {
+      triggerBtn.addEventListener("click", runPipeline);
+    }
+
+    // Auto-run once on page load
+    runPipeline();
+  </script>
+</body>
+
+</html>
