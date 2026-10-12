@@ -99,16 +99,12 @@
         class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-xs font-mono text-indigo-700 font-medium">
         Global Window Object Guide
       </div>
-      <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-        Using <code class="text-indigo-600">window.ks.jsonRenderers.renderToDom</code>
-      </h1>
       <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-        When you import the bundle, it attaches the <code
-          class="text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded font-mono">ks</code> global object to <code
-          class="text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded font-mono">window</code>. Inside this object, the
-        function <code
-          class="text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded font-mono">window.ks.jsonRenderers.renderToDom</code>
-        is available to build and mount HTML tables into the DOM.
+
+        The `json-renderers` library exposes its rendering functionality through the global `window.ks.jsonRenderers`
+        object when the library bundle is loaded. The `renderToDom()` method allows you to convert structured JSON data
+        into HTML elements and render them directly into a specified DOM container. By providing the data, target
+        element ID, and column configuration, you can generate HTML tables with minimal JavaScript code.
       </p>
     </section>
 

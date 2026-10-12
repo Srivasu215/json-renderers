@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>window.ks.jsonRenderers.renderToDom | json-renderers</title>
+  <meta name="description"
+    content="Simple guide explaining how window.ks.jsonRenderers.renderToDom works to build and render HTML tables from JSON data." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+    }
+
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+
+    /* Style rendered table in demo container */
+    #dom-render-container table {
+      width: 100%;
+      margin-bottom: 0;
+      color: #1e293b;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      background-color: #ffffff;
+    }
+
+    #dom-render-container th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+      border-bottom: 2px solid #e2e8f0;
+      text-transform: capitalize;
+      font-size: 0.875rem;
+    }
+
+    #dom-render-container td {
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid #f1f5f9;
+      background: #ffffff;
+      font-size: 0.875rem;
+      color: #334155;
+    }
+
+    #dom-render-container tr:hover td {
+      background: #f8fafc;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col antialiased">
+
+  <!-- Navigation Bar -->
+  <header class="border-b border-slate-200 bg-white/95 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="../index.html"
+          class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-teal-600 flex items-center justify-center font-bold text-white shadow-sm text-base">
+          📊
+        </a>
+        <div>
+          <a href="../index.html"
+            class="text-sm font-bold text-slate-900 hover:text-indigo-600 transition">json-renderers</a>
+          <span class="text-xs text-slate-500 block">window.ks Guide</span>
+        </div>
+      </div>
+
+      <nav class="flex items-center gap-2 text-xs sm:text-sm">
+        <a href="../index.html"
+          class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition">Home</a>
+        <a href="windowKs.html"
+          class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white font-semibold transition">window.ks</a>
+
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-5xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
+
+    <!-- Document Header -->
+    <section class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-3">
+      <div
+        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-xs font-mono text-indigo-700 font-medium">
+        Global Window Object Guide
+      </div>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+        Using <code class="text-indigo-600">window.ks.jsonRenderers.renderToDom</code>
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+        When you import the bundle, it attaches the <code
+          class="text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded font-mono">ks</code> global object to <code
+          class="text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded font-mono">window</code>. Inside this object, the
+        function <code
+          class="text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded font-mono">window.ks.jsonRenderers.renderToDom</code>
+        is available to build and mount HTML tables into the DOM.
+      </p>
+    </section>
+
+    <!-- Global Object Explanation -->
+    <section class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+      <h2 class="text-lg font-bold text-slate-900">How the Global Object is Structured</h2>
+      <p class="text-sm text-slate-600 leading-relaxed">
+        The bundle creates a nested namespace on the browser window:
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <div class="font-mono font-bold text-indigo-600 text-sm">1. window.ks</div>
+          <p class="text-xs text-slate-600">The root global object attached directly to the browser <code
+              class="font-mono text-[11px]">window</code>.</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <div class="font-mono font-bold text-indigo-600 text-sm">2. jsonRenderers</div>
+          <p class="text-xs text-slate-600">The module namespace object inside <code
+              class="font-mono text-[11px]">window.ks</code> containing render tools.</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <div class="font-mono font-bold text-indigo-600 text-sm">3. renderToDom()</div>
+          <p class="text-xs text-slate-600">The execution function that compiles your JSON and builds the table in the
+            target HTML element.</p>
+        </div>
+      </div>
+
+      <div
+        class="p-3.5 rounded-xl bg-indigo-50/70 border border-indigo-100 font-mono text-xs text-indigo-900 flex items-center gap-2">
+        <span class="font-bold text-indigo-700">Hierarchy:</span>
+        <code>window &rarr; ks &rarr; jsonRenderers &rarr; renderToDom({ ... })</code>
+      </div>
+    </section>
+
+    <!-- Code Walkthrough -->
+    <section class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-5">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold text-slate-900">Code to Build the Table</h2>
+          <p class="text-xs sm:text-sm text-slate-500">Import the bundle, load JSON data, and run <code
+              class="font-mono text-indigo-700">window.ks.jsonRenderers.renderToDom</code>.</p>
+        </div>
+        <button onclick="copyCode('code-block')"
+          class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono transition flex items-center gap-1">
+          <span>📋</span> Copy
+        </button>
+      </div>
+
+      <pre
+        class="bg-slate-950 rounded-xl p-4 sm:p-5 text-xs text-slate-200 font-mono overflow-x-auto border border-slate-800 leading-relaxed"><code id="code-block">import "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v14/min.js";
+
+import data from "./batches.json" with { type: "json" };
+
+const start = () => {
+  try {
+    window.ks.jsonRenderers.renderToDom({
+      type: "table",
+      data: data.slice(0, 50),
+      targetHtmlId: "dom-render-container",
+      columns: ["itemName", "baseUnit"],
+      showLog: true
+    });
+
+  } catch (err) {
+    console.log("error : ", err);
+  }
+};
+
+start();</code></pre>
+
+      <!-- Target HTML Element -->
+      <div class="pt-2 space-y-2">
+        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider font-mono">HTML Target Container</h3>
+        <p class="text-xs text-slate-600">Ensure your HTML contains a container whose <code
+            class="text-indigo-700 font-mono">id</code> matches <code
+            class="text-indigo-700 font-mono">targetHtmlId</code>:</p>
+        <pre
+          class="bg-slate-900 rounded-xl p-3 text-xs text-indigo-200 font-mono overflow-x-auto border border-slate-800"><code>&lt;div id="dom-render-container"&gt;&lt;/div&gt;</code></pre>
+      </div>
+    </section>
+
+    <!-- Parameters Table -->
+    <section class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+      <h2 class="text-lg font-bold text-slate-900">Options Passed to renderToDom</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs border border-slate-200 rounded-xl overflow-hidden">
+          <thead class="bg-slate-50 text-slate-700 font-mono uppercase border-b border-slate-200">
+            <tr>
+              <th class="px-4 py-3 font-semibold">Parameter</th>
+              <th class="px-4 py-3 font-semibold">Type</th>
+              <th class="px-4 py-3 font-semibold">Description</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-600">
+            <tr>
+              <td class="px-4 py-3 font-mono font-bold text-indigo-700">type</td>
+              <td class="px-4 py-3 font-mono text-slate-500">string</td>
+              <td class="px-4 py-3">Set to <code class="font-mono text-slate-800">"table"</code> to build and render an
+                HTML table.</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3 font-mono font-bold text-indigo-700">data</td>
+              <td class="px-4 py-3 font-mono text-slate-500">Array&lt;Object&gt;</td>
+              <td class="px-4 py-3">The array of objects containing the row records (e.g. <code
+                  class="font-mono text-slate-800">data.slice(0, 50)</code>).</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3 font-mono font-bold text-indigo-700">targetHtmlId</td>
+              <td class="px-4 py-3 font-mono text-slate-500">string</td>
+              <td class="px-4 py-3">The DOM element ID where the table will be rendered (<code
+                  class="font-mono text-slate-800">"dom-render-container"</code>).</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3 font-mono font-bold text-indigo-700">columns</td>
+              <td class="px-4 py-3 font-mono text-slate-500">Array&lt;string&gt;</td>
+              <td class="px-4 py-3">Array of object keys to display as table headers and columns (e.g. <code
+                  class="font-mono text-slate-800">["itemName", "baseUnit"]</code>).</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3 font-mono font-bold text-indigo-700">showLog</td>
+              <td class="px-4 py-3 font-mono text-slate-500">boolean</td>
+              <td class="px-4 py-3">Optional. Set to <code class="font-mono text-slate-800">true</code> to print build
+                logs in the browser console.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Live Render Demonstration -->
+    <section class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div>
+          <h2 class="text-lg font-bold text-slate-900">Live Table Output</h2>
+          <p class="text-xs text-slate-500">Rendered automatically by calling <code
+              class="font-mono text-indigo-700">window.ks.jsonRenderers.renderToDom</code></p>
+        </div>
+        <span
+          class="px-2.5 py-1 text-xs font-mono rounded-full bg-emerald-100 text-emerald-800 font-semibold flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Mounted to #dom-render-container
+        </span>
+      </div>
+
+      <!-- Container where table will be mounted -->
+      <div id="dom-render-container" class="overflow-x-auto min-h-[140px]">
+        <div class="text-center py-6 text-slate-400 text-sm">Loading table via window.ks...</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 bg-white py-6 mt-8">
+    <div
+      class="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+      <div>
+        <span class="text-slate-800 font-semibold">json-renderers</span> &bull; <code
+          class="text-indigo-600">window.ks.jsonRenderers.renderToDom</code>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="hover:underline">HTML Process</a>
+        <a href="cdn.html" class="hover:underline">Using CDN</a>
+        <a href="../../samples/table/byKs/index.html" target="_blank"
+          class="text-indigo-600 font-medium hover:underline">Sample (byKs)</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script executing window.ks.jsonRenderers.renderToDom -->
+  <script type="module">
+    // 1. Load the bundle to attach window.ks globally
+    try {
+      await import("../dist/v14/min.js");
+    } catch {
+      await import("https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v14/min.js");
+    }
+
+    // 2. Sample data matching the columns ["itemName", "baseUnit"]
+    const data = [
+      { itemName: "0.09/30mm Steel Wire", baseUnit: "kgs", category: "Raw Materials" },
+      { itemName: "0.11-25 Copper Alloy", baseUnit: "kgs", category: "Metals" },
+      { itemName: "0.11-30 Aluminum Rod", baseUnit: "kgs", category: "Metals" },
+      { itemName: "0.11/32mm Brass Tube", baseUnit: "kgs", category: "Pipes" },
+      { itemName: "Industrial Gear G-14", baseUnit: "pcs", category: "Machinery" },
+      { itemName: "High-Tensile Fastener", baseUnit: "pcs", category: "Hardware" },
+      { itemName: "Hydraulic Seal Ring", baseUnit: "pcs", category: "Seals" },
+      { itemName: "Precision Bearing 6205", baseUnit: "pcs", category: "Bearings" }
+    ];
+
+    // 3. Run the function to build the table
+    const start = () => {
+      try {
+        if (window.ks && window.ks.jsonRenderers && window.ks.jsonRenderers.renderToDom) {
+          window.ks.jsonRenderers.renderToDom({
+            type: "table",
+            data: data.slice(0, 50),
+            targetHtmlId: "dom-render-container",
+            columns: ["itemName", "baseUnit"],
+            showLog: true
+          });
+        }
+      } catch (err) {
+        console.log("error : ", err);
+      }
+    };
+
+    start();
+
+    // Clipboard copy helper
+    window.copyCode = (id) => {
+      const code = document.getElementById(id);
+      if (!code) return;
+      navigator.clipboard.writeText(code.textContent).then(() => {
+        alert("Code copied to clipboard!");
+      });
+    };
+  </script>
+</body>
+
+</html>
