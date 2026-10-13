@@ -99,12 +99,8 @@ const render = ({
     return container;
 };
 
-// Register on global window.ks.jsonRenderers
 registerGlobal({ render, getSpec });
 
-// Export two ways:
-// 1. As an object (named exports)
-export { render, getSpec, guardFunc, buildSpec };
+export { render, getSpec, buildSpec };
 
-// 2. As a single function (default export)
 export default render;
