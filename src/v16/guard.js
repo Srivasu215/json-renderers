@@ -6,10 +6,10 @@ const guardFunc = ({ inConfig } = {}) => {
         throw new TypeError("Config must be an object");
     }
 
-    if (localConfig.type !== "table") {
-        console.error("type must be 'table'");
-        throw new Error("type must be 'table'");
-    }
+    if (typeof localConfig?.type !== "string") {
+        console.error("type must be string only");
+        throw new Error("type must be string only");
+    };
 
     if (!Array.isArray(localConfig.data)) {
         console.error("data must be an Array");

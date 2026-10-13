@@ -1,14 +1,16 @@
-import "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v16/min.js";
+// import "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v16/min.js";
+import "../../../docs/dist/v16/min.js";
 
 import data from "./batches.json" with { type: "json" };
 
 const start = () => {
   try {
     window.ks.jsonRenderers.renderToDom({
-      type: "table",
+      type: "tableFromSpec",
       data: data.slice(0, 50),
       targetHtmlId: "dom-render-container",
-      columns: ["itemName", "baseUnit"],
+      columns: [{ columnName: "itemName", width: "200px" },
+      { columnName: "baseUnit", width: "150px" }],
       showLog: true
     });
 

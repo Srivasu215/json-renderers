@@ -17,8 +17,8 @@ const R = {
   const e = t;
   if (!e || typeof e != "object")
     throw console.error("Config must be an object"), new TypeError("Config must be an object");
-  if (e.type !== "table")
-    throw console.error("type must be 'table'"), new Error("type must be 'table'");
+  if (typeof (e == null ? void 0 : e.type) != "string")
+    throw console.error("type must be string only"), new Error("type must be string only");
   if (!Array.isArray(e.data))
     throw console.error("data must be an Array"), new TypeError("data must be an Array");
   if (typeof e.targetHtmlId != "string" || !e.targetHtmlId.trim())
