@@ -17,10 +17,11 @@ export const registerGlobal = (inDefinition) => {
 
     globalThis.ks.jsonRenderers = {
         meta,
-        renderToDom: renderFunc,
+        ...(typeof localDefinition === "object" ? localDefinition : {}),
         render: renderFunc,
-        ...(getSpecFunc ? { getSpec: getSpecFunc } : {}),
-        ...(typeof localDefinition === "object" ? localDefinition : {})
+        renderToDom: renderFunc,
+        domMount: localDefinition?.renderToDom,
+        ...(getSpecFunc ? { getSpec: getSpecFunc } : {})
     };
 };
 

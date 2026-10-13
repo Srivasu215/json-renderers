@@ -1,5 +1,5 @@
 export const meta = {
-    version: "v16.0.0",
+    version: "v17.0.0",
     description: "build table from store data and render to DOM uses json-to-spec, json-to-dom under the hood"
 };
 
