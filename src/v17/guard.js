@@ -1,3 +1,5 @@
+import spec from "./spec.json" with { type: "json" };
+
 const guardFunc = ({ inConfig } = {}) => {
     const localConfig = inConfig;
 
@@ -6,29 +8,30 @@ const guardFunc = ({ inConfig } = {}) => {
         throw new TypeError("Config must be an object");
     }
 
-    if (typeof localConfig?.type !== "string") {
-        console.error("type must be string only");
-        throw new Error("type must be string only");
-    };
+    // Dynamic schema validation against spec.json keys and types
+    for (const key of Object.keys(spec)) {
+        // 1. All keys are compulsory
+        if (!(key in localConfig) || localConfig[key] === undefined) {
+            console.error(`Missing compulsory key: "${key}"`);
+            throw new Error(`Missing compulsory key: "${key}"`);
+        }
 
-    if (!Array.isArray(localConfig.data)) {
-        console.error("data must be an Array");
-        throw new TypeError("data must be an Array");
+        // 2. Type validation derived from spec.json
+        if (Array.isArray(spec[key])) {
+            if (!Array.isArray(localConfig[key])) {
+                console.error(`${key} must be an Array`);
+                throw new TypeError(`${key} must be an Array`);
+            }
+        } else if (typeof localConfig[key] !== typeof spec[key]) {
+            console.error(`${key} must be of type ${typeof spec[key]}`);
+            throw new TypeError(`${key} must be of type ${typeof spec[key]}`);
+        }
     }
 
-    if (typeof localConfig.targetHtmlId !== "string" || !localConfig.targetHtmlId.trim()) {
+    // Specific business rule: targetHtmlId must be a non-empty string
+    if (typeof localConfig.targetHtmlId === "string" && !localConfig.targetHtmlId.trim()) {
         console.error("targetHtmlId must be a non-empty string");
         throw new TypeError("targetHtmlId must be a non-empty string");
-    }
-
-    if (!Array.isArray(localConfig.columns)) {
-        console.error("columns must be an array");
-        throw new TypeError("columns must be an array");
-    }
-
-    if (localConfig.showLog !== undefined && typeof localConfig.showLog !== "boolean") {
-        console.error("showLog must be a boolean");
-        throw new TypeError("showLog must be a boolean");
     }
 
     return true;
