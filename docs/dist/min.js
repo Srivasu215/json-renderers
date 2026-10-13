@@ -1553,7 +1553,9 @@ const U = ({
   const i = document.getElementById(s);
   return i ? (Array.isArray(c) || c instanceof NodeList || c instanceof HTMLCollection ? l === "prepend" ? i.prepend(...c) : i.append(...c) : l === "prepend" ? i.prepend(c) : (i.innerHTML = "", i.append(c)), a && console.log("renderToDom 2 (mounted):", i), i) : null;
 }, rr = (t = {}) => {
-  const e = T(t), o = L({
+  const e = T(t);
+  console.log("showLog : ", e == null ? void 0 : e.showLog);
+  const o = L({
     inColumns: e.columns,
     inData: e.data,
     inType: e.type,
