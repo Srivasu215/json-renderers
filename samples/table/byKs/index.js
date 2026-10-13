@@ -1,4 +1,4 @@
-import "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v14/min.js";
+import "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v16/min.js";
 
 import data from "./batches.json" with { type: "json" };
 
