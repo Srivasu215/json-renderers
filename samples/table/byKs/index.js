@@ -9,9 +9,24 @@ const start = () => {
       type: "tableFromSpec",
       data: data.slice(0, 50),
       targetHtmlId: "dom-render-container",
-      columns: [{ columnName: "itemName", width: "200px" },
-      { columnName: "baseUnit", width: "150px" }],
-      showLog: true
+      columns: [
+        {
+          columnName: "itemName", width: "300px", template: {
+            bodyCell: "buildBodyCell"
+          }
+        },
+        {
+          columnName: "baseUnit", width: "200px", template: {
+            bodyCell: "buildBodyCell"
+          }
+        },
+        {
+          columnName: "batches", width: "100px", template: {
+            bodyCell: "button"
+          }
+        }
+      ],
+      showLog: false
     });
 
   } catch (err) {
@@ -19,4 +34,4 @@ const start = () => {
   }
 };
 
-// start();
+start();

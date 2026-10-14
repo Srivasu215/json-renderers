@@ -1,4 +1,4 @@
-import spec from "./spec.json" with { type: "json" };
+import spec from "./configSpec.json" with { type: "json" };
 
 // Returns the specification object when called
 const getSpec = () => {
