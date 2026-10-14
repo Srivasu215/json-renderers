@@ -7,7 +7,7 @@ import renderToDom from "./renderToDom/index.js";
 // Main orchestrator: coordinates validation, spec building, and DOM rendering
 const render = (options = {}) => {
     const config = validateConfig(options);
-    console.log("showLog : ", config?.showLog);
+    // console.log("showLog : ", config?.showLog);
 
     const spec = buildSpec({
         inColumns: config.columns,
