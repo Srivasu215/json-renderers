@@ -14,7 +14,7 @@ import { saveClick } from "./methods/saveClick.js";
 import { rowOptionsClick } from "./methods/rowOptionsClick.js";
 import { cellButtonClick } from "./methods/cellButtonClick.js";
 
-const start = async () => {
+const buildTable = async () => {
     try {
         const spec = window.ks.jsonRenderersBuild.renderToDom({
             type: "table",
@@ -75,6 +75,32 @@ const start = async () => {
         console.error("Render error:", err);
         container.innerHTML = `<div class="alert alert-danger font-monospace small mb-0">${err.message}</div>`;
     }
+};
+
+const buildSelect = (inColumns, inData) => {
+    const spec = {
+        "tagName": "option",
+        "textContent": "${rowValue}",
+        "attributes": {
+            "value": "${rowValue}"
+        }
+    };
+    const name = inColumns[0].columnName;
+    spec.textContent = name;
+    spec.attributes.value = name;
+
+    const options = inData.map(item => {
+        return fromCollection(item, spec)
+    });
+
+    // runInstructions(singleInstructions);
+    return options;
+};
+
+const start = () => {
+    buildTable();
+    // const options = buildSelect(columns, data);
+    // console.log("options : ", options);
 };
 
 start();
