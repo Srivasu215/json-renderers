@@ -1,21 +1,23 @@
-
-import render from "../../docs/dist/v17/min.js";
+// import "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v16/min.js";
+import "../../../docs/dist/v17/min.js";
 
 import data from "./data.json" with { type: "json" };
-// if (appendPosition === "prepend") {
+import columns from "./columns.json" with { type: "json" };
+
 const start = () => {
   try {
-    const spec = render({
+    window.ks.jsonRenderers.renderToDom({
       appendPosition: "prepend",
-      type: "selectOptionsOnly", data: data.LedgerType,
-      columns: [{ columnName: "name" }],
-      targetHtmlId: "selectId"
+      type: "selectOptionsOnly",
+      data: data.slice(0, 50),
+      targetHtmlId: "selectId",
+      columns,
+      showLog: true
     });
-    console.log("spec : ", spec);
+
   } catch (err) {
     console.log("error : ", err);
-
-  };
+  }
 };
 
 start();
