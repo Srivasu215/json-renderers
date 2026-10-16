@@ -43,7 +43,7 @@ const q = {
   targetHtmlId: t,
   data: o,
   columns: n,
-  classToApply: a = "",
+  classToApply: l = "",
   appendPosition: r = "replace",
   showLog: s = !1
 } = {}) => {
@@ -52,7 +52,7 @@ const q = {
     targetHtmlId: t,
     data: o,
     columns: n,
-    classToApply: a,
+    classToApply: l,
     appendPosition: r,
     showLog: s
   };
@@ -108,10 +108,10 @@ const et = {
     }
   }
   return !0;
-}, rt = "table", at = [], lt = [], st = {}, ct = !1, h = {
+}, rt = "table", lt = [], at = [], st = {}, ct = !1, h = {
   type: rt,
-  columns: at,
-  data: lt,
+  columns: lt,
+  data: at,
   options: st,
   showLog: ct
 }, it = [
@@ -139,48 +139,48 @@ const et = {
   data: t = f.data,
   columns: o = f.columns,
   options: n = f.options,
-  showLog: a = f.showLog
+  showLog: l = f.showLog
 } = {}) => {
-  const l = {
+  const a = {
     type: e,
     data: t,
     columns: o,
     options: n,
-    showLog: a
+    showLog: l
   };
-  return F({ inConfig: l }), l;
+  return F({ inConfig: a }), a;
 };
 Object.assign(x, f);
 x.toJSON = () => structuredClone(f);
 const pt = (e) => typeof e == "object" && e !== null && !Array.isArray(e), ft = (e, t) => {
   if (!pt(e)) return;
   let o = {};
-  for (const [n, a] of Object.entries(e))
-    o[n] = w(a, t);
+  for (const [n, l] of Object.entries(e))
+    o[n] = g(t, l);
   return o;
 }, bt = (e, t) => {
   const o = structuredClone(e);
-  return Array.isArray(o) ? o.map((a) => w(t, a)) : void 0;
+  return Array.isArray(o) ? o.map((l) => g(t, l)) : void 0;
 }, k = (e, t, o) => {
   if (e === "${agg:count}" && "rowData" in t) {
     if (Array.isArray(t == null ? void 0 : t.rowData))
       return t == null ? void 0 : t.rowData.length;
   } else
-    return e === "${rowValue}" && "rowData" in t ? t == null ? void 0 : t.rowData : e.replace(/\$\{(\w+)\}/g, (n, a) => t[a] !== void 0 ? t[a] : n);
+    return e === "${rowValue}" && "rowData" in t ? t == null ? void 0 : t.rowData : e.replace(/\$\{(\w+)\}/g, (n, l) => t[l] !== void 0 ? t[l] : n);
 }, ht = (e, t) => k(e, t), mt = (e, t, o) => {
-  if (e == null)
+  if (t == null)
     throw new TypeError("inTemplate is required");
-  if (typeof e != "object" && typeof e != "string")
+  if (typeof t != "object" && typeof t != "string")
     throw new TypeError("inTemplate must be an object or string");
-  if (!t || typeof t != "object" || Array.isArray(t))
+  if (!e || typeof e != "object" || Array.isArray(e))
     throw new TypeError("inElement must be an object");
   return !0;
-}, w = (e, t, o) => {
-  const n = e, a = t;
-  mt(n, a);
-  const r = structuredClone(a);
+}, g = (e, t, o) => {
+  const n = e, l = t;
+  mt(n, l);
+  const r = structuredClone(l);
   return typeof r == "string" ? k(r, n) : (r === null || typeof r != "object" || ("textContent" in r && (r.textContent = ht(r == null ? void 0 : r.textContent, n)), "attributes" in r && (r.attributes = ft(r == null ? void 0 : r.attributes, n)), "children" in r && (r.children = bt(r == null ? void 0 : r.children, n))), r);
-}, gt = (e, t) => {
+}, wt = (e, t) => {
   if (!Array.isArray(e))
     throw new TypeError("inSource must be an Array");
   if (e.length === 0)
@@ -193,64 +193,64 @@ const pt = (e) => typeof e == "object" && e !== null && !Array.isArray(e), ft = 
   return !0;
 }, C = (e, t) => {
   const o = e, n = t;
-  return gt(o, n), o.map((a) => w(a, n));
-}, wt = (e, t) => e.map((n) => ({
+  return wt(o, n), o.map((l) => g(l, n));
+}, gt = (e, t) => e.map((n) => ({
   ...n,
   rowData: t[n.columnName]
 })), yt = (e, t, o) => {
-  var a, r, s, c, i, u;
+  var l, r, s, c, i, u;
   if (!Array.isArray(e))
     throw new TypeError("inColumns must be an Array");
   if (e.length === 0)
     throw new Error("inColumns cannot be empty");
-  for (let l = 0; l < e.length; l++) {
-    const d = e[l];
+  for (let a = 0; a < e.length; a++) {
+    const d = e[a];
     if (!d || typeof d != "object")
-      throw new TypeError(`inColumns[${l}] must be an object`);
+      throw new TypeError(`inColumns[${a}] must be an object`);
     if (typeof d.columnName != "string" || !d.columnName.trim())
-      throw new TypeError(`inColumns[${l}].columnName must be a non-empty string`);
+      throw new TypeError(`inColumns[${a}].columnName must be a non-empty string`);
   }
   if (!Array.isArray(t))
     throw new TypeError("inData must be an Array");
-  for (let l = 0; l < t.length; l++) {
-    const d = t[l];
+  for (let a = 0; a < t.length; a++) {
+    const d = t[a];
     if (!d || typeof d != "object")
-      throw new TypeError(`inData[${l}] must be an object`);
+      throw new TypeError(`inData[${a}] must be an object`);
   }
   if (!o || typeof o != "object" || Array.isArray(o))
     throw new TypeError("inSpec must be an object");
-  const n = ((s = (r = (a = e[0]) == null ? void 0 : a.template) == null ? void 0 : r.body) == null ? void 0 : s.tr) || "buildBodyTr";
+  const n = ((s = (r = (l = e[0]) == null ? void 0 : l.template) == null ? void 0 : r.body) == null ? void 0 : s.tr) || "buildBodyTr";
   if (!(n in o))
     throw new Error(`Row template "${n}" not found in inSpec`);
-  for (let l = 0; l < e.length; l++) {
-    const d = e[l], p = ((i = (c = d.template) == null ? void 0 : c.body) == null ? void 0 : i.cell) || ((u = d.template) == null ? void 0 : u.bodyCell) || "buildBodyCell";
+  for (let a = 0; a < e.length; a++) {
+    const d = e[a], p = ((i = (c = d.template) == null ? void 0 : c.body) == null ? void 0 : i.cell) || ((u = d.template) == null ? void 0 : u.bodyCell) || "buildBodyCell";
     if (!(p in o))
       throw new Error(`Cell template "${p}" for column "${d.columnName}" not found in inSpec`);
   }
   return !0;
 }, Tt = (e, t) => e.map((n) => {
   var c, i, u;
-  const a = ((i = (c = n.template) == null ? void 0 : c.body) == null ? void 0 : i.cell) || ((u = n.template) == null ? void 0 : u.bodyCell) || "buildBodyCell", r = t[a];
-  return w(n, r);
+  const l = ((i = (c = n.template) == null ? void 0 : c.body) == null ? void 0 : i.cell) || ((u = n.template) == null ? void 0 : u.bodyCell) || "buildBodyCell", r = t[l];
+  return g(n, r);
 }), Ct = (e, t, o) => {
-  var u, l, d;
+  var u, a, d;
   yt(e, t, o);
-  const n = e, a = t, r = o, s = ((d = (l = (u = n[0]) == null ? void 0 : u.template) == null ? void 0 : l.body) == null ? void 0 : d.tr) || "buildBodyTr", c = r[s];
-  return a.map((p) => {
-    const A = w(p, c), y = wt(n, p), z = Tt(y, r);
+  const n = e, l = t, r = o, s = ((d = (a = (u = n[0]) == null ? void 0 : u.template) == null ? void 0 : a.body) == null ? void 0 : d.tr) || "buildBodyTr", c = r[s];
+  return l.map((p) => {
+    const A = g(p, c), y = gt(n, p), z = Tt(y, r);
     return A.children = z, A;
   });
 }, S = (e, t) => {
   var o;
   if (((o = e == null ? void 0 : e.attributes) == null ? void 0 : o["data-role"]) === t) return e;
   for (const n of (e == null ? void 0 : e.children) ?? []) {
-    const a = S(n, t);
-    if (a) return a;
+    const l = S(n, t);
+    if (l) return l;
   }
   return null;
 }, At = (e, t) => {
   const o = e[t.fileName], n = t.dataRole ? S(o, t.dataRole) : o;
-  return (t.filePath ?? []).reduce((a, r) => a[r], n);
+  return (t.filePath ?? []).reduce((l, r) => l[r], n);
 }, Nt = {
   tagName: "tr",
   attributes: {
@@ -464,13 +464,13 @@ const pt = (e) => typeof e == "object" && e !== null && !Array.isArray(e), ft = 
     });
   },
   unshiftSerialToRows: (e, t, o) => {
-    e[t].forEach((n, a) => {
+    e[t].forEach((n, l) => {
       const r = structuredClone(o);
-      r.textContent = a + 1, n.children.unshift(r);
+      r.textContent = l + 1, n.children.unshift(r);
     });
   }
 }, R = (e, t, o) => {
-  const n = t.dataRole ? S(e[t.fileName], t.dataRole) : e[t.fileName], a = [...t.filePath ?? []], r = a.pop(), s = a.reduce((i, u) => i[u], n);
+  const n = t.dataRole ? S(e[t.fileName], t.dataRole) : e[t.fileName], l = [...t.filePath ?? []], r = l.pop(), s = l.reduce((i, u) => i[u], n);
   (L[t.action] || L.set)(s, r, o);
 }, m = { data: {}, base: I, spec: j }, v = {
   fromCollection: C,
@@ -519,23 +519,25 @@ const pt = (e) => typeof e == "object" && e !== null && !Array.isArray(e), ft = 
     "data-name": "${columnName}"
   },
   children: []
-}, g = {
+}, w = {
   buildOption: Mt,
   buildSelect: Gt,
   buildDataList: Kt
 }, zt = ({ inData: e = [] } = {}) => {
   const t = (e ?? []).map(
     (n) => typeof n == "object" && n !== null ? n : { rowValue: n }
-  ), o = structuredClone(g.buildSelect);
-  return o.children = C(t, g.buildOption), o;
+  ), o = structuredClone(w.buildSelect);
+  return o.children = C(t, w.buildOption), o;
 }, qt = ({ inData: e = [], inColumns: t = [] } = {}) => t.map((n) => {
-  const a = structuredClone(g.buildOption);
-  return a.textContent = a.textContent.replace("rowValue", n.columnName), a.attributes.value = a.attributes.value.replace("rowValue", n.columnName), C(e, a);
+  const l = structuredClone(w.buildOption);
+  l.textContent = l.textContent.replace("rowValue", n.columnName), l.attributes.value = l.attributes.value.replace("rowValue", n.columnName);
+  const r = C(e, l);
+  return console.log("createdArray : ", r[0], l), r;
 }), E = ({ inData: e = [] } = {}) => {
   const t = (e ?? []).map(
     (n) => typeof n == "object" && n !== null ? n : { rowValue: n }
-  ), o = structuredClone(g.buildDataList);
-  return o.children = C(t, g.buildOption), o;
+  ), o = structuredClone(w.buildDataList);
+  return o.children = C(t, w.buildOption), o;
 }, _t = {
   table: D,
   tableFromSpec: D,
@@ -548,25 +550,25 @@ const pt = (e) => typeof e == "object" && e !== null && !Array.isArray(e), ft = 
   data: t = h.data,
   columns: o = h.columns,
   options: n = h.options,
-  showLog: a = h.showLog
+  showLog: l = h.showLog
 } = {}) => {
-  const l = {
+  const a = {
     type: e,
     data: t,
     columns: o,
     options: n,
-    showLog: a
+    showLog: l
   };
-  F({ inConfig: l });
-  const d = _t[l.type];
+  F({ inConfig: a });
+  const d = _t[a.type];
   if (!d)
-    throw new Error(`Renderer for type "${l.type}" not found.`);
+    throw new Error(`Renderer for type "${a.type}" not found.`);
   const p = d({
-    inColumns: l.columns,
-    inData: l.data,
-    options: l.options
+    inColumns: a.columns,
+    inData: a.data,
+    options: a.options
   });
-  return l.showLog && console.log("json-renderers-build output:", p), p;
+  return a.showLog && console.log("json-renderers-build output:", p), p;
 };
 ot({ render: H, getSpec: x, spec: f });
 const V = ({
@@ -630,16 +632,16 @@ const V = ({
   const o = e, n = t;
   if (!o || !n || typeof n != "object")
     return o;
-  const a = typeof SVGElement < "u" ? o instanceof SVGElement : o.namespaceURI === "http://www.w3.org/2000/svg";
+  const l = typeof SVGElement < "u" ? o instanceof SVGElement : o.namespaceURI === "http://www.w3.org/2000/svg";
   return Object.entries(n).forEach(([r, s]) => {
     if (r === "class") {
-      a ? o.setAttribute("class", String(s)) : o.className = s;
+      l ? o.setAttribute("class", String(s)) : o.className = s;
       return;
     }
     if (r === "xlink:href" || r === "href") {
       if (s != null) {
         const c = String(s);
-        if (a)
+        if (l)
           try {
             o.setAttributeNS(oe, "href", c);
           } catch {
@@ -658,7 +660,7 @@ const V = ({
   if (!e || !t) return e;
   const o = typeof t == "string" ? t.split(/\s+/).filter(Boolean) : Array.isArray(t) ? t.filter((n) => typeof n == "string" && n.trim()) : [];
   return o.length && e.classList.add(...o), e;
-}, ae = (e) => {
+}, le = (e) => {
   if (!e || typeof e != "object" || Array.isArray(e) || !e.tagName) return null;
   const t = Zt({ inTagName: e.tagName });
   if (!t) return null;
@@ -680,7 +682,7 @@ const V = ({
     o.length && t.append(...o);
   }
   return t;
-}, M = (e) => e == null ? null : typeof Node < "u" && e instanceof Node ? e : Array.isArray(e) ? B(e) : typeof e == "object" ? ae(e) : typeof e == "string" || typeof e == "number" ? document.createTextNode(String(e)) : null, le = "./tags.schema.json", se = {
+}, M = (e) => e == null ? null : typeof Node < "u" && e instanceof Node ? e : Array.isArray(e) ? B(e) : typeof e == "object" ? le(e) : typeof e == "string" || typeof e == "number" ? document.createTextNode(String(e)) : null, ae = "./tags.schema.json", se = {
   allowsTextContent: !1,
   allowsChildren: !0,
   allowedAttributes: [
@@ -772,12 +774,12 @@ const V = ({
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: []
-}, ge = {
+}, we = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [],
   childTags: []
-}, we = {
+}, ge = {
   allowsTextContent: !0,
   allowsChildren: !0,
   allowedAttributes: [],
@@ -931,7 +933,7 @@ const V = ({
   allowsChildren: !1,
   allowedAttributes: []
 }, ve = {
-  $schema: le,
+  $schema: ae,
   div: se,
   input: ce,
   checkbox: ie,
@@ -942,8 +944,8 @@ const V = ({
   select: be,
   p: he,
   h1: me,
-  h2: ge,
-  span: we,
+  h2: we,
+  span: ge,
   img: ye,
   button: Te,
   table: Ce,
@@ -970,15 +972,15 @@ const V = ({
   if (typeof t != "object") return [];
   const o = [];
   return typeof t.tagName == "string" && t.tagName.trim().length > 0 && o.push(t.tagName.toLowerCase()), Array.isArray(t.children) && t.children.length > 0 && t.children.forEach((n) => {
-    const a = $({ inSpec: n });
-    o.push(...a);
+    const l = $({ inSpec: n });
+    o.push(...l);
   }), o;
 }, He = ({ inTagsFound: e, inAllowedTags: t }) => {
-  const o = e ?? [], n = t ?? {}, a = new Set(
-    Object.keys(n).filter((l) => l !== "$schema").map((l) => l.toLowerCase())
+  const o = e ?? [], n = t ?? {}, l = new Set(
+    Object.keys(n).filter((a) => a !== "$schema").map((a) => a.toLowerCase())
   ), r = {}, s = [], c = [];
-  o.forEach((l) => {
-    r[l] = (r[l] || 0) + 1, a.has(l) ? s.includes(l) || s.push(l) : c.includes(l) || c.push(l);
+  o.forEach((a) => {
+    r[a] = (r[a] || 0) + 1, l.has(a) ? s.includes(a) || s.push(a) : c.includes(a) || c.push(a);
   });
   const i = o.length, u = c.length === 0;
   return {
@@ -990,8 +992,8 @@ const V = ({
     areAllTagsPresent: u
   };
 }, Ve = ({ inSpec: e, inTags: t = ve } = {}) => {
-  const o = e, n = t, a = $({ inSpec: o }), r = He({
-    inTagsFound: a,
+  const o = e, n = t, l = $({ inSpec: o }), r = He({
+    inTagsFound: l,
     inAllowedTags: n
   });
   return {
@@ -1016,13 +1018,13 @@ const K = ({
   inAppendPosition: o,
   inShowLog: n = !1
 } = {}) => {
-  const a = e, r = t, s = o, c = n, i = G(a);
+  const l = e, r = t, s = o, c = n, i = G(l);
   c && console.log("renderToDom 1 (content):", i);
   const u = document.getElementById(r);
   return u ? (Array.isArray(i) || i instanceof NodeList || i instanceof HTMLCollection ? s === "prepend" ? u.prepend(...i) : u.append(...i) : s === "prepend" ? u.prepend(i) : (u.innerHTML = "", u.append(i)), c && console.log("renderToDom 2 (mounted):", u), u) : null;
 }, Be = (e = {}) => {
   const t = O(e);
-  (t == null ? void 0 : t.showLog) && console.log("first : ", t == null ? void 0 : t.columns, t == null ? void 0 : t.data);
+  (t == null ? void 0 : t.showLog) && console.log("first : ", t == null ? void 0 : t.columns, t == null ? void 0 : t.data, t == null ? void 0 : t.appendPosition);
   const n = V({
     inColumns: t.columns,
     inData: t.data,
