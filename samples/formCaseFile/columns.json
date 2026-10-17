@@ -1,0 +1,50 @@
+[
+  {
+    "columnName": "CaseNumber",
+    "id": "case-number",
+    "dataListId": "case-number-options",
+    "label": "Case number",
+    "type": "text",
+    "required": true,
+    "placeholder": "CF-2026-041"
+  },
+  {
+    "columnName": "CaseType",
+    "id": "case-type",
+    "dataListId": "case-type-options",
+    "label": "Case type",
+    "type": "text",
+    "required": true,
+    "placeholder": "Account access"
+  },
+  {
+    "columnName": "Priority",
+    "id": "priority",
+    "dataListId": "priority-options",
+    "label": "Priority",
+    "type": "text",
+    "required": true
+  },
+  {
+    "columnName": "Status",
+    "id": "status",
+    "dataListId": "status-options",
+    "label": "Status",
+    "type": "text",
+    "required": true
+  },
+  {
+    "columnName": "AssignedTeam",
+    "id": "assigned-team",
+    "dataListId": "assigned-team-options",
+    "label": "Assigned team",
+    "type": "text"
+  },
+  {
+    "columnName": "Summary",
+    "id": "summary",
+    "label": "Case summary",
+    "type": "textarea",
+    "placeholder": "Describe the issue"
+  }
+]

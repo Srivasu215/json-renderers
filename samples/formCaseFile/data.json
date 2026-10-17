@@ -1,0 +1,42 @@
+[
+  {
+    "CaseNumber": "CF-2026-041",
+    "CaseType": "Account access",
+    "Priority": "High",
+    "Status": "Open",
+    "AssignedTeam": "Customer Support",
+    "Summary": "A customer cannot reset their password."
+  },
+  {
+    "CaseNumber": "CF-2026-042",
+    "CaseType": "Billing question",
+    "Priority": "Normal",
+    "Status": "In review",
+    "AssignedTeam": "Billing Team",
+    "Summary": "A charge needs to be explained."
+  },
+  {
+    "CaseNumber": "CF-2026-043",
+    "CaseType": "Delivery delay",
+    "Priority": "Low",
+    "Status": "Resolved",
+    "AssignedTeam": "Operations",
+    "Summary": "A delivery arrived later than expected."
+  },
+  {
+    "CaseNumber": "CF-2026-044",
+    "CaseType": "Account access",
+    "Priority": "Urgent",
+    "Status": "Open",
+    "AssignedTeam": "Customer Support",
+    "Summary": "A team member is locked out of their account."
+  },
+  {
+    "CaseNumber": "CF-2026-045",
+    "CaseType": "Product question",
+    "Priority": "Normal",
+    "Status": "In review",
+    "AssignedTeam": "Product Team",
+    "Summary": "A customer needs help choosing a plan."
+  }
+]
