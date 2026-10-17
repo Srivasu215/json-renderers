@@ -1,0 +1,1140 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+    content="Documentation for KeshavSoft json-renderers: its role, architecture, installation, examples, API, and development workflow.">
+  <title>json-renderers — Documentation</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --surface: #fff;
+      --ink: #182230;
+      --muted: #5b6879;
+      --line: #e1e7ef;
+      --brand: #3858e9;
+      --brand2: #6c45d9;
+      --code: #101827;
+      --green: #15845b;
+      --soft: #eef2ff;
+      --shadow: 0 10px 32px rgba(23, 35, 70, .07)
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 86px
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.65 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif
+    }
+
+    a {
+      color: var(--brand);
+      text-decoration: none
+    }
+
+    a:hover {
+      text-decoration: underline
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: rgba(255, 255, 255, .92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line)
+    }
+
+    .topbar-inner {
+      max-width: 1200px;
+      margin: auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      font-weight: 800;
+      letter-spacing: -.03em
+    }
+
+    .logo {
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color: white;
+      border-radius: 10px;
+      width: 36px;
+      height: 36px;
+      font-weight: 900
+    }
+
+    .top-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      font-weight: 650
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: auto;
+      padding: 30px 24px 72px
+    }
+
+    .hero {
+      border-radius: 24px;
+      padding: clamp(28px, 5vw, 60px);
+      background: radial-gradient(circle at 85% 15%, rgba(255, 255, 255, .2), transparent 28%), linear-gradient(120deg, #1b2b65, #3c48bd 55%, #7547ce);
+      color: white;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      font-size: 12px;
+      font-weight: 800;
+      opacity: .8
+    }
+
+    .hero h1 {
+      font-size: clamp(34px, 5vw, 60px);
+      line-height: 1.08;
+      letter-spacing: -.055em;
+      max-width: 800px;
+      margin: 14px 0
+    }
+
+    .hero p {
+      font-size: clamp(16px, 2vw, 20px);
+      max-width: 760px;
+      color: #e9ecff
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 26px
+    }
+
+    .hero-links a {
+      display: inline-flex;
+      padding: 10px 15px;
+      border-radius: 11px;
+      background: white;
+      color: #24316e;
+      font-weight: 750;
+      font-size: 14px
+    }
+
+    .hero-links a.secondary {
+      background: rgba(255, 255, 255, .12);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, .35)
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 245px minmax(0, 1fr);
+      gap: 26px;
+      margin-top: 28px
+    }
+
+    .sidebar {
+      align-self: start;
+      position: sticky;
+      top: 76px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: var(--shadow)
+    }
+
+    .sidebar h3 {
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 10px
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 7px 9px;
+      border-radius: 8px;
+      color: #364254;
+      font-size: 13px
+    }
+
+    .sidebar a:hover {
+      background: var(--soft);
+      text-decoration: none;
+      color: var(--brand)
+    }
+
+    main {
+      min-width: 0
+    }
+
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: clamp(20px, 3vw, 34px);
+      margin-bottom: 20px;
+      box-shadow: var(--shadow)
+    }
+
+    h2 {
+      font-size: clamp(24px, 3vw, 32px);
+      letter-spacing: -.04em;
+      line-height: 1.2;
+      margin: 0 0 14px
+    }
+
+    h3 {
+      font-size: 19px;
+      letter-spacing: -.02em;
+      margin: 24px 0 8px
+    }
+
+    p {
+      margin: 8px 0 14px
+    }
+
+    .muted {
+      color: var(--muted)
+    }
+
+    .lead {
+      font-size: 18px;
+      color: #435166
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 4px 9px;
+      background: #edf2ff;
+      color: #3448bb;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 750;
+      margin: 3px 4px 3px 0
+    }
+
+    .grid3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px
+    }
+
+    .mini-card {
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 16px;
+      background: #fcfdff
+    }
+
+    .mini-card strong {
+      display: block;
+      margin-bottom: 5px
+    }
+
+    .mini-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px
+    }
+
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 22px 0
+    }
+
+    .step {
+      background: #f8f9ff;
+      border: 1px solid #dfe4ff;
+      border-radius: 13px;
+      padding: 15px;
+      position: relative
+    }
+
+    .step:not(:last-child):after {
+      content: '→';
+      position: absolute;
+      right: -12px;
+      top: 38%;
+      z-index: 1;
+      color: var(--brand);
+      font-weight: 900;
+      font-size: 19px
+    }
+
+    .step .num {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--brand);
+      text-transform: uppercase;
+      letter-spacing: .08em
+    }
+
+    .step strong {
+      display: block;
+      margin: 6px 0
+    }
+
+    .step p {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0
+    }
+
+    .note {
+      border-left: 4px solid var(--brand);
+      padding: 13px 16px;
+      background: #f3f5ff;
+      border-radius: 0 10px 10px 0;
+      margin: 16px 0
+    }
+
+    .note strong {
+      display: block;
+      margin-bottom: 3px
+    }
+
+    .codehead {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      color: #c8d3e8;
+      font-size: 12px;
+      font-weight: 750;
+      padding: 10px 14px;
+      background: #1b2638;
+      border-radius: 11px 11px 0 0
+    }
+
+    .codewrap {
+      position: relative;
+      margin: 12px 0 20px
+    }
+
+    pre {
+      margin: 0;
+      background: var(--code);
+      color: #e4ebf7;
+      padding: 18px;
+      overflow: auto;
+      border-radius: 0 0 11px 11px;
+      font: 13px/1.65 ui-monospace, SFMono-Regular, Consolas, monospace;
+      tab-size: 2
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace
+    }
+
+    .inline-code {
+      background: #edf1f7;
+      padding: 2px 5px;
+      border-radius: 5px;
+      font-size: .9em
+    }
+
+    .copy {
+      border: 1px solid #45536a;
+      background: #26344b;
+      color: #fff;
+      border-radius: 6px;
+      padding: 5px 9px;
+      font-size: 11px;
+      cursor: pointer
+    }
+
+    .copy:hover {
+      background: #374967
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+      margin: 14px 0
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      min-width: 560px
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      padding: 11px 12px
+    }
+
+    th {
+      background: #f7f9fc;
+      color: #37455a;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .04em
+    }
+
+    td:first-child {
+      font-weight: 700
+    }
+
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px
+    }
+
+    .compare-card {
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 18px
+    }
+
+    .compare-card h3 {
+      margin: 0 0 8px
+    }
+
+    .compare-card ul {
+      padding-left: 18px;
+      margin: 8px 0
+    }
+
+    .compare-card li {
+      margin: 5px 0
+    }
+
+    .flow-list {
+      counter-reset: flow;
+      list-style: none;
+      padding: 0
+    }
+
+    .flow-list li {
+      counter-increment: flow;
+      display: flex;
+      gap: 12px;
+      margin: 12px 0
+    }
+
+    .flow-list li:before {
+      content: counter(flow);
+      width: 27px;
+      height: 27px;
+      flex: 0 0 27px;
+      display: grid;
+      place-items: center;
+      background: var(--soft);
+      color: var(--brand);
+      font-weight: 800;
+      border-radius: 8px;
+      font-size: 12px
+    }
+
+    .footer {
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+      padding: 18px
+    }
+
+    .searchbox {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      margin-bottom: 12px;
+      font: inherit;
+      font-size: 13px
+    }
+
+    .hidden {
+      display: none !important
+    }
+
+    @media(max-width:850px) {
+      .layout {
+        grid-template-columns: 1fr
+      }
+
+      .sidebar {
+        position: static;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 8px
+      }
+
+      .sidebar h3,
+      .searchbox {
+        grid-column: 1/-1
+      }
+
+      .grid3 {
+        grid-template-columns: 1fr
+      }
+
+      .pipeline {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .step:not(:last-child):after {
+        display: none
+      }
+
+      .top-links {
+        display: none
+      }
+    }
+
+    @media(max-width:520px) {
+      .wrap {
+        padding: 16px 12px 42px
+      }
+
+      .topbar-inner {
+        padding: 10px 14px
+      }
+
+      .hero {
+        border-radius: 18px
+      }
+
+      .pipeline,
+      .comparison {
+        grid-template-columns: 1fr
+      }
+
+      .section {
+        padding: 20px 16px
+      }
+
+      .sidebar {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap" id="top">
+      <section class="hero">
+        <div class="eyebrow">KeshavSoft · Browser DOM Runtime</div>
+        <h1>Render JSON-driven UI into the browser.</h1>
+        <p>A practical guide to <strong>json-renderers</strong> — the runtime that coordinates UI-spec generation, DOM
+          creation, and mounting rendered components into a page.</p>
+        <div class="hero-links">
+          <a href="simpleDoc.html">🌱 Read Simple Guide ↗</a>
+          <a class="secondary" href="index.html">📚 SubDoc Hub ↗</a>
+          <a class="secondary" href="../index.html">🏠 Main Docs &amp; Workbench ↗</a>
+          <a class="secondary" href="https://github.com/keshavsoft/json-renderers" target="_blank" rel="noreferrer">View
+            repository ↗</a>
+        </div>
+      </section>
+
+      <div class="layout">
+        <aside class="sidebar">
+          <div style="margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--line);">
+            <h3 style="margin-bottom:6px;">Documentation Hub</h3>
+            <a href="../index.html" style="font-weight:600;color:var(--ink);">🏠 Main Docs</a>
+            <a href="index.html" style="font-weight:600;color:var(--brand);">📚 SubDoc Hub</a>
+            <a href="simpleDoc.html" style="font-weight:600;color:#059669;">🌱 Simple Guide</a>
+            <a href="advanceDoc.html" style="font-weight:750;background:var(--soft);color:var(--brand);">🚀 Advanced
+              Guide</a>
+          </div>
+          <input class="searchbox" id="navSearch" placeholder="Filter sections…"
+            aria-label="Filter documentation sections">
+          <h3>Section Index</h3>
+          <a class="doc-section-link" href="#overview">What it does</a>
+          <a class="doc-section-link" href="#simple-story">Simple story</a>
+          <a class="doc-section-link" href="#architecture">Architecture & pipeline</a>
+          <a class="doc-section-link" href="#features">Features</a>
+          <a class="doc-section-link" href="#installation">Installation</a>
+          <a class="doc-section-link" href="#quick-start">Quick start</a>
+          <a class="doc-section-link" href="#api">API reference</a>
+          <a class="doc-section-link" href="#comparison">Related repository</a>
+          <a class="doc-section-link" href="#structure">Project structure</a>
+          <a class="doc-section-link" href="#development">Development & build</a>
+          <a class="doc-section-link" href="#references">Official references</a>
+        </aside>
+
+        <main>
+          <section class="section" id="overview">
+            <h2>1. What is json-renderers?</h2>
+            <p class="lead"><strong>json-renderers</strong> is the browser runtime layer in the KeshavSoft declarative
+              UI
+              ecosystem. It accepts render configuration, obtains a JSON description of the requested component, asks
+              <span class="inline-code">@keshavsoft/json-to-tag</span> to create DOM nodes, and mounts the result in the
+              requested browser container.
+            </p>
+            <p>It is an orchestration layer rather than the specification compiler itself. The component structure is
+              prepared upstream by <span class="inline-code">json-renderers-build</span>; actual element construction is
+              delegated to <span class="inline-code">@keshavsoft/json-to-tag</span>.</p>
+            <div class="grid3">
+              <div class="mini-card"><span class="pill">Input</span><strong>Data + options</strong>
+                <p>Rows, option values, component type, target element ID, and optional columns.</p>
+              </div>
+              <div class="mini-card"><span class="pill">Coordination</span><strong>Build the UI spec</strong>
+                <p>The builder assembles the declarative JSON structure for the selected component.</p>
+              </div>
+              <div class="mini-card"><span class="pill">Output</span><strong>Mounted DOM</strong>
+                <p>Real browser elements appear inside the target container.</p>
+              </div>
+            </div>
+            <div class="note"><strong>Key distinction</strong>json-renderers does not hand-code each table or dropdown
+              DOM
+              tree. It coordinates the pipeline that converts a declarative specification into mounted browser elements.
+            </div>
+          </section>
+
+          <section class="section" id="simple-story">
+            <h2>2. A simple story everyone can understand</h2>
+            <p class="lead">Imagine we are building a house. The same idea helps explain how a UI becomes real HTML on a
+              webpage.</p>
+            <div class="grid3">
+              <div class="mini-card"><span class="pill">1 · The architect</span><strong>json-renderers-build</strong>
+                <p>The architect prepares a blueprint. Here, it prepares the JSON structure in the format that the next
+                  tool expects.</p>
+              </div>
+              <div class="mini-card"><span class="pill">2 · The construction worker</span><strong>json-to-tag</strong>
+                <p>The worker reads the blueprint and builds the actual parts. Here, it converts the JSON specification
+                  into real HTML DOM elements.</p>
+              </div>
+              <div class="mini-card"><span class="pill">3 · The site manager</span><strong>json-renderers</strong>
+                <p>The manager takes the built parts to the right place. Here, it mounts the created elements inside the
+                  target container on the webpage.</p>
+              </div>
+            </div>
+            <h3>Example: displaying a student table</h3>
+            <ol class="flow-list">
+              <li>
+                <div><strong>We provide student data.</strong><br><span class="muted">For example: student names and
+                    their
+                    cities, plus the ID of the HTML container.</span></div>
+              </li>
+              <li>
+                <div><strong>The architect prepares the blueprint.</strong><br><span
+                    class="muted"><code>json-renderers-build</code> produces a JSON specification describing the
+                    table.</span></div>
+              </li>
+              <li>
+                <div><strong>The construction worker builds the table elements.</strong><br><span
+                    class="muted"><code>json-to-tag</code> reads that specification and creates the HTML DOM
+                    elements.</span></div>
+              </li>
+              <li>
+                <div><strong>The site manager puts the table in place.</strong><br><span
+                    class="muted"><code>json-renderers</code> mounts the result inside the target HTML container, so the
+                    user can see the table.</span></div>
+              </li>
+            </ol>
+            <div class="note"><strong>Easy sentence to remember</strong><code>json-renderers-build</code> prepares the
+              blueprint, <code>json-to-tag</code> builds the actual DOM elements, and <code>json-renderers</code> places
+              them on the webpage.</div>
+          </section>
+
+          <section class="section" id="architecture">
+            <h2>3. Architecture and rendering pipeline</h2>
+            <p>The README describes the flow from application inputs to the final browser DOM as a staged pipeline:</p>
+            <div class="pipeline">
+              <div class="step"><span class="num">Step 01</span><strong>Application data</strong>
+                <p>Pass a component type, data, columns, and target HTML ID.</p>
+              </div>
+              <div class="step"><span class="num">Step 02</span><strong>json-renderers-build</strong>
+                <p>Builds a declarative JSON specification for the component.</p>
+              </div>
+              <div class="step"><span class="num">Step 03</span><strong>json-to-tag</strong>
+                <p>Converts the specification into browser DOM nodes.</p>
+              </div>
+              <div class="step"><span class="num">Step 04</span><strong>json-renderers</strong>
+                <p>Mounts the result into the specified container.</p>
+              </div>
+            </div>
+            <ol class="flow-list">
+              <li>
+                <div><strong>The application calls the render function.</strong><br><span class="muted">The
+                    configuration
+                    includes values such as <code>type</code>, <code>targetHtmlId</code>, <code>data</code>, and
+                    optionally <code>columns</code>.</span></div>
+              </li>
+              <li>
+                <div><strong>The builder prepares the component specification.</strong><br><span class="muted">The
+                    <code>json-renderers-build</code> package combines the component blueprint with the supplied data
+                    and
+                    returns a JSON spec.</span></div>
+              </li>
+              <li>
+                <div><strong>The JSON spec is converted into DOM.</strong><br><span
+                    class="muted"><code>@keshavsoft/json-to-tag</code> constructs the relevant HTML elements from that
+                    specification.</span></div>
+              </li>
+              <li>
+                <div><strong>The runtime mounts the generated elements.</strong><br><span class="muted">The renderer
+                    resolves the destination element and applies its mounting behavior.</span></div>
+              </li>
+            </ol>
+            <div class="note"><strong>Remember this for a technical
+                explanation</strong><code>json-renderers-build</code>
+              prepares the structure, <code>json-to-tag</code> creates the elements, and <code>json-renderers</code>
+              coordinates and mounts the result.</div>
+          </section>
+
+          <section class="section" id="features">
+            <h2>3. Main features</h2>
+            <div class="grid3">
+              <div class="mini-card"><strong>Table rendering</strong>
+                <p>Creates a table with headers and rows from the supplied data. The README documents Bootstrap table
+                  classes.</p>
+              </div>
+              <div class="mini-card"><strong>Select dropdown</strong>
+                <p>Builds a select element and populates it with the provided options.</p>
+              </div>
+              <div class="mini-card"><strong>Existing select options</strong>
+                <p>Can add option elements to an already-existing select element.</p>
+              </div>
+              <div class="mini-card"><strong>Flexible mounting</strong>
+                <p>Supports default content replacement and a <code>prepend</code> option.</p>
+              </div>
+              <div class="mini-card"><strong>Browser global</strong>
+                <p>The README documents a browser bundle that registers under <code>window.ks.jsonRenderers</code>.</p>
+              </div>
+              <div class="mini-card"><strong>ES module / npm</strong>
+                <p>Can be used through the package or a browser ES module bundle.</p>
+              </div>
+            </div>
+            <p class="muted" style="margin-top:15px">Documented renderer types: <code>table</code>, <code>select</code>,
+              and <code>selectOptionsOnly</code>.</p>
+          </section>
+
+          <section class="section" id="installation">
+            <h2>4. Installation</h2>
+            <h3>Option A — npm</h3>
+            <p>Install the package in your JavaScript project:</p>
+            <div class="codewrap">
+              <div class="codehead"><span>Terminal</span><button class="copy"
+                  data-copy="npm install json-renderers">Copy</button></div>
+              <pre><code>npm install json-renderers</code></pre>
+            </div>
+            <p>Then import the default render function in your JavaScript module:</p>
+            <div class="codewrap">
+              <div class="codehead"><span>JavaScript</span><button class="copy"
+                  data-copy='import render from "json-renderers";'>Copy</button></div>
+              <pre><code>import render from "json-renderers";</code></pre>
+            </div>
+            <h3>Option B — browser ES module bundle</h3>
+            <p>The README documents loading the v13 bundle from jsDelivr:</p>
+            <div class="codewrap">
+              <div class="codehead"><span>HTML</span><button class="copy"
+                  data-copy='<script type="module" src="https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v13/min.js"></script>'>Copy</button>
+              </div>
+              <pre><code>&lt;script type="module" src="https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers@main/docs/dist/v13/min.js"&gt;&lt;/script&gt;</code></pre>
+            </div>
+            <p>According to the README, the browser bundle registers a global API at
+              <code>window.ks.jsonRenderers</code>,
+              including <code>renderToDom</code>.</p>
+            <div class="note"><strong>Choose one setup</strong>Use npm imports in a bundled application, or load the
+              documented browser module in a page. Check the live README before publishing a project to confirm the
+              currently recommended bundle/version.</div>
+          </section>
+
+          <section class="section" id="quick-start">
+            <h2>5. Quick start examples</h2>
+            <p>Each example needs a destination element in the HTML and a call to <code>render</code> with the
+              corresponding options. The snippets below follow the examples documented in the repository README.</p>
+            <h3>Example A — render a table</h3>
+            <div class="codewrap">
+              <div class="codehead"><span>HTML</span><button class="copy"
+                  data-copy='<div id="table-container"></div>'>Copy</button></div>
+              <pre><code>&lt;div id="table-container"&gt;&lt;/div&gt;</code></pre>
+            </div>
+            <div class="codewrap">
+              <div class="codehead"><span>JavaScript</span><button class="copy"
+                  data-copy='import render from "json-renderers";\n\nconst records = [\n  { id: 101, name: "Alpha Enterprise", city: "Hyderabad" },\n  { id: 102, name: "Beta Logistics", city: "Bengaluru" }\n];\n\nrender({\n  type: "table",\n  targetHtmlId: "table-container",\n  data: records,\n  columns: ["Name", "City"]\n});'>Copy</button>
+              </div>
+              <pre><code>import render from "json-renderers";
+
+const records = [
+  { id: 101, name: "Alpha Enterprise", city: "Hyderabad" },
+  { id: 102, name: "Beta Logistics", city: "Bengaluru" }
+];
+
+render({
+  type: "table",
+  targetHtmlId: "table-container",
+  data: records,
+  columns: ["Name", "City"]
+});</code></pre>
+            </div>
+            <p class="muted">Expected result: a table is mounted inside the <code>#table-container</code> element,
+              showing
+              the selected columns and data rows.</p>
+            <h3>Example B — render a select dropdown</h3>
+            <div class="codewrap">
+              <div class="codehead"><span>HTML</span><button class="copy"
+                  data-copy='<div id="dropdown-container"></div>'>Copy</button></div>
+              <pre><code>&lt;div id="dropdown-container"&gt;&lt;/div&gt;</code></pre>
+            </div>
+            <div class="codewrap">
+              <div class="codehead"><span>JavaScript</span><button class="copy"
+                  data-copy='import render from "json-renderers";\n\nrender({\n  type: "select",\n  targetHtmlId: "dropdown-container",\n  data: ["Account Receivable", "Account Payable", "Sales Revenue"]\n});'>Copy</button>
+              </div>
+              <pre><code>import render from "json-renderers";
+
+render({
+  type: "select",
+  targetHtmlId: "dropdown-container",
+  data: ["Account Receivable", "Account Payable", "Sales Revenue"]
+});</code></pre>
+            </div>
+            <p class="muted">Expected result: a select element is generated with the supplied values as options.</p>
+            <h3>Example C — add options to an existing select</h3>
+            <div class="codewrap">
+              <div class="codehead"><span>HTML</span><button class="copy"
+                  data-copy='<select id="user-role-select" class="form-select">\n  <option value="" disabled selected>Select Role...</option>\n</select>'>Copy</button>
+              </div>
+              <pre><code>&lt;select id="user-role-select" class="form-select"&gt;
+  &lt;option value="" disabled selected&gt;Select Role...&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+            </div>
+            <div class="codewrap">
+              <div class="codehead"><span>JavaScript</span><button class="copy"
+                  data-copy='import render from "json-renderers";\n\nrender({\n  type: "selectOptionsOnly",\n  targetHtmlId: "user-role-select",\n  data: ["Administrator", "Editor", "Viewer"]\n});'>Copy</button>
+              </div>
+              <pre><code>import render from "json-renderers";
+
+render({
+  type: "selectOptionsOnly",
+  targetHtmlId: "user-role-select",
+  data: ["Administrator", "Editor", "Viewer"]
+});</code></pre>
+            </div>
+            <p class="muted">Expected result: options for Administrator, Editor, and Viewer are added to the existing
+              select control.</p>
+          </section>
+
+          <section class="section" id="api">
+            <h2>6. API reference</h2>
+            <p>The README documents the default export as a render function receiving one options object.</p>
+            <div class="codewrap">
+              <div class="codehead"><span>Function signature</span><button class="copy"
+                  data-copy='render({ type, targetHtmlId, data, columns, appendPosition, showLog });'>Copy</button>
+              </div>
+              <pre><code>render({
+  type = "table",
+  targetHtmlId,
+  data,
+  columns,
+  appendPosition,
+  showLog = false
+});</code></pre>
+            </div>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Default</th>
+                    <th>Purpose</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>type</code></td>
+                    <td>String</td>
+                    <td><code>"table"</code></td>
+                    <td>Selects the renderer: <code>table</code>, <code>select</code>, or
+                      <code>selectOptionsOnly</code>.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>targetHtmlId</code></td>
+                    <td>String</td>
+                    <td>Not set</td>
+                    <td>ID of the destination element resolved through <code>document.getElementById(...)</code>.</td>
+                  </tr>
+                  <tr>
+                    <td><code>data</code></td>
+                    <td>Array</td>
+                    <td><code>[]</code></td>
+                    <td>Row objects for a table; string values for select/dropdown option renderers.</td>
+                  </tr>
+                  <tr>
+                    <td><code>columns</code></td>
+                    <td>Array</td>
+                    <td>Not set</td>
+                    <td>Table column headers; the README describes strings or objects such as
+                      <code>{ title: "Name" }</code>.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>appendPosition</code></td>
+                    <td>String</td>
+                    <td>Not set</td>
+                    <td>Use <code>"prepend"</code> to prepend content. Otherwise, the documented behavior replaces
+                      existing container content.</td>
+                  </tr>
+                  <tr>
+                    <td><code>showLog</code></td>
+                    <td>Boolean</td>
+                    <td><code>false</code></td>
+                    <td>Enables debug logging during rendering.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>Return value</h3>
+            <p>The README describes the return value as an <code>HTMLElement</code> representing the mounted DOM
+              container.</p>
+            <div class="note"><strong>Usage check</strong>Make sure the element named by <code>targetHtmlId</code>
+              already
+              exists in the page before calling the render function. The parameter is an element ID, not a CSS selector.
+            </div>
+          </section>
+
+          <section class="section" id="comparison">
+            <h2>7. How it differs from json-renderers-build</h2>
+            <p>These packages work together, but they have different responsibilities.</p>
+            <div class="comparison">
+              <div class="compare-card"><span class="pill">Specification stage</span>
+                <h3><a href="https://github.com/keshavsoft/json-renderers-build" target="_blank"
+                    rel="noreferrer">json-renderers-build ↗</a></h3>
+                <ul>
+                  <li>Prepares the JSON component specification.</li>
+                  <li>Combines component blueprints with input data and options.</li>
+                  <li>Produces a declarative specification, rather than directly mounting DOM.</li>
+                </ul>
+              </div>
+              <div class="compare-card"><span class="pill">Browser runtime stage</span>
+                <h3>json-renderers</h3>
+                <ul>
+                  <li>Coordinates the full render path.</li>
+                  <li>Passes the spec to <code>json-to-tag</code> for element construction.</li>
+                  <li>Mounts the resulting nodes into the target browser container.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Aspect</th>
+                    <th>json-renderers-build</th>
+                    <th>json-renderers</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Primary job</td>
+                    <td>Build UI specification</td>
+                    <td>Coordinate and mount rendered UI</td>
+                  </tr>
+                  <tr>
+                    <td>Output / result</td>
+                    <td>Declarative JSON spec</td>
+                    <td>Rendered DOM mounted in a page</td>
+                  </tr>
+                  <tr>
+                    <td>DOM mounting</td>
+                    <td>Not its main responsibility</td>
+                    <td>Core runtime responsibility</td>
+                  </tr>
+                  <tr>
+                    <td>Typical use</td>
+                    <td>Build custom or reusable specifications</td>
+                    <td>Render components in browser applications</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="section" id="structure">
+            <h2>8. Project structure</h2>
+            <p>The README describes the repository as organized around source runtime code, browser documentation/build
+              output, and runnable samples.</p>
+            <div class="codewrap">
+              <div class="codehead"><span>Repository map (from README)</span><button class="copy"
+                  data-copy='json-renderers/\n├── docs/\n│   ├── dist/\n│   │   ├── min.js\n│   │   └── v13/min.js\n│   └── index.html\n├── samples/\n│   ├── table/\n│   ├── select/\n│   └── selectOptionsOnly/\n├── src/\n│   ├── index.js\n│   └── v13/\n│       ├── buildSpec/\n│       ├── meta.js\n│       ├── registerGlobal.js\n│       └── index.js\n├── package.json\n├── vite.config.js\n└── README.md'>Copy</button>
+              </div>
+              <pre><code>json-renderers/
+├── docs/                     # Documentation and distribution
+│   ├── dist/                 # Built browser bundles
+│   │   ├── min.js
+│   │   └── v13/min.js
+│   └── index.html            # Docs and interactive workbench
+├── samples/                  # Browser examples
+│   ├── table/
+│   ├── select/
+│   └── selectOptionsOnly/
+├── src/                      # Source code
+│   ├── index.js              # Package entry
+│   └── v13/                  # Runtime implementation
+│       ├── buildSpec/
+│       ├── meta.js
+│       ├── registerGlobal.js
+│       └── index.js
+├── package.json
+├── vite.config.js
+└── README.md</code></pre>
+            </div>
+            <p class="muted">File paths and bundle names can change over time; use the repository’s current default
+              branch
+              as the source of truth.</p>
+          </section>
+
+          <section class="section" id="development">
+            <h2>9. Development and build</h2>
+            <p>To run the project locally, the README documents the following commands:</p>
+            <div class="codewrap">
+              <div class="codehead"><span>Terminal</span><button class="copy"
+                  data-copy='npm install\nnpm run dev\nnpm run build'>Copy</button></div>
+              <pre><code># Install dependencies
+npm install
+
+# Start the Vite development server
+npm run dev
+
+# Build production bundles
+npm run build</code></pre>
+            </div>
+            <p>Use <code>npm run dev</code> to work with the project locally, then <code>npm run build</code> to build
+              the
+              production bundles described in the README. Consult <code>package.json</code> for the exact scripts in the
+              current checkout.</p>
+            <h3>Practical troubleshooting</h3>
+            <ul>
+              <li><strong>Nothing renders:</strong> confirm the target container exists and that
+                <code>targetHtmlId</code>
+                matches its ID exactly.</li>
+              <li><strong>Wrong component appears:</strong> check the <code>type</code> value and the shape of
+                <code>data</code>.
+              </li>
+              <li><strong>Table columns are missing:</strong> verify the <code>columns</code> array matches the intended
+                record properties/headers.</li>
+              <li><strong>Unexpectedly replaced content:</strong> review <code>appendPosition</code>; the README
+                describes
+                replacement as the default and <code>prepend</code> as an alternative.</li>
+            </ul>
+          </section>
+
+          <section class="section" id="references">
+            <h2>10. Official links and references</h2>
+            <p>This guide is based on the repository’s README and documentation links available when the page was
+              prepared. Check these sources for the latest implementation details.</p>
+            <div class="grid3">
+              <div class="mini-card"><strong>GitHub repository</strong>
+                <p><a href="https://github.com/keshavsoft/json-renderers" target="_blank" rel="noreferrer">Source code
+                    and
+                    README ↗</a></p>
+              </div>
+              <div class="mini-card"><strong>Live documentation</strong>
+                <p><a href="https://keshavsoft.github.io/json-renderers/" target="_blank" rel="noreferrer">Docs and
+                    interactive workbench ↗</a></p>
+              </div>
+              <div class="mini-card"><strong>Table rendering guide</strong>
+                <p><a href="https://keshavsoft.github.io/json-renderers/table/index.html" target="_blank"
+                    rel="noreferrer">HTML table process & architecture ↗</a></p>
+              </div>
+              <div class="mini-card"><strong>Select dropdown guide</strong>
+                <p><a href="https://keshavsoft.github.io/json-renderers/aboutSelect.html" target="_blank"
+                    rel="noreferrer">Select component guide ↗</a></p>
+              </div>
+              <div class="mini-card"><strong>Builder repository</strong>
+                <p><a href="https://github.com/keshavsoft/json-renderers-build" target="_blank"
+                    rel="noreferrer">json-renderers-build ↗</a></p>
+              </div>
+              <div class="mini-card"><strong>DOM conversion package</strong>
+                <p><a href="https://github.com/keshavsoft/json-to-tag" target="_blank" rel="noreferrer">json-to-tag
+                    ↗</a>
+                </p>
+              </div>
+            </div>
+            <p><span class="pill">License</span> The README identifies the project as MIT-licensed. See the repository’s
+              current LICENSE file for the license text.</p>
+          </section>
+          <div class="section" style="background:#f0f7ff;border-color:#bfdbfe;">
+            <h3 style="margin-top:0;color:#1e40af;">Explore More Documentation</h3>
+            <p style="margin:6px 0 16px;color:#334155;font-size:14px;">Looking for a quick conceptual model or
+              interactive
+              live playground?</p>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+              <a href="simpleDoc.html"
+                style="display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:10px;background:#059669;color:white;font-weight:600;font-size:13px;text-decoration:none;">🌱
+                Read Simple Guide</a>
+              <a href="index.html"
+                style="display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:10px;background:var(--brand);color:white;font-weight:600;font-size:13px;text-decoration:none;">📚
+                SubDoc Hub</a>
+              <a href="../index.html"
+                style="display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:10px;background:#1e293b;color:white;font-weight:600;font-size:13px;text-decoration:none;">🏠
+                Main Docs &amp; Workbench</a>
+            </div>
+          </div>
+          <div class="footer">Documentation prepared from the public README for <a
+              href="https://github.com/keshavsoft/json-renderers" target="_blank"
+              rel="noreferrer">keshavsoft/json-renderers</a>.</div>
+        </main>
+      </div>
+    </div>
+    <script>
+      // Copy buttons provide one-click copying for the examples.
+      document.querySelectorAll('.copy').forEach(button => {
+        button.addEventListener('click', async () => {
+          const text = button.dataset.copy || '';
+          try {
+            await navigator.clipboard.writeText(text.replace(/\\n/g, '\n'));
+            const previous = button.textContent;
+            button.textContent = 'Copied!';
+            setTimeout(() => button.textContent = previous, 1200);
+          } catch {
+            button.textContent = 'Select code';
+            const pre = button.closest('.codewrap')?.querySelector('pre');
+            if (pre) { const range = document.createRange(); range.selectNodeContents(pre); const selection = window.getSelection(); selection.removeAllRanges(); selection.addRange(range); }
+          }
+        });
+      });
+      // Filter the sidebar section links by their visible text.
+      const search = document.getElementById('navSearch');
+      search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        document.querySelectorAll('.sidebar a.doc-section-link').forEach(a => a.classList.toggle('hidden', !a.textContent.toLowerCase().includes(q)));
+      });
+    </script>
+</body>
+
+</html>

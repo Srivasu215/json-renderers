@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>json-renderers - Simple Guide</title>
+  <meta name="description"
+    content="A simple guide to KeshavSoft json-renderers: the house-building story, 3-tier architecture, and minimal table mounting example.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --ink: #1e293b;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --brand: #2563eb;
+      --brand-soft: #eff6ff;
+      --brand-dark: #1d4ed8;
+      --shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Topbar Navigation */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+
+    .topbar-inner {
+      max-width: 950px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .brand:hover {
+      text-decoration: none;
+    }
+
+    .logo {
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      border-radius: 9px;
+      width: 32px;
+      height: 32px;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: all 0.15s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+      background: #f1f5f9;
+      text-decoration: none;
+    }
+
+    .nav-links a.active {
+      color: #065f46;
+      background: #d1fae5;
+    }
+
+    .nav-links a.btn-cta {
+      background: #3b82f6;
+      color: #ffffff;
+    }
+
+    .nav-links a.btn-cta:hover {
+      background: #2563eb;
+      color: #ffffff;
+    }
+
+    /* Main Container */
+    .content-wrap {
+      max-width: 900px;
+      margin: 32px auto 60px;
+      padding: 0 20px;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 20px;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .breadcrumbs a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .breadcrumbs a:hover {
+      color: var(--brand);
+    }
+
+    /* Main Card */
+    .article-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: clamp(24px, 4vw, 42px);
+      box-shadow: var(--shadow);
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'Fira Code', monospace;
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      color: #0f172a;
+      font-size: clamp(28px, 4vw, 36px);
+      letter-spacing: -0.03em;
+      margin: 8px 0 16px;
+      line-height: 1.2;
+    }
+
+    h2 {
+      color: #1e3a8a;
+      font-size: clamp(20px, 3vw, 24px);
+      letter-spacing: -0.02em;
+      margin: 32px 0 14px;
+      padding-top: 12px;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .lead {
+      font-size: 16px;
+      color: #334155;
+      line-height: 1.7;
+    }
+
+    .story {
+      background: #f0f7ff;
+      border: 1px solid #bfdbfe;
+      padding: 20px 22px;
+      border-radius: 14px;
+      margin: 20px 0;
+    }
+
+    .story p {
+      margin: 10px 0;
+      color: #1e293b;
+    }
+
+    .story p:first-child {
+      margin-top: 0;
+    }
+
+    .story p:last-child {
+      margin-bottom: 0;
+    }
+
+    ol {
+      padding-left: 20px;
+      margin: 16px 0;
+      color: #334155;
+    }
+
+    ol li {
+      margin-bottom: 8px;
+    }
+
+    code,
+    pre {
+      font-family: 'Fira Code', monospace;
+      background: #f1f5f9;
+      color: #0f172a;
+      border-radius: 6px;
+    }
+
+    code {
+      padding: 2px 6px;
+      font-size: 13.5px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .code-container {
+      position: relative;
+      margin: 18px 0;
+    }
+
+    pre {
+      padding: 16px 18px;
+      border-radius: 12px;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      font-size: 13.5px;
+      line-height: 1.6;
+      border: 1px solid #cbd5e1;
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-family: 'Fira Code', monospace;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .inline-code {
+      font-family: 'Fira Code', monospace;
+      background: #f1f5f9;
+      color: #1d4ed8;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .callout-box {
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-top: 28px;
+    }
+
+    /* Next Steps Navigation Box */
+    .next-nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 36px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+
+    .next-card {
+      display: block;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .next-card:hover {
+      border-color: #3b82f6;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+      text-decoration: none;
+    }
+
+    .next-card-subtitle {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-family: 'Fira Code', monospace;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .next-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    a {
+      color: var(--brand);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <div class="content-wrap">
+
+    <!-- Breadcrumb trail -->
+    <div class="breadcrumbs">
+      <a href="../index.html">Home</a>
+      <span>/</span>
+      <a href="index.html">subDoc</a>
+      <span>/</span>
+      <span style="color:#059669; font-weight:600;">simpleDoc.html</span>
+    </div>
+
+    <!-- Article Card -->
+    <article class="article-card">
+      <div class="badge-pill">
+        <span>🌱</span> Quick Conceptual Guide &bull; 3 min read
+      </div>
+
+      <h1>json-renderers</h1>
+      <p><b>Render JSON-driven UI into the browser:</b></p>
+      <p class="lead"><strong>json-renderers</strong> is the browser runtime layer in the KeshavSoft declarative UI
+        ecosystem. It accepts render configuration, obtains a JSON description of the requested component, asks
+        <span class="inline-code">@keshavsoft/json-to-tag</span> to create DOM nodes, and mounts the result in the
+        requested browser container.
+      </p>
+      <p>It is an orchestration layer rather than the specification compiler itself. The component structure is
+        prepared upstream by <span class="inline-code">json-renderers-build</span>; actual element construction is
+        delegated to <span class="inline-code">@keshavsoft/json-to-tag</span>.</p>
+
+      <h2>Simple House-Building Story</h2>
+      <div class="story">
+        <p><b>1. json-renderers-build — The Architect:</b> prepares a JSON blueprint.</p>
+        <p><b>2. json-to-tag — The Construction Worker:</b> reads the blueprint and creates real HTML elements.</p>
+        <p><b>3. json-renderers — The Site Manager:</b> puts those elements in the correct place on the webpage.</p>
+      </div>
+
+      <h2>Example: Show a Student Table</h2>
+      <ol>
+        <li>Send student data and column names.</li>
+        <li><code>json-renderers-build</code> prepares the table specification.</li>
+        <li><code>json-to-tag</code> creates the HTML table elements.</li>
+        <li><code>json-renderers</code> mounts the table inside the target container.</li>
+      </ol>
+
+      <div class="code-container">
+        <button class="copy-btn" id="copyBtn">Copy</button>
+        <pre id="codeSnippet">&lt;div id="students"&gt;&lt;/div&gt;
+&lt;script type="module"&gt;
+import render from "json-renderers";
+render({
+  type: "table",
+  targetHtmlId: "students",
+  data: [{ name: "Ravi", city: "Kakinada" }],
+  columns: ["Name", "City"]
+});
+&lt;/script&gt;</pre>
+      </div>
+
+      <h2>Remember</h2>
+      <div class="callout-box">
+        <p style="margin:0; font-size:15px;"><b>Build prepares the blueprint &rarr; json-to-tag creates the DOM &rarr;
+            json-renderers mounts it on the page.</b></p>
+      </div>
+
+      <p style="margin-top:24px; font-size:14px; color:#64748b;">
+        Official repository: <a href="https://github.com/keshavsoft/json-renderers" target="_blank"
+          rel="noopener noreferrer">github.com/keshavsoft/json-renderers</a>
+      </p>
+
+      <!-- Next Steps & Connected Navigation -->
+      <div class="next-nav">
+        <a href="advanceDoc.html" class="next-card">
+          <div class="next-card-subtitle">Next Track &bull; In-Depth</div>
+          <div class="next-card-title">
+            <span>Read Advanced Guide</span>
+            <span>&rarr;</span>
+          </div>
+        </a>
+
+        <a href="index.html" class="next-card">
+          <div class="next-card-subtitle">Hub &bull; Overview</div>
+          <div class="next-card-title">
+            <span>Back to SubDoc Hub</span>
+            <span>&rarr;</span>
+          </div>
+        </a>
+
+        <a href="../index.html" class="next-card">
+          <div class="next-card-subtitle">Sandbox &bull; Live DOM</div>
+          <div class="next-card-title">
+            <span>Try Live Workbench</span>
+            <span>&rarr;</span>
+          </div>
+        </a>
+      </div>
+
+    </article>
+
+  </div>
+
+  <script>
+    const copyBtn = document.getElementById('copyBtn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        const code = document.getElementById('codeSnippet')?.textContent || '';
+        try {
+          await navigator.clipboard.writeText(code);
+          copyBtn.textContent = 'Copied!';
+          setTimeout(() => { copyBtn.textContent = 'Copy'; }, 1500);
+        } catch (e) {
+          copyBtn.textContent = 'Done';
+        }
+      });
+    }
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SubDoc Hub | json-renderers Guides & Documentation</title>
+  <meta name="description"
+    content="Documentation Hub for KeshavSoft json-renderers: explore both the Simple conceptual guide and the Comprehensive Advanced architectural reference.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Fira Code', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-card {
+      background: rgba(30, 41, 59, 0.5);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(99, 102, 241, 0.3);
+      border-radius: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(99, 102, 241, 0.6);
+    }
+  </style>
+</head>
+
+<body
+  class="bg-slate-950 text-slate-100 min-h-screen antialiased flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+
+
+  <!-- Main Body Content -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-12">
+
+    <!-- Breadcrumb -->
+    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
+      <a href="../index.html" class="hover:text-white transition flex items-center gap-1">
+        <span>🏠</span> Home
+      </a>
+      <span>/</span>
+      <span class="text-slate-500">docs</span>
+      <span>/</span>
+      <span class="text-indigo-400 font-semibold">subDoc</span>
+    </div>
+
+
+    <!-- Two Tracks Showcase Grid -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <!-- Track 1: Simple Guide Card -->
+      <div
+        class="glass-panel p-6 sm:p-8 rounded-3xl border border-emerald-500/30 flex flex-col justify-between relative overflow-hidden group hover:border-emerald-500/60 transition shadow-lg">
+        <div
+          class="absolute -right-12 -top-12 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none group-hover:bg-emerald-500/20 transition">
+        </div>
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <span
+              class="px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Quick Concept &bull; 3 min read
+            </span>
+            <span class="text-3xl">🌱</span>
+          </div>
+
+          <h2 class="text-2xl font-bold text-white group-hover:text-emerald-300 transition">Simple Guide</h2>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            Fast, beginner-friendly explanation structured around the famous <strong>House-Building Story</strong>.
+            Clarifies who prepares the blueprint, who builds the HTML elements, and who mounts them in the DOM.
+          </p>
+
+          <div class="space-y-2 pt-2">
+            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider font-mono">What you will learn:
+            </div>
+            <ul class="text-xs text-slate-300 space-y-1.5">
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">1.</span>
+                <span><strong>The Architect:</strong> <code
+                    class="text-indigo-300 font-mono">json-renderers-build</code> prepares the blueprint.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">2.</span>
+                <span><strong>The Construction Worker:</strong> <code
+                    class="text-emerald-300 font-mono">@keshavsoft/json-to-tag</code> creates real DOM elements.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">3.</span>
+                <span><strong>The Site Manager:</strong> <code class="text-teal-300 font-mono">json-renderers</code>
+                  mounts the elements on the web page.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">4.</span>
+                <span>Minimal runnable snippet showing a student table rendering in workbench.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pt-6">
+          <a href="simpleDoc.html"
+            class="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition flex items-center justify-center gap-2 shadow-md shadow-emerald-600/30">
+            <span>Read Simple Guide</span>
+            <span>&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Track 2: Advanced Guide Card -->
+      <div
+        class="glass-panel p-6 sm:p-8 rounded-3xl border border-purple-500/30 flex flex-col justify-between relative overflow-hidden group hover:border-purple-500/60 transition shadow-lg">
+        <div
+          class="absolute -right-12 -top-12 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl pointer-events-none group-hover:bg-purple-500/20 transition">
+        </div>
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <span
+              class="px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-purple-500/20 text-purple-300 border border-purple-500/30 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span> Deep Dive &bull; 15 min read
+            </span>
+            <span class="text-3xl">🚀</span>
+          </div>
+
+          <h2 class="text-2xl font-bold text-white group-hover:text-purple-300 transition">Advanced Documentation</h2>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            Exhaustive technical handbook covering system architecture, component lifecycles, configuration
+            specifications, pipeline stages, Vite and CDN bundling, and troubleshooting.
+          </p>
+
+          <div class="space-y-2 pt-2">
+            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider font-mono">What you will learn:
+            </div>
+            <ul class="text-xs text-slate-300 space-y-1.5">
+              <li class="flex items-start gap-2">
+                <span class="text-purple-400 font-bold">&bull;</span>
+                <span><strong>Architectural Pipeline:</strong> Detailed multi-stage sequence from caller arguments to
+                  container replacement.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-purple-400 font-bold">&bull;</span>
+                <span><strong>Full API Reference:</strong> Complete option breakdown for <code
+                    class="text-purple-300 font-mono">type</code>, <code
+                    class="text-purple-300 font-mono">targetHtmlId</code>, <code
+                    class="text-purple-300 font-mono">data</code>, and <code
+                    class="text-purple-300 font-mono">columns</code>.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-purple-400 font-bold">&bull;</span>
+                <span><strong>Component Types:</strong> Table generation, select dropdowns, and pre-existing host
+                  attachment (<code class="text-purple-300 font-mono">selectOptionsOnly</code>).</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-purple-400 font-bold">&bull;</span>
+                <span><strong>Packaging &amp; Tooling:</strong> Vite build workflow, Rollup configurations, browser
+                  global <code class="text-purple-300 font-mono">window.ks</code>, and CDN distribution.</span>
+              </li>
+            </ul>
+          </div>
+
+
+        </div>
+
+        <div class="pt-6">
+          <a href="advanceDoc.html"
+            class="w-full py-3 px-4 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition flex items-center justify-center gap-2 shadow-md shadow-purple-600/30">
+            <span>Read Advanced Guide</span>
+            <span>&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </section>
+
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-500 mt-12">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>
+        <strong class="text-slate-400">json-renderers</strong> &bull; SubDoc Hub &bull; KeshavSoft &bull; MIT License
+      </div>
+      <div class="flex items-center gap-4 text-slate-400">
+        <a href="../index.html" class="hover:text-white transition">Main Docs</a>
+        <a href="simpleDoc.html" class="hover:text-white transition">Simple Guide</a>
+        <a href="advanceDoc.html" class="hover:text-white transition">Advanced Guide</a>
+        <a href="https://github.com/keshavsoft/json-renderers" target="_blank" rel="noopener noreferrer"
+          class="hover:text-white transition">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
